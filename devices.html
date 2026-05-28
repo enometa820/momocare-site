@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 케어 디바이스 — 1·2·3단계 통합 자료</title>
+<meta name="description" content="모모케어 케어 디바이스 3단계 정의 — 1단계 무료 배포·2단계 페어 워치·3단계 슈퍼 디바이스. 제품 실사진·벨트 사양·RFQ·특허 자료 통합.">
+<link rel="stylesheet" href="lightbox.css">
+<style>
+  :root {
+    --green: #1f7a5a; --green-light: #e7f4ee; --green-dark: #155e44;
+    --purple: #7F77DD; --purple-light: #EEEDFE;
+    --coral: #D85A30; --coral-light: #FAECE7;
+    --bg: #f6f4ef; --paper: #ffffff; --ink: #1c1c1e; --ink-soft: #4a4a4a; --ink-mute: #888;
+    --line: #e6e3dc;
+    --shadow: 0 4px 14px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.65; word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(246,244,239,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--ink); }
+  .logo img { height: 52px; width: auto; display: block; }
+  .logo b { color: var(--green); }
+  .nav-menu { display: flex; gap: 28px; align-items: center; font-size: 14px; font-weight: 600; }
+  .nav-menu a { color: var(--ink-soft); transition: color 0.2s; }
+  .nav-menu a:hover, .nav-menu a.active { color: var(--green); }
+  .nav-cta { background: var(--green); color: #fff; padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+  .nav-cta:hover { background: var(--green-dark); }
+
+  /* Hero */
+  .hero { padding: 80px 0 56px; text-align: center; }
+  .hero h1 { font-size: 44px; font-weight: 800; letter-spacing: -1.2px; line-height: 1.2; margin-bottom: 18px; }
+  .hero h1 b { color: var(--green); }
+  .hero p { font-size: 18px; color: var(--ink-soft); max-width: 720px; margin: 0 auto 28px; }
+  .stage-nav { display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .stage-nav a {
+    padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 700;
+    background: var(--paper); border: 1px solid var(--line); color: var(--ink);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .stage-nav a:hover { border-color: var(--green); color: var(--green); }
+
+  /* Stage section */
+  .stage { padding: 80px 0; border-top: 1px solid var(--line); }
+  .stage.s1 { background: var(--paper); }
+  .stage.s2 { background: var(--bg); }
+  .stage.s3 { background: var(--paper); }
+  .stage-head { max-width: 720px; margin: 0 auto 48px; text-align: center; }
+  .stage-num {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-light); color: var(--green-dark);
+    padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 800; letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .stage.s2 .stage-num { background: var(--purple-light); color: var(--purple); }
+  .stage.s3 .stage-num { background: var(--coral-light); color: var(--coral); }
+  .stage-head h2 { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin-bottom: 14px; line-height: 1.25; }
+  .stage-head p { font-size: 17px; color: var(--ink-soft); }
+
+  /* 1단계 grid */
+  .s1-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; margin-bottom: 56px; }
+  .s1-image {
+    background: var(--bg); border-radius: 24px; padding: 32px;
+    box-shadow: var(--shadow); text-align: center;
+  }
+  .s1-image img { width: 100%; height: auto; border-radius: 14px; background: #fff; }
+  .s1-image .caption { margin-top: 14px; font-size: 13px; color: var(--ink-mute); letter-spacing: 0.5px; }
+  .s1-text h3 { font-size: 26px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 14px; }
+  .s1-text > p { font-size: 16px; color: var(--ink-soft); margin-bottom: 24px; }
+  .feat-list { list-style: none; display: grid; gap: 12px; margin-bottom: 28px; }
+  .feat-list li {
+    background: var(--bg); padding: 14px 18px; border-radius: 12px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 14px; color: var(--ink);
+  }
+  .feat-list li::before {
+    content: "✓"; color: var(--green); font-weight: 800; font-size: 16px;
+  }
+  .price-row {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    background: var(--green-light); padding: 18px 22px; border-radius: 14px;
+  }
+  .price-row > div { flex: 1; min-width: 140px; }
+  .price-row strong { display: block; font-size: 12px; color: var(--green-dark); margin-bottom: 4px; font-weight: 700; letter-spacing: 0.5px; }
+  .price-row span { font-size: 15px; font-weight: 700; color: var(--ink); }
+
+  /* 인포그래픽 박스 */
+  .info-box {
+    background: var(--bg); border-radius: 24px; padding: 36px;
+    text-align: center; box-shadow: var(--shadow);
+    margin-top: 32px;
+  }
+  .info-box h4 { font-size: 18px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .info-box p { font-size: 14px; color: var(--ink-soft); margin-bottom: 20px; max-width: 720px; margin-left: auto; margin-right: auto; }
+  .info-box img { width: 100%; max-width: 1040px; height: auto; border-radius: 12px; margin: 0 auto; }
+
+  /* 2·3단계 카드 */
+  .stage-content {
+    background: var(--paper); border-radius: 24px; padding: 40px;
+    max-width: 920px; margin: 0 auto;
+    box-shadow: var(--shadow);
+  }
+  .stage.s2 .stage-content { background: var(--paper); border: 2px solid var(--purple-light); }
+  .stage.s3 .stage-content { background: var(--paper); border: 2px solid var(--coral-light); }
+  .stage-content h3 { font-size: 22px; font-weight: 800; margin-bottom: 14px; letter-spacing: -0.5px; }
+  .stage-content p { font-size: 16px; color: var(--ink-soft); margin-bottom: 18px; }
+  .stage-content ul { list-style: none; padding: 0; margin: 0 0 24px; }
+  .stage-content li { font-size: 14px; color: var(--ink-soft); padding: 6px 0; padding-left: 18px; position: relative; }
+  .stage-content li::before { content: "·"; position: absolute; left: 6px; color: var(--green); font-weight: 800; }
+  .stage.s2 .stage-content li::before { color: var(--purple); }
+  .stage.s3 .stage-content li::before { color: var(--coral); }
+  .stage-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--green); font-weight: 700; font-size: 14px;
+  }
+  .stage.s2 .stage-link { color: var(--purple); }
+  .stage.s3 .stage-link { color: var(--coral); }
+  .stage-link::after { content: "→"; }
+
+  /* Footer */
+  footer { background: var(--ink); color: #aaa; padding: 56px 0 32px; font-size: 13px; }
+  footer .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+  footer h5 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+  footer .foot-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  footer .foot-logo-row img { height: 48px; width: auto; }
+  footer .foot-desc { color: #888; line-height: 1.7; font-size: 13px; max-width: 380px; }
+  footer ul { list-style: none; }
+  footer li { padding: 4px 0; }
+  footer a { color: #aaa; }
+  footer a:hover { color: #fff; }
+  footer .foot-bottom { border-top: 1px solid #333; padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #777; font-size: 12px; }
+  footer .disclaimer { background: rgba(255,255,255,0.04); padding: 14px 18px; border-radius: 10px; color: #888; font-size: 12px; line-height: 1.6; margin-top: 24px; }
+
+  /* 모바일 */
+  @media (max-width: 880px) {
+    .wrap { padding: 0 20px; }
+    .nav-inner { height: 64px; }
+    .nav-menu { display: none; }
+    .nav-cta { padding: 8px 14px; font-size: 12px; }
+    .logo img { height: 40px; }
+    .logo { font-size: 18px; }
+    .hero { padding: 56px 0 40px; }
+    .hero h1 { font-size: 30px; line-height: 1.25; }
+    .hero p { font-size: 15px; }
+    .stage { padding: 56px 0; }
+    .stage-head h2 { font-size: 24px; }
+    .stage-head p { font-size: 15px; }
+    .s1-grid { grid-template-columns: 1fr; gap: 24px; }
+    .s1-image { padding: 20px; }
+    .stage-content { padding: 24px; }
+    .info-box { padding: 24px; }
+    footer .foot-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="logo"><img src="assets/logo-icon.png" alt="모모케어 로고"><span>모모<b>케어</b></span></a>
+    <div class="nav-menu">
+      <a href="index.html">홈</a>
+      <a href="devices.html" class="active">디바이스</a>
+      <a href="gallery.html">자료실</a>
+      <a href="sitemap.html">사이트맵</a>
+    </div>
+    <a href="caregiver-manual.html" class="nav-cta">코디 매뉴얼</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>모모케어 케어 <b>디바이스 3단계</b></h1>
+    <p>1단계는 코디네이터에게 무료로 배포되는 기록 벨트, 2단계는 페어 워치, 3단계는 AI 모션 분석 슈퍼 디바이스. 단계를 거치며 간병 데이터를 모아 슈퍼 디바이스의 학습 자료가 돼요.</p>
+    <div class="stage-nav">
+      <a href="#stage1">1단계 케어 디바이스</a>
+      <a href="#stage2">2단계 페어 워치</a>
+      <a href="#stage3">3단계 슈퍼 디바이스</a>
+    </div>
+  </div>
+</header>
+
+<section class="stage s1" id="stage1">
+  <div class="wrap">
+    <div class="stage-head">
+      <div class="stage-num">STAGE 01</div>
+      <h2>1단계 케어 디바이스 — 무료 배포</h2>
+      <p>코디네이터에게 1단계 디바이스는 무료로 배포돼요. 흰색 본체에 1인칭 카메라·하트 버튼·6축 모션 센서가 들어가요.</p>
+    </div>
+
+    <div class="s1-grid">
+      <div class="s1-image">
+        <img src="assets/device-product.png" class="zoomable" alt="모모케어 1단계 케어 디바이스 제품샷" data-caption="1단계 케어 디바이스 — 흰색 본체 · 하트 버튼 · 1인칭 카메라">
+        <div class="caption">제품 실사진 (클릭하면 크게 보여요)</div>
+      </div>
+      <div class="s1-text">
+        <h3>왜 디바이스를 무료로 줄까요?</h3>
+        <p>1단계 디바이스는 코디네이터의 1인칭 활동을 모션·음성·영상으로 수집해요. 이 데이터가 슈퍼 디바이스(3단계)의 AI 행동추론 학습 자료가 됩니다.</p>
+        <ul class="feat-list">
+          <li>터치 + 음성인식 + 전용 앱 연동</li>
+          <li>6축 IMU 모션 센서 (보행·자세 추정)</li>
+          <li>저해상도 1인칭 카메라 (프라이버시 LED)</li>
+          <li>매일 5분 루틴 자동 기록 (4구간)</li>
+          <li>본 제품은 의료기기가 아닙니다</li>
+        </ul>
+        <div class="price-row">
+          <div><strong>10K MOQ 목표 단가</strong><span>약 $35 ~ $48</span></div>
+          <div><strong>500개 기준 시제품</strong><span>6,900 ~ 8,500원</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>착용 기록 벨트 — 1단계 활용 방식</h4>
+      <p>핸드폰을 거치해 매일 같은 시각 5분 1인칭 루틴을 자연스럽게 담아요. 4구간(A 신체·B 인지·C 정서·D 특이) 구조로 보호자가 변화를 비교하기 쉬워요.</p>
+      <img src="assets/belt-spec.png" class="zoomable" alt="모모케어 착용 기록 벨트 사양 인포그래픽" data-caption="착용 기록 벨트 — 매일 5분 1인칭 루틴 기록 솔루션">
+    </div>
+
+    <div class="info-box">
+      <h4>케어 디바이스 사양 — RFQ · 단가 · 특허 청구항</h4>
+      <p>10K MOQ 기준 BOM 분석과 ODM 후보, 특허 포트폴리오 방향까지 한 장에 정리한 1단계 디바이스 사양 자료예요.</p>
+      <img src="assets/device-spec.png" class="zoomable" alt="모모케어 케어 디바이스 사양 인포그래픽" data-caption="모모케어 케어 디바이스: 간병인 무수수료 + 자동일지 + 보호자 안심서비스">
+    </div>
+  </div>
+</section>
+
+<section class="stage s2" id="stage2">
+  <div class="wrap">
+    <div class="stage-head">
+      <div class="stage-num">STAGE 02</div>
+      <h2>2단계 페어 워치 — 편의 업그레이드</h2>
+      <p>1단계 데이터가 충분히 모이면, 같은 기능을 더 편안한 워치 형태로 자라요.</p>
+    </div>
+    <div class="stage-content">
+      <h3>v0.2 페어 워치 (계획)</h3>
+      <p>코디네이터·어르신이 함께 차는 페어 워치. 1단계 디바이스보다 착용 불편감이 적고, 같은 IMU·음성 입력을 손목에서 처리해요.</p>
+      <ul>
+        <li>편안한 워치 형태 (디자인 업그레이드)</li>
+        <li>1단계와 동일한 기록·음성 명령</li>
+        <li>SOS · 충격 알림 · 복약 알림</li>
+        <li>본 제품은 의료기기가 아닙니다</li>
+      </ul>
+      <a href="watch.html" class="stage-link">페어 워치 v0.2 스펙 보기</a>
+    </div>
+  </div>
+</section>
+
+<section class="stage s3" id="stage3">
+  <div class="wrap">
+    <div class="stage-head">
+      <div class="stage-num">STAGE 03</div>
+      <h2>3단계 슈퍼 디바이스 — AI 모션 분석</h2>
+      <p>1·2단계에서 모은 간병 특화 모션 데이터로 학습한 슈퍼 디바이스. AI가 활동을 자동 인식하고 위험 신호를 표시해요.</p>
+    </div>
+    <div class="stage-content">
+      <h3>슈퍼 디바이스 (PoC 단계)</h3>
+      <p>모션·음성 위험 알림과 3시간 송출 가능한 진짜 슈퍼 디바이스. 1단계 디바이스 데이터 수집의 사업적 의도가 여기에서 결실을 맺어요.</p>
+      <ul>
+        <li>AI 모션 행동추론 — 활동 자동 인식·리포트</li>
+        <li>음성·모션 위험 알림 (낙상·이상 행동 표시)</li>
+        <li>실시간 녹화 송출 3시간 이상</li>
+        <li>편안한 착용감 + 모든 기능 탑재</li>
+        <li>본 제품은 의료기기가 아닙니다</li>
+      </ul>
+      <a href="five-min.html" class="stage-link">5분 송출 표준 매뉴얼</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo-row">
+          <img src="assets/logo-icon.png" alt="모모케어 로고">
+        </div>
+        <p class="foot-desc">코디네이터(간병인)와 보호자를 잇는 안심 케어 플랫폼. 디바이스 무료, 수수료 0%, 평생 무료로 운영합니다.</p>
+      </div>
+      <div>
+        <h5>디바이스 단계</h5>
+        <ul>
+          <li><a href="#stage1">1단계 케어 디바이스</a></li>
+          <li><a href="#stage2">2단계 페어 워치</a></li>
+          <li><a href="#stage3">3단계 슈퍼 디바이스</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>다른 자료</h5>
+        <ul>
+          <li><a href="index.html">홈 (LP)</a></li>
+          <li><a href="gallery.html">자료실 (인포그래픽)</a></li>
+          <li><a href="sitemap.html">사이트맵</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <strong style="color:#bbb;">모모케어 약속</strong><br>
+      모모케어는 돌봄을 더 투명하게 보여드리는 도구입니다. 활동을 기록·표시·알림으로 전달할 뿐, 의료적 진단·치료·예방을 대신하지 않습니다. 건강 판단은 의료진과 상의해 주세요.
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 모모케어 — 함께 더 나은 돌봄 문화를</span>
+      <span>코드잇 IT창업가 3기 1팀 (MVP 단계)</span>
+    </div>
+  </div>
+</footer>
+
+<script src="lightbox.js" defer></script>
+</body>
+</html>

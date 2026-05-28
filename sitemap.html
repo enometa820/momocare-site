@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 사이트맵 — 한눈에 보기</title>
+<meta name="description" content="모모케어 사이트 페이지 트리·자산 인벤토리·페이지 관계·운영 메타를 한 화면으로. 멀리서도 사이트 구조를 리뷰할 수 있어요.">
+<style>
+  :root {
+    --green: #1f7a5a; --green-light: #e7f4ee; --green-dark: #155e44;
+    --purple: #7F77DD; --purple-light: #EEEDFE;
+    --coral: #D85A30; --coral-light: #FAECE7;
+    --bg: #f6f4ef; --paper: #ffffff; --ink: #1c1c1e; --ink-soft: #4a4a4a; --ink-mute: #888;
+    --line: #e6e3dc;
+    --shadow: 0 4px 14px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.65; word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(246,244,239,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 80px; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--ink); }
+  .logo img { height: 52px; width: auto; }
+  .logo b { color: var(--green); }
+  .nav-menu { display: flex; gap: 28px; font-size: 14px; font-weight: 600; }
+  .nav-menu a { color: var(--ink-soft); transition: color 0.2s; }
+  .nav-menu a:hover, .nav-menu a.active { color: var(--green); }
+  .nav-cta { background: var(--green); color: #fff; padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+
+  /* Hero */
+  .hero { padding: 72px 0 40px; text-align: center; }
+  .hero h1 { font-size: 40px; font-weight: 800; letter-spacing: -1px; margin-bottom: 14px; }
+  .hero h1 b { color: var(--green); }
+  .hero p { font-size: 17px; color: var(--ink-soft); max-width: 720px; margin: 0 auto; }
+
+  /* Section base */
+  section.s { padding: 48px 0; }
+  section.s + section.s { border-top: 1px solid var(--line); }
+  .s-head { margin-bottom: 32px; }
+  .s-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .s-head p { font-size: 14px; color: var(--ink-soft); }
+
+  /* Page tree */
+  .tree {
+    background: var(--paper); border-radius: 16px; padding: 32px;
+    box-shadow: var(--shadow); border: 1px solid var(--line);
+  }
+  .tree-root {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--green); color: #fff;
+    padding: 12px 20px; border-radius: 12px; font-weight: 700; font-size: 16px;
+    margin-bottom: 24px;
+  }
+  .tree-root::before { content: "🏠"; }
+  .branches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .branch {
+    background: var(--bg); border-radius: 12px; padding: 18px 16px;
+    border-left: 4px solid var(--green);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .branch:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .branch.new { border-left-color: var(--purple); background: var(--purple-light); }
+  .branch.doc { border-left-color: var(--coral); background: var(--coral-light); }
+  .branch h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .branch p { font-size: 12px; color: var(--ink-mute); line-height: 1.5; }
+  .branch a { font-size: 12px; color: var(--green-dark); font-weight: 700; margin-top: 6px; display: inline-block; }
+  .branch.new a { color: var(--purple); }
+  .branch.doc a { color: var(--coral); }
+  .branch a::after { content: " →"; }
+
+  /* Asset inventory */
+  .inv-table {
+    width: 100%; background: var(--paper); border-radius: 16px; overflow: hidden;
+    box-shadow: var(--shadow); border: 1px solid var(--line);
+    border-collapse: collapse;
+  }
+  .inv-table th, .inv-table td {
+    padding: 12px 16px; text-align: left; font-size: 13px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .inv-table th {
+    background: var(--bg); font-weight: 700; color: var(--ink); font-size: 12px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .inv-table tr:last-child td { border-bottom: none; }
+  .inv-table .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 6px;
+    font-size: 11px; font-weight: 700;
+  }
+  .inv-table .badge.live { background: var(--green-light); color: var(--green-dark); }
+  .inv-table .badge.new { background: var(--purple-light); color: var(--purple); }
+  .inv-table code { font-size: 12px; color: var(--ink-mute); }
+
+  /* Relations */
+  .rel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .rel-card {
+    background: var(--paper); border-radius: 12px; padding: 18px 20px;
+    border: 1px solid var(--line);
+    font-size: 13px;
+  }
+  .rel-card strong { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 700; }
+  .rel-card .arrow { color: var(--green); font-weight: 800; margin: 0 6px; }
+
+  /* Meta */
+  .meta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .meta-card {
+    background: var(--paper); border-radius: 12px; padding: 20px;
+    border: 1px solid var(--line);
+  }
+  .meta-card h4 { font-size: 13px; font-weight: 800; color: var(--green); letter-spacing: 0.5px; margin-bottom: 10px; text-transform: uppercase; }
+  .meta-card p { font-size: 14px; line-height: 1.7; }
+  .meta-card a { color: var(--green); font-weight: 700; }
+  .meta-card a:hover { text-decoration: underline; }
+  .meta-card code { background: var(--bg); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+
+  /* Footer */
+  footer { background: var(--ink); color: #aaa; padding: 56px 0 32px; font-size: 13px; margin-top: 40px; }
+  footer .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; margin-bottom: 32px; max-width: 1120px; margin-left: auto; margin-right: auto; padding: 0 24px; }
+  footer h5 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+  footer .foot-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  footer .foot-logo-row img { height: 48px; width: auto; }
+  footer .foot-desc { color: #888; line-height: 1.7; font-size: 13px; max-width: 380px; }
+  footer ul { list-style: none; }
+  footer li { padding: 4px 0; }
+  footer a { color: #aaa; }
+  footer a:hover { color: #fff; }
+  footer .foot-bottom { border-top: 1px solid #333; padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #777; font-size: 12px; max-width: 1120px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+
+  @media (max-width: 880px) {
+    .wrap { padding: 0 20px; }
+    .nav-inner { height: 64px; padding: 0 20px; }
+    .nav-menu { display: none; }
+    .logo img { height: 40px; }
+    .logo { font-size: 18px; }
+    .hero { padding: 48px 0 32px; }
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 15px; }
+    section.s { padding: 32px 0; }
+    .s-head h2 { font-size: 22px; }
+    .branches { grid-template-columns: 1fr; }
+    .rel-grid, .meta-grid { grid-template-columns: 1fr; }
+    .tree { padding: 20px; }
+    .inv-table th, .inv-table td { padding: 10px 12px; font-size: 12px; }
+    footer .foot-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="assets/logo-icon.png" alt="모모케어 로고"><span>모모<b>케어</b></span></a>
+    <div class="nav-menu">
+      <a href="index.html">홈</a>
+      <a href="devices.html">디바이스</a>
+      <a href="gallery.html">자료실</a>
+      <a href="sitemap.html" class="active">사이트맵</a>
+    </div>
+    <a href="caregiver-manual.html" class="nav-cta">코디 매뉴얼</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>모모케어 <b>사이트맵</b></h1>
+    <p>본 사이트의 모든 페이지·자산·관계를 한 화면에. 멀리서도 사이트 구조를 리뷰할 수 있어요.</p>
+  </div>
+</header>
+
+<main>
+
+<section class="s">
+  <div class="wrap">
+    <div class="s-head">
+      <h2>📂 페이지 트리</h2>
+      <p>홈(LP)을 루트로 한 11개 페이지. 보라색은 본 사이클 신규 페이지.</p>
+    </div>
+    <div class="tree">
+      <div class="tree-root">홈 LP / <code>index.html</code></div>
+      <div class="branches">
+        <div class="branch new">
+          <h3>devices.html</h3>
+          <p>1·2·3단계 디바이스 통합. 제품샷·벨트 사양·RFQ 자료.</p>
+          <a href="devices.html">디바이스 통합</a>
+        </div>
+        <div class="branch new">
+          <h3>gallery.html</h3>
+          <p>인포그래픽 갤러리. 사업·디바이스·운영 자료 큰 보기.</p>
+          <a href="gallery.html">자료실</a>
+        </div>
+        <div class="branch new">
+          <h3>sitemap.html</h3>
+          <p>본 페이지. 사이트 구조·자산·관계 메타 뷰.</p>
+          <a href="sitemap.html">사이트맵 (현재)</a>
+        </div>
+        <div class="branch">
+          <h3>caregiver-manual.html</h3>
+          <p>코디네이터 사용 안내 매뉴얼. 디바이스부터 정산까지.</p>
+          <a href="caregiver-manual.html">코디 매뉴얼</a>
+        </div>
+        <div class="branch">
+          <h3>app-screens.html</h3>
+          <p>6개 앱 화면 인터랙티브 가이드. 클릭으로 체험.</p>
+          <a href="app-screens.html">앱 화면 가이드</a>
+        </div>
+        <div class="branch">
+          <h3>watch.html</h3>
+          <p>2단계 페어 워치 v0.2 스펙. 디바이스 갈래 자료.</p>
+          <a href="watch.html">페어 워치 스펙</a>
+        </div>
+        <div class="branch">
+          <h3>education.html</h3>
+          <p>코디네이터 교육 매뉴얼 v3. 처음 익히는 자료.</p>
+          <a href="education.html">교육 자료</a>
+        </div>
+        <div class="branch">
+          <h3>five-min.html</h3>
+          <p>5분 영상 송출 표준 매뉴얼. 4구간 라벨링 케어 상황.</p>
+          <a href="five-min.html">5분 송출 매뉴얼</a>
+        </div>
+        <div class="branch">
+          <h3>competitors.html</h3>
+          <p>경쟁사 비교 — 케어링·케어네이션·케어닥. 시장 포지셔닝.</p>
+          <a href="competitors.html">경쟁사 비교</a>
+        </div>
+        <div class="branch doc">
+          <h3>hub.html</h3>
+          <p>6 카드 자료 모음 hub. 빠른 진입로.</p>
+          <a href="hub.html">자료 hub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="s-head">
+      <h2>🗂 자산 인벤토리</h2>
+      <p>주요 페이지의 자산·사이즈·용도. <code>assets/</code> 폴더에 통째 저장.</p>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="inv-table">
+        <thead>
+          <tr><th>페이지</th><th>주요 자산</th><th>사이즈</th><th>용도</th><th>상태</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>index.html</strong></td>
+            <td><code>logo-icon.png · bmc.png · belt-spec.png · device-product.png</code></td>
+            <td>~5.7MB</td>
+            <td>Hero·Pillars·Device·Model·5분송출 섹션 본 시각</td>
+            <td><span class="badge live">live</span></td>
+          </tr>
+          <tr>
+            <td><strong>devices.html</strong> (NEW)</td>
+            <td><code>device-product.png · belt-spec.png · device-spec.png</code></td>
+            <td>~4.1MB</td>
+            <td>1·2·3단계 디바이스 통합 자료</td>
+            <td><span class="badge new">new</span></td>
+          </tr>
+          <tr>
+            <td><strong>gallery.html</strong> (NEW)</td>
+            <td><code>bmc · one-pager · device-* · belt-spec · carenation-arch</code></td>
+            <td>~9MB (썸네일 포함)</td>
+            <td>인포그래픽 갤러리 + 라이트박스</td>
+            <td><span class="badge new">new</span></td>
+          </tr>
+          <tr>
+            <td><strong>sitemap.html</strong> (NEW)</td>
+            <td><code>logo-icon.png</code></td>
+            <td>0.2MB</td>
+            <td>사이트 구조 메타 뷰</td>
+            <td><span class="badge new">new</span></td>
+          </tr>
+          <tr>
+            <td><strong>caregiver-manual.html</strong></td>
+            <td>base64 임베드 이미지</td>
+            <td>0.9MB (HTML 자체)</td>
+            <td>코디 매뉴얼 자기완결 페이지</td>
+            <td><span class="badge live">live</span></td>
+          </tr>
+          <tr>
+            <td><strong>watch.html</strong></td>
+            <td>(HTML 자체 내장)</td>
+            <td>35KB</td>
+            <td>페어 워치 v0.2 스펙</td>
+            <td><span class="badge live">live</span></td>
+          </tr>
+          <tr>
+            <td><strong>five-min.html</strong></td>
+            <td>(HTML 자체 내장 + 폰트 외부)</td>
+            <td>18KB</td>
+            <td>5분 송출 표준 매뉴얼</td>
+            <td><span class="badge live">live</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="s-head">
+      <h2>🔗 페이지 관계</h2>
+      <p>주요 CTA·link 흐름. 사용자가 어느 길로 진입·이동하는지.</p>
+    </div>
+    <div class="rel-grid">
+      <div class="rel-card">
+        <strong>Hero 진입로</strong>
+        <code>index.html</code> Hero CTA <span class="arrow">→</span> <code>caregiver-manual.html</code> + <code>hub.html</code>
+      </div>
+      <div class="rel-card">
+        <strong>nav 메뉴 (모든 페이지 공통)</strong>
+        홈 / 디바이스 / 자료실 / 사이트맵 <span class="arrow">→</span> 4 페이지 + nav-cta = 코디 매뉴얼
+      </div>
+      <div class="rel-card">
+        <strong>디바이스 갈래</strong>
+        <code>index.html</code> #pillars 1번 <span class="arrow">→</span> <code>devices.html</code> stage1·2·3
+        <br>stage2 <span class="arrow">→</span> <code>watch.html</code>
+      </div>
+      <div class="rel-card">
+        <strong>자료 갈래</strong>
+        <code>index.html</code> 자료실 <span class="arrow">→</span> 6 페이지
+        <br><code>gallery.html</code> <span class="arrow">→</span> 라이트박스 (풀스크린 인포그래픽)
+      </div>
+      <div class="rel-card">
+        <strong>5분 송출 갈래</strong>
+        <code>index.html</code> #five-min <span class="arrow">→</span> <code>five-min.html</code>
+        <br><code>devices.html</code> stage3 <span class="arrow">→</span> <code>five-min.html</code>
+      </div>
+      <div class="rel-card">
+        <strong>풋터 (모든 페이지)</strong>
+        풋터 link <span class="arrow">→</span> 자료실 / 매뉴얼 / 사이트맵 / 모모케어 약속(면책)
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s">
+  <div class="wrap">
+    <div class="s-head">
+      <h2>⚙️ 운영 메타</h2>
+      <p>repo·도메인·자동 배포·자산 sync 정보.</p>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-card">
+        <h4>GitHub Repo</h4>
+        <p><a href="https://github.com/enometa820/momocare-site" target="_blank">enometa820/momocare-site</a> (PUBLIC). 소스 코드·자산 통째 보관. 사용자가 main에 push 하면 자동 빌드.</p>
+      </div>
+      <div class="meta-card">
+        <h4>라이브 도메인</h4>
+        <p><code>https://enometa820.github.io/momocare-site/</code> — GitHub Pages 자동 배포. 무료·CDN.</p>
+      </div>
+      <div class="meta-card">
+        <h4>SSOT 분리</h4>
+        <p>본 repo는 publish 사본. BD 결정·재무·회의록 master는 PRIVATE repo <code>codeit-learning-materials</code>. 본 사이트 자료 변경 시 양쪽 sync.</p>
+      </div>
+      <div class="meta-card">
+        <h4>옛 Netlify 4개</h4>
+        <p><code>momocareapp · momocare1page · momowatch · momocaremvp · jocular</code> 사이트는 본 사이트 통합 후에도 옛 URL 보존. 점진 폐기 또는 redirect 예정.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo-row">
+        <img src="assets/logo-icon.png" alt="모모케어 로고">
+      </div>
+      <p class="foot-desc">코디네이터(간병인)와 보호자를 잇는 안심 케어 플랫폼. 디바이스 무료, 수수료 0%, 평생 무료로 운영합니다.</p>
+    </div>
+    <div>
+      <h5>주요 페이지</h5>
+      <ul>
+        <li><a href="index.html">홈 (LP)</a></li>
+        <li><a href="devices.html">디바이스 통합</a></li>
+        <li><a href="gallery.html">자료실</a></li>
+        <li><a href="hub.html">자료 hub</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>매뉴얼</h5>
+      <ul>
+        <li><a href="caregiver-manual.html">코디 매뉴얼</a></li>
+        <li><a href="five-min.html">5분 송출 매뉴얼</a></li>
+        <li><a href="education.html">교육 자료</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 모모케어 — 함께 더 나은 돌봄 문화를</span>
+    <span>코드잇 IT창업가 3기 1팀 (MVP 단계)</span>
+  </div>
+</footer>
+
+</body>
+</html>

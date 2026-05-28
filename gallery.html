@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 자료실 — 인포그래픽 갤러리</title>
+<meta name="description" content="모모케어 사업 모델·디바이스 사양·운영 자료 인포그래픽을 한 곳에서. 카드를 클릭하면 크게 볼 수 있어요.">
+<link rel="stylesheet" href="lightbox.css">
+<style>
+  :root {
+    --green: #1f7a5a; --green-light: #e7f4ee; --green-dark: #155e44;
+    --purple: #7F77DD; --purple-light: #EEEDFE;
+    --coral: #D85A30; --coral-light: #FAECE7;
+    --bg: #f6f4ef; --paper: #ffffff; --ink: #1c1c1e; --ink-soft: #4a4a4a; --ink-mute: #888;
+    --line: #e6e3dc;
+    --shadow: 0 4px 14px rgba(0,0,0,0.04);
+    --shadow-hover: 0 12px 32px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.65; word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(246,244,239,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 80px; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--ink); }
+  .logo img { height: 52px; width: auto; }
+  .logo b { color: var(--green); }
+  .nav-menu { display: flex; gap: 28px; font-size: 14px; font-weight: 600; }
+  .nav-menu a { color: var(--ink-soft); transition: color 0.2s; }
+  .nav-menu a:hover, .nav-menu a.active { color: var(--green); }
+  .nav-cta { background: var(--green); color: #fff; padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+
+  /* Hero */
+  .hero { padding: 72px 0 48px; text-align: center; }
+  .hero h1 { font-size: 40px; font-weight: 800; letter-spacing: -1px; margin-bottom: 14px; }
+  .hero h1 b { color: var(--green); }
+  .hero p { font-size: 17px; color: var(--ink-soft); max-width: 640px; margin: 0 auto; }
+
+  /* Filter */
+  .cats { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 24px 0 32px; }
+  .cat {
+    padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    background: var(--paper); border: 1px solid var(--line); color: var(--ink-soft);
+  }
+  .cat.business { color: var(--green-dark); background: var(--green-light); border-color: var(--green-light); }
+  .cat.device { color: var(--purple); background: var(--purple-light); border-color: var(--purple-light); }
+  .cat.ops { color: var(--coral); background: var(--coral-light); border-color: var(--coral-light); }
+
+  /* Gallery grid */
+  .gallery { padding: 0 0 96px; }
+  .g-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .g-card {
+    background: var(--paper); border-radius: 18px; padding: 18px;
+    border: 1px solid var(--line);
+    display: flex; flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .g-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--green-light); }
+  .g-thumb {
+    background: var(--bg); border-radius: 12px; padding: 16px;
+    margin-bottom: 14px;
+    aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .g-thumb img {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+    background: #fff; border-radius: 8px;
+  }
+  .g-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .g-card h3 { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 6px; }
+  .g-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+  .g-zoom {
+    margin-top: 14px; font-size: 12px; color: var(--green); font-weight: 700;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .g-zoom::before { content: "🔍"; font-size: 14px; }
+
+  /* Section divider */
+  .gsec-title {
+    font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
+    margin: 56px 0 18px; padding-bottom: 12px; border-bottom: 2px solid var(--green);
+    display: inline-block;
+  }
+  .gsec-title:first-of-type { margin-top: 0; }
+
+  /* Footer */
+  footer { background: var(--ink); color: #aaa; padding: 56px 0 32px; font-size: 13px; margin-top: 40px; }
+  footer .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; margin-bottom: 32px; max-width: 1120px; margin-left: auto; margin-right: auto; padding: 0 24px; }
+  footer h5 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+  footer .foot-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  footer .foot-logo-row img { height: 48px; width: auto; }
+  footer .foot-desc { color: #888; line-height: 1.7; font-size: 13px; max-width: 380px; }
+  footer ul { list-style: none; }
+  footer li { padding: 4px 0; }
+  footer a { color: #aaa; }
+  footer a:hover { color: #fff; }
+  footer .foot-bottom { border-top: 1px solid #333; padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #777; font-size: 12px; max-width: 1120px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  footer .disclaimer { background: rgba(255,255,255,0.04); padding: 14px 18px; border-radius: 10px; color: #888; font-size: 12px; line-height: 1.6; margin: 0 24px 24px; max-width: 1072px; }
+
+  @media (max-width: 1024px) { .g-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) {
+    .wrap { padding: 0 20px; }
+    .nav-inner { height: 64px; padding: 0 20px; }
+    .nav-menu { display: none; }
+    .logo img { height: 40px; }
+    .logo { font-size: 18px; }
+    .hero { padding: 48px 0 32px; }
+    .hero h1 { font-size: 28px; }
+    .hero p { font-size: 15px; }
+    .g-grid { grid-template-columns: 1fr; gap: 16px; }
+    .gsec-title { font-size: 18px; margin-top: 40px; }
+    footer .foot-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="assets/logo-icon.png" alt="모모케어 로고"><span>모모<b>케어</b></span></a>
+    <div class="nav-menu">
+      <a href="index.html">홈</a>
+      <a href="devices.html">디바이스</a>
+      <a href="gallery.html" class="active">자료실</a>
+      <a href="sitemap.html">사이트맵</a>
+    </div>
+    <a href="caregiver-manual.html" class="nav-cta">코디 매뉴얼</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>모모케어 <b>자료실</b> — 인포그래픽</h1>
+    <p>본 사이트에서 다루는 사업 모델·디바이스·운영 자료를 한 곳에. 카드를 클릭하면 풀스크린으로 자세히 볼 수 있어요.</p>
+    <div class="cats">
+      <span class="cat business">사업 모델</span>
+      <span class="cat device">디바이스</span>
+      <span class="cat ops">운영</span>
+    </div>
+  </div>
+</header>
+
+<main class="gallery">
+  <div class="wrap">
+
+    <h2 class="gsec-title">사업 모델</h2>
+    <div class="g-grid">
+      <div class="g-card">
+        <div class="g-thumb">
+          <img src="assets/bmc.png" class="zoomable" alt="모모케어 비즈니스 모델 캔버스" data-caption="모모케어 BMC — 9블록 사업 모델 (VP·CS·CH·CR·RS·KR·KA·KP·CS)">
+        </div>
+        <div class="g-meta"><span class="cat business">사업 모델</span></div>
+        <h3>비즈니스 모델 캔버스 (BMC)</h3>
+        <p>가치 제안부터 수익 구조까지 9블록 사업 모델을 한 장에. "보이는 돌봄"이 모모케어의 핵심 VP.</p>
+        <span class="g-zoom">크게 보기</span>
+      </div>
+
+      <div class="g-card">
+        <div class="g-thumb">
+          <img src="assets/one-pager.png" class="zoomable" alt="모모케어 원페이저" data-caption="모모케어 원페이저 — 사업 한 장 요약">
+        </div>
+        <div class="g-meta"><span class="cat business">사업 모델</span></div>
+        <h3>원페이저</h3>
+        <p>사업 한 장 요약. 1차 시안 — 본 결정 갱신 본은 BMC 참고.</p>
+        <span class="g-zoom">크게 보기</span>
+      </div>
+    </div>
+
+    <h2 class="gsec-title">디바이스</h2>
+    <div class="g-grid">
+      <div class="g-card">
+        <div class="g-thumb">
+          <img src="assets/device-product.png" class="zoomable" alt="모모케어 1단계 케어 디바이스 제품샷" data-caption="1단계 케어 디바이스 — 흰색 본체 · 하트 버튼 · 1인칭 카메라">
+        </div>
+        <div class="g-meta"><span class="cat device">디바이스</span></div>
+        <h3>1단계 케어 디바이스 제품샷</h3>
+        <p>모모케어 1단계 디바이스 실사진. 코디네이터에게 무료로 배포되는 흰색 본체.</p>
+        <span class="g-zoom">크게 보기</span>
+      </div>
+
+      <div class="g-card">
+        <div class="g-thumb">
+          <img src="assets/belt-spec.png" class="zoomable" alt="모모케어 착용 기록 벨트 사양" data-caption="착용 기록 벨트 — 매일 5분 1인칭 루틴 기록 솔루션 (4구간 A·B·C·D)">
+        </div>
+        <div class="g-meta"><span class="cat device">디바이스</span></div>
+        <h3>착용 기록 벨트 사양</h3>
+        <p>핸드폰 거치 + 1인칭 5분 루틴 기록. 4구간(신체·인지·정서·특이) 자세히.</p>
+        <span class="g-zoom">크게 보기</span>
+      </div>
+
+      <div class="g-card">
+        <div class="g-thumb">
+          <img src="assets/device-spec.png" class="zoomable" alt="모모케어 케어 디바이스 사양 — RFQ·원가·특허" data-caption="모모케어 케어 디바이스: 10K MOQ 단가·ODM 후보·특허 청구항 초안">
+        </div>
+        <div class="g-meta"><span class="cat device">디바이스</span></div>
+        <h3>케어 디바이스 사양 (RFQ)</h3>
+        <p>10K MOQ BOM 분석, ODM 후보, 특허 포트폴리오 한 장. 사업적 정합 자료.</p>
+        <span class="g-zoom">크게 보기</span>
+      </div>
+
+      <div class="g-card">
+        <div class="g-thumb">
+          <img src="assets/device_manual_overview.png" class="zoomable" alt="모모케어 디바이스 매뉴얼 9분할" data-caption="디바이스 매뉴얼 — 9분할 사용 안내">
+        </div>
+        <div class="g-meta"><span class="cat device">디바이스</span></div>
+        <h3>디바이스 매뉴얼 (9분할)</h3>
+        <p>코디네이터를 위한 9분할 사용 안내. 디바이스 착용·기록·업로드 절차.</p>
+        <span class="g-zoom">크게 보기</span>
+      </div>
+    </div>
+
+    <h2 class="gsec-title">운영 · 참고</h2>
+    <div class="g-grid">
+      <div class="g-card">
+        <div class="g-thumb">
+          <img src="assets/carenation_architecture.png" class="zoomable" alt="케어네이션 시스템 아키텍처" data-caption="케어네이션 참고 시스템 아키텍처 — 모모케어 앱통장·기록 구조 정합 비교">
+        </div>
+        <div class="g-meta"><span class="cat ops">운영</span></div>
+        <h3>케어네이션 참고 아키텍처</h3>
+        <p>케어네이션 앱통장·기록 구조 참고. 모모케어 앱통장 4단계 설계 정합 비교용.</p>
+        <span class="g-zoom">크게 보기</span>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo-row">
+        <img src="assets/logo-icon.png" alt="모모케어 로고">
+      </div>
+      <p class="foot-desc">코디네이터(간병인)와 보호자를 잇는 안심 케어 플랫폼. 디바이스 무료, 수수료 0%, 평생 무료로 운영합니다.</p>
+    </div>
+    <div>
+      <h5>다른 자료</h5>
+      <ul>
+        <li><a href="index.html">홈 (LP)</a></li>
+        <li><a href="devices.html">디바이스 통합</a></li>
+        <li><a href="sitemap.html">사이트맵</a></li>
+        <li><a href="hub.html">자료 모음 hub</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>매뉴얼</h5>
+      <ul>
+        <li><a href="caregiver-manual.html">코디 매뉴얼</a></li>
+        <li><a href="five-min.html">5분 송출 매뉴얼</a></li>
+        <li><a href="education.html">교육 자료</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="disclaimer">
+    <strong style="color:#bbb;">모모케어 약속</strong><br>
+    모모케어는 돌봄을 더 투명하게 보여드리는 도구입니다. 활동을 기록·표시·알림으로 전달할 뿐, 의료적 진단·치료·예방을 대신하지 않습니다. 건강 판단은 의료진과 상의해 주세요.
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 모모케어 — 함께 더 나은 돌봄 문화를</span>
+    <span>코드잇 IT창업가 3기 1팀 (MVP 단계)</span>
+  </div>
+</footer>
+
+<script src="lightbox.js" defer></script>
+</body>
+</html>

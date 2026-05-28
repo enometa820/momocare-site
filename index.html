@@ -7,6 +7,7 @@
 <meta name="description" content="간병이 끝나면 일지도 정산도 자동으로. 디바이스 무료, 수수료 0%, 평생 무료. 코디네이터와 보호자를 잇는 안심 케어 플랫폼.">
 <meta property="og:title" content="모모케어 — 간병을 안심으로">
 <meta property="og:description" content="디바이스 무료 · 수수료 0% · 평생 무료. 5분 송출로 보호자가 안심하는 돌봄 투명성.">
+<link rel="stylesheet" href="lightbox.css">
 <style>
   :root {
     --green: #1f7a5a;
@@ -441,10 +442,10 @@
     <a href="#" class="logo"><img src="assets/logo-icon.png" alt="모모케어 로고"><span>모모<b>케어</b></span></a>
     <div class="nav-menu">
       <a href="#pillars">서비스</a>
-      <a href="#how">작동 방식</a>
       <a href="#five-min">5분 송출</a>
-      <a href="#settle">정산</a>
-      <a href="#model">사업 모델</a>
+      <a href="devices.html">디바이스</a>
+      <a href="gallery.html">자료실</a>
+      <a href="sitemap.html">사이트맵</a>
     </div>
     <a href="caregiver-manual.html" class="nav-cta">코디 매뉴얼</a>
   </div>
@@ -590,8 +591,8 @@
     </div>
     <div class="device-grid">
       <div class="device-image-wrap">
-        <img src="assets/device-product.png" alt="모모케어 1단계 케어 디바이스 제품샷">
-        <div class="caption">1단계 케어 디바이스 — 흰색 · 하트 버튼 · 1인칭 카메라</div>
+        <img src="assets/device-product.png" class="zoomable" alt="모모케어 1단계 케어 디바이스 제품샷" data-caption="1단계 케어 디바이스 — 흰색 본체 · 하트 버튼 · 1인칭 카메라">
+        <div class="caption">1단계 케어 디바이스 — 흰색 · 하트 버튼 · 1인칭 카메라 (클릭하면 크게 보여요)</div>
       </div>
       <div class="device-text">
         <h3>왜 디바이스가 무료인가요?</h3>
@@ -616,7 +617,7 @@
     <div class="belt-detail">
       <h4>착용 기록 벨트 — 1단계 디바이스 활용 방식</h4>
       <p>핸드폰을 거치해 매일 같은 시각 5분 루틴을 1인칭 시점으로 자연스럽게 담아요. 4구간(신체·인지·정서·특이) 구조로 보호자가 변화를 비교하기 쉬워요.</p>
-      <img src="assets/belt-spec.png" alt="모모케어 착용 기록 벨트 사양 인포그래픽">
+      <img src="assets/belt-spec.png" class="zoomable" alt="모모케어 착용 기록 벨트 사양 인포그래픽" data-caption="착용 기록 벨트 — 매일 5분 1인칭 루틴 기록 솔루션">
     </div>
   </div>
 </section>
@@ -705,7 +706,7 @@
       <p>가치 제안부터 수익 구조까지, 모모케어가 어떻게 작동하는지 한 장으로.</p>
     </div>
     <div class="model-card">
-      <img src="assets/bmc.png" alt="모모케어 비즈니스 모델 캔버스">
+      <img src="assets/bmc.png" class="zoomable" alt="모모케어 비즈니스 모델 캔버스" data-caption="모모케어 BMC — 9블록 사업 모델">
       <div class="model-foot">2026년 5월 본 자료 · 본 검증(PSM 6/9) 결과에 따라 갱신됩니다</div>
     </div>
   </div>
@@ -755,6 +756,24 @@
         <p>하루 한 번 보호자에게 안심을 전하는 표준 절차와 콘텐츠 가이드.</p>
         <span class="go">매뉴얼 보기</span>
       </a>
+      <a href="devices.html" class="res-card">
+        <div class="res-icon">⚙️</div>
+        <h4>디바이스 통합</h4>
+        <p>1·2·3단계 케어 디바이스를 한 페이지에. 실사진·벨트 사양·RFQ 자료까지.</p>
+        <span class="go">디바이스 보기</span>
+      </a>
+      <a href="gallery.html" class="res-card">
+        <div class="res-icon">🖼️</div>
+        <h4>자료실 (인포그래픽)</h4>
+        <p>BMC·디바이스 사양·운영 자료. 카드를 클릭하면 풀스크린.</p>
+        <span class="go">자료 보기</span>
+      </a>
+      <a href="sitemap.html" class="res-card">
+        <div class="res-icon">🗺️</div>
+        <h4>사이트맵 — 한눈에 보기</h4>
+        <p>본 사이트 페이지·자산·관계를 한 화면으로. 멀리서 리뷰 가능.</p>
+        <span class="go">사이트맵 보기</span>
+      </a>
     </div>
   </div>
 </section>
@@ -798,5 +817,6 @@
   </div>
 </footer>
 
+<script src="lightbox.js" defer></script>
 </body>
 </html>
