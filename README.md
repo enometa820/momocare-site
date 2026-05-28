@@ -16,6 +16,7 @@
 | `/watch.html` | 페어 워치 v0.2 스펙 |
 | `/education.html` | 코디네이터 교육 매뉴얼 v3 |
 | `/competitors.html` | 경쟁사 비교 |
+| `/five-min.html` | 5분 영상 송출 표준 매뉴얼 (jocular 사이트 흡수, 7차 회의 결정) |
 
 ## SSOT 관계
 

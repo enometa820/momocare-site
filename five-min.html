@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 5분 영상 송출 표준 매뉴얼</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1D9E75;
+    --green-light: #E1F5EE;
+    --green-dark: #085041;
+    --purple: #7F77DD;
+    --purple-light: #EEEDFE;
+    --purple-dark: #3C3489;
+    --coral: #D85A30;
+    --coral-light: #FAECE7;
+    --coral-dark: #993C1D;
+    --gray: #5F5E5A;
+    --gray-light: #F1EFE8;
+    --gray-dark: #2C2C2A;
+    --red: #E24B4A;
+    --bg: #0e0e0e;
+    --bg2: #161616;
+    --bg3: #1e1e1e;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0ede8;
+    --text2: #a09d98;
+    --text3: #6b6866;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .page-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+  }
+
+  /* Header */
+  .header {
+    border-bottom: 0.5px solid var(--border2);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+  }
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .header-meta span {
+    font-size: 11px;
+    letter-spacing: .1em;
+    color: var(--text3);
+  }
+  .header-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text3); }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .header-badge .dot2 { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 12px;
+    letter-spacing: -.02em;
+  }
+  h1 span { color: var(--green); }
+  .header-desc {
+    font-size: 15px;
+    color: var(--text2);
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  /* Section title */
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    color: var(--text3);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: var(--border);
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
+
+  section { margin-bottom: 52px; }
+
+  /* Timeline / 5분 구조 */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .timeline-item {
+    background: var(--bg2);
+    padding: 20px 18px;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .timeline-item.a::before { background: var(--green); }
+  .timeline-item.b::before { background: var(--purple); }
+  .timeline-item.c::before { background: var(--coral); }
+  .timeline-item.d::before { background: var(--gray); }
+
+  .tl-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    margin-bottom: 4px;
+  }
+  .tl-label.a { color: var(--green); }
+  .tl-label.b { color: var(--purple); }
+  .tl-label.c { color: var(--coral); }
+  .tl-label.d { color: var(--gray); }
+
+  .tl-min {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .tl-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .tl-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .tl-items li {
+    font-size: 12px;
+    color: var(--text2);
+    padding-left: 10px;
+    position: relative;
+  }
+  .tl-items li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--text3);
+  }
+
+  /* 조합 테이블 */
+  .combo-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 0.5px solid var(--border2);
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 13px;
+  }
+  .combo-table thead th {
+    background: var(--bg3);
+    color: var(--text3);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: .06em;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 0.5px solid var(--border2);
+  }
+  .combo-table tbody tr {
+    border-bottom: 0.5px solid var(--border);
+  }
+  .combo-table tbody tr:last-child { border-bottom: none; }
+  .combo-table tbody td {
+    padding: 13px 16px;
+    color: var(--text2);
+    vertical-align: top;
+  }
+  .combo-table tbody td:first-child {
+    color: var(--text);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .color-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 7px;
+    vertical-align: 1px;
+    flex-shrink: 0;
+  }
+
+  /* 체크리스트 카드 */
+  .checklist-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cl-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .cl-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    background: var(--bg3);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .cl-badge {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .cl-badge.a { background: var(--green); color: #fff; }
+  .cl-badge.b { background: var(--purple); color: #fff; }
+  .cl-badge.c { background: var(--coral); color: #fff; }
+  .cl-badge.d { background: var(--gray); color: #fff; }
+
+  .cl-title { font-size: 15px; font-weight: 500; color: var(--text); }
+  .cl-time { font-size: 12px; color: var(--text3); margin-left: auto; }
+
+  .cl-body { padding: 16px 18px; }
+  .cl-items { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .cl-items li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text2);
+  }
+  .cl-items li input[type="checkbox"] {
+    width: 16px; height: 16px;
+    margin-top: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: var(--green);
+  }
+  .cl-items li input[type="checkbox"].purple { accent-color: var(--purple); }
+  .cl-items li input[type="checkbox"].coral { accent-color: var(--coral); }
+  .cl-items li input[type="checkbox"].gray { accent-color: var(--gray); }
+
+  .cl-note {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(127,119,221,0.08);
+    border-left: 2px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  /* Do / Don't */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .rules-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .rules-card-title {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    margin-bottom: 14px;
+  }
+  .rules-card-title.do { color: var(--green); }
+  .rules-card-title.dont { color: var(--red); }
+  .rules-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .rules-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+  .icon-check { color: var(--green); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .icon-x { color: var(--red); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Footer note */
+  .footer-note {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .footer-note-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; opacity: .5; }
+  .footer-note p { font-size: 13px; color: var(--text2); line-height: 1.8; }
+  .footer-note strong { color: var(--text); font-weight: 500; }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; color: #111; }
+    :root {
+      --bg: #fff; --bg2: #f8f8f6; --bg3: #f0ede8;
+      --border: #e0ddd8; --border2: #d0cdc8;
+      --text: #111; --text2: #555; --text3: #888;
+    }
+    .page-wrap { padding: 30px; }
+    h1 { font-size: 28px; }
+  }
+
+  @media (max-width: 640px) {
+    .page-wrap { padding: 32px 20px 60px; }
+    h1 { font-size: 26px; }
+    .timeline { grid-template-columns: 1fr 1fr; }
+    .rules-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-meta">
+      <span>MOMOCARE</span>
+      <div class="dot"></div>
+      <span>간병인 영상 송출 표준 매뉴얼</span>
+      <div class="dot"></div>
+      <span>v1.0</span>
+    </div>
+    <div class="header-badge">
+      <div class="dot2"></div>
+      의미 기반 이벤트 기록 시스템
+    </div>
+    <h1>5분 영상 송출<br><span>표준 가이드</span></h1>
+    <p class="header-desc">매일 정해진 시간에 5분을 녹화합니다. 무작위 촬영이 아니라 의미 있는 이벤트 중심으로 구성해 보호자에게 신뢰할 수 있는 돌봄 기록을 제공합니다.</p>
+  </header>
+
+  <!-- Section 1: 5분 구조 -->
+  <section>
+    <div class="section-label">01 / 루틴 구조</div>
+    <h2>5분 구조</h2>
+    <div class="timeline">
+      <div class="timeline-item a">
+        <div class="tl-label a">A 구간</div>
+        <div class="tl-min">1분</div>
+        <div class="tl-title">신체 상태</div>
+        <ul class="tl-items">
+          <li>보행·자세</li>
+          <li>식사 반응</li>
+          <li>복약 후 반응</li>
+        </ul>
+      </div>
+      <div class="timeline-item b">
+        <div class="tl-label b">B 구간</div>
+        <div class="tl-min">2분</div>
+        <div class="tl-title">인지 활동</div>
+        <ul class="tl-items">
+          <li>인지 질문</li>
+          <li>회상 대화</li>
+          <li>단어·숫자 테스트</li>
+        </ul>
+      </div>
+      <div class="timeline-item c">
+        <div class="tl-label c">C 구간</div>
+        <div class="tl-min">1분</div>
+        <div class="tl-title">대화 / 정서</div>
+        <ul class="tl-items">
+          <li>어르신 메시지</li>
+          <li>정서 표현</li>
+          <li>보호자께 한마디</li>
+        </ul>
+      </div>
+      <div class="timeline-item d">
+        <div class="tl-label d">D 구간</div>
+        <div class="tl-min">1분</div>
+        <div class="tl-title">특이사항</div>
+        <ul class="tl-items">
+          <li>낙상·통증</li>
+          <li>이상 행동</li>
+          <li>환경 상태</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: 콘텐츠 조합 -->
+  <section>
+    <div class="section-label">02 / 콘텐츠 설계</div>
+    <h2>매일 추천 조합 A1 + B1 + C1</h2>
+    <table class="combo-table">
+      <thead>
+        <tr>
+          <th>가치 목적</th>
+          <th>타겟</th>
+          <th>효과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="color-dot" style="background:var(--purple)"></span>인지 변화 추적</td>
+          <td>보호자</td>
+          <td>단어 정답률 변화 → 의료적 시그널 감지</td>
+        </tr>
+        <tr>
+          <td><span class="color-dot" style="background:var(--green)"></span>좋은 돌봄 행동 검증</td>
+          <td>보호자·시설</td>
+          <td>간병인이 친절하게 유도하는지 영상 증빙</td>
+        </tr>
+        <tr>
+          <td><span class="color-dot" style="background:var(--coral)"></span>영상 메시지</td>
+          <td>시니어 → 보호자</td>
+          <td>"감시"의 반대 — 시니어가 주도하는 콘텐츠</td>
+        </tr>
+        <tr>
+          <td><span class="color-dot" style="background:var(--gray)"></span>학대 방지</td>
+          <td>전체</td>
+          <td>매일 정해진 시간 녹화 = 학대 발생 시간대 특정 가능</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 3: 체크리스트 -->
+  <section>
+    <div class="section-label">03 / 촬영 체크리스트</div>
+    <h2>구간별 필수 확인 항목</h2>
+    <div class="checklist-grid">
+
+      <!-- A -->
+      <div class="cl-card">
+        <div class="cl-header">
+          <div class="cl-badge a">A</div>
+          <span class="cl-title">신체 상태 (1분)</span>
+          <span class="cl-time">점심 식사 직후 권장</span>
+        </div>
+        <div class="cl-body">
+          <ul class="cl-items">
+            <li><input type="checkbox"> 어르신이 스스로 보행하는 모습 5~10초 이상 촬영</li>
+            <li><input type="checkbox"> 식사 중 반응 (손 떨림, 씹는 속도, 식욕) 촬영</li>
+            <li><input type="checkbox"> 복약 후 30분 이내 반응 (표정·자세 변화) 기록</li>
+            <li><input type="checkbox"> 카메라는 정면 또는 측면 45도, 얼굴+상체 프레임 유지</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="cl-card">
+        <div class="cl-header">
+          <div class="cl-badge b">B</div>
+          <span class="cl-title">인지 활동 (2분)</span>
+          <span class="cl-time">오전 활동 시간 권장</span>
+        </div>
+        <div class="cl-body">
+          <ul class="cl-items">
+            <li><input type="checkbox" class="purple"> 표준 단어 5개 불러주고 따라 말하기 (반복 여부 기록)</li>
+            <li><input type="checkbox" class="purple"> 오늘 날짜·요일 물어보기 (대답 여부 그대로 촬영)</li>
+            <li><input type="checkbox" class="purple"> 어르신이 기억하는 옛날 이야기 30초 이상 회상 유도</li>
+            <li><input type="checkbox" class="purple"> 간병인은 유도만, 대답을 대신하지 않기</li>
+          </ul>
+          <div class="cl-note">매주 같은 5개 단어 사용 → 3개월 누적 시 인지 변화 추적 데이터 생성</div>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="cl-card">
+        <div class="cl-header">
+          <div class="cl-badge c">C</div>
+          <span class="cl-title">대화 / 정서 (1분)</span>
+          <span class="cl-time">어르신 주도</span>
+        </div>
+        <div class="cl-body">
+          <ul class="cl-items">
+            <li><input type="checkbox" class="coral"> "가족에게 하고 싶은 말 있으세요?" 질문 후 촬영</li>
+            <li><input type="checkbox" class="coral"> 오늘 기분 한 문장으로 표현하도록 유도</li>
+            <li><input type="checkbox" class="coral"> 억지로 말 시키지 않기 (무응답도 그대로 기록)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- D -->
+      <div class="cl-card">
+        <div class="cl-header">
+          <div class="cl-badge d">D</div>
+          <span class="cl-title">특이사항 (1분)</span>
+          <span class="cl-time">이상 없으면 환경 촬영</span>
+        </div>
+        <div class="cl-body">
+          <ul class="cl-items">
+            <li><input type="checkbox" class="gray"> 낙상·통증 호소·이상 행동 있을 경우 즉시 촬영 후 보고</li>
+            <li><input type="checkbox" class="gray"> 특이사항 없으면 생활 공간 환경 상태 30초 촬영</li>
+            <li><input type="checkbox" class="gray"> 음성으로 "오늘 특이사항 없습니다" 한마디 녹음</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Section 4: 공통 원칙 -->
+  <section>
+    <div class="section-label">04 / 촬영 원칙</div>
+    <h2>공통 원칙</h2>
+    <div class="rules-grid">
+      <div class="rules-card">
+        <div class="rules-card-title do">✔ 해야 할 것</div>
+        <ul class="rules-list">
+          <li><span class="icon-check">✓</span> 어르신 사전 동의 후 촬영</li>
+          <li><span class="icon-check">✓</span> 자연광 또는 실내 조명 충분한 공간</li>
+          <li><span class="icon-check">✓</span> 매일 같은 시간대 촬영 (루틴화)</li>
+          <li><span class="icon-check">✓</span> 간병인 목소리는 명확하게 녹음</li>
+          <li><span class="icon-check">✓</span> 배경 소음 최소화된 환경 선택</li>
+        </ul>
+      </div>
+      <div class="rules-card">
+        <div class="rules-card-title dont">✖ 하면 안 되는 것</div>
+        <ul class="rules-list">
+          <li><span class="icon-x">✗</span> 어르신 의사 없이 강제 발화 유도</li>
+          <li><span class="icon-x">✗</span> 인지 테스트 정답 미리 알려주기</li>
+          <li><span class="icon-x">✗</span> 배경 소음이 심한 환경에서 촬영</li>
+          <li><span class="icon-x">✗</span> 5분 초과해 촬영 (루틴 이탈)</li>
+          <li><span class="icon-x">✗</span> 사후 편집·삭제 (원본 그대로 송출)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer note -->
+  <div class="footer-note">
+    <div class="footer-note-icon">ℹ</div>
+    <p>이 매뉴얼은 단순 영상 저장이 아닌 <strong>의미 기반 이벤트 기록</strong> 체계입니다. 누적된 데이터는 <strong>AI 리포트 자동 생성</strong>, <strong>노화 progression 추적</strong>, <strong>학대 발생 시점 특정</strong>에 활용됩니다. 매일의 5분이 어르신의 건강 데이터가 됩니다.</p>
+  </div>
+
+</div>
+</body>
+</html>
