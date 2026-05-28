@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 비즈니스 모델 — 2026-05-28 7차 결정 본</title>
+<meta name="description" content="모모케어 비즈니스 모델 캔버스 9블록. 7차 회의(2026-05-28) 결정 본 — GTM 피봇·디바이스 3단계·5분 송출 본질·코디네이션 호칭·주 수익모델 통째 반영.">
+<link rel="stylesheet" href="lightbox.css">
+<style>
+  :root {
+    --green: #1f7a5a; --green-light: #e7f4ee; --green-dark: #155e44;
+    --purple: #7F77DD; --purple-light: #EEEDFE;
+    --coral: #D85A30; --coral-light: #FAECE7;
+    --orange: #E89B3A; --orange-light: #FBF1DE;
+    --bg: #f6f4ef; --paper: #ffffff; --ink: #1c1c1e; --ink-soft: #4a4a4a; --ink-mute: #888;
+    --line: #e6e3dc;
+    --shadow: 0 4px 14px rgba(0,0,0,0.04);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.65; word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  .nav { position: sticky; top: 0; z-index: 50; background: rgba(246,244,239,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .nav-inner { display: flex; justify-content: space-between; align-items: center; height: 80px; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--ink); }
+  .logo img { height: 52px; width: auto; }
+  .logo b { color: var(--green); }
+  .nav-menu { display: flex; gap: 28px; font-size: 14px; font-weight: 600; }
+  .nav-menu a { color: var(--ink-soft); transition: color 0.2s; }
+  .nav-menu a:hover, .nav-menu a.active { color: var(--green); }
+  .nav-cta { background: var(--green); color: #fff; padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+
+  /* Hero */
+  .hero { padding: 72px 0 48px; text-align: center; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--green-light); color: var(--green-dark);
+    padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .hero h1 { font-size: 40px; font-weight: 800; letter-spacing: -1px; margin-bottom: 14px; line-height: 1.25; }
+  .hero h1 b { color: var(--green); }
+  .hero p { font-size: 17px; color: var(--ink-soft); max-width: 720px; margin: 0 auto 28px; }
+  .hero-links { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .hero-links a {
+    padding: 9px 18px; border-radius: 999px; font-size: 13px; font-weight: 700;
+    background: var(--paper); border: 1px solid var(--line); color: var(--ink-soft);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .hero-links a:hover { border-color: var(--green); color: var(--green); }
+  .hero-links a.primary { background: var(--green); color: #fff; border-color: var(--green); }
+  .hero-links a.primary:hover { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
+
+  /* BMC Grid (5x2 데스크탑 / 1컬럼 모바일) */
+  .bmc { padding: 32px 0 80px; }
+  .bmc-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 16px;
+    max-width: 1280px; margin: 0 auto;
+  }
+  .block {
+    background: var(--paper);
+    border-radius: 16px;
+    padding: 22px 20px;
+    border-top: 4px solid var(--green);
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column;
+    min-height: 320px;
+  }
+  .block.vp { border-top-color: var(--green); background: var(--green-light); }
+  .block.cs { border-top-color: var(--purple); }
+  .block.ch { border-top-color: var(--coral); }
+  .block.cr { border-top-color: var(--orange); }
+  .block.rs { border-top-color: var(--green-dark); }
+  .block.kr { border-top-color: var(--purple); }
+  .block.ka { border-top-color: var(--coral); }
+  .block.kp { border-top-color: var(--orange); }
+  .block.costs { border-top-color: var(--green-dark); }
+
+  .block-tag {
+    display: inline-block;
+    background: var(--bg);
+    padding: 3px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 1px; color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .block.vp .block-tag { background: var(--paper); color: var(--green-dark); }
+  .block h3 { font-size: 17px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 12px; }
+  .block ul { list-style: none; padding: 0; margin: 0; }
+  .block li {
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 5px 0 5px 14px;
+    position: relative;
+    line-height: 1.55;
+  }
+  .block li::before {
+    content: ""; position: absolute; left: 4px; top: 12px;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--green);
+  }
+  .block.cs li::before, .block.kr li::before { background: var(--purple); }
+  .block.ch li::before, .block.ka li::before { background: var(--coral); }
+  .block.cr li::before, .block.kp li::before { background: var(--orange); }
+  .block.rs li::before, .block.costs li::before { background: var(--green-dark); }
+  .block li strong { color: var(--ink); font-weight: 700; }
+  .block .quote {
+    margin-top: auto;
+    padding-top: 12px;
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-style: italic;
+    border-top: 1px solid var(--line);
+  }
+
+  /* Summary row */
+  .summary {
+    background: var(--paper);
+    border-radius: 24px;
+    padding: 40px;
+    margin: 56px 0;
+    box-shadow: var(--shadow);
+  }
+  .summary h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.6px; margin-bottom: 16px; text-align: center; }
+  .summary > p { text-align: center; font-size: 17px; color: var(--ink-soft); max-width: 800px; margin: 0 auto 28px; }
+  .summary > p b { color: var(--green); font-weight: 700; }
+  .formula {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  }
+  .formula .pill {
+    background: var(--green-light); color: var(--green-dark);
+    padding: 12px 20px; border-radius: 12px;
+    font-size: 14px; font-weight: 700;
+  }
+
+  /* Change log */
+  .change-log { background: var(--paper); border-radius: 16px; padding: 32px; margin-top: 40px; box-shadow: var(--shadow); }
+  .change-log h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 18px; }
+  .change-log table { width: 100%; border-collapse: collapse; }
+  .change-log th, .change-log td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); font-size: 13px; vertical-align: top; }
+  .change-log th { background: var(--bg); font-weight: 700; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--ink-soft); }
+  .change-log code { background: var(--bg); padding: 1px 6px; border-radius: 4px; font-size: 12px; }
+
+  /* Footer */
+  footer { background: var(--ink); color: #aaa; padding: 56px 0 32px; font-size: 13px; margin-top: 40px; }
+  footer .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 32px; margin-bottom: 32px; max-width: 1120px; margin-left: auto; margin-right: auto; padding: 0 24px; }
+  footer h5 { color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+  footer .foot-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  footer .foot-logo-row img { height: 48px; width: auto; }
+  footer .foot-desc { color: #888; line-height: 1.7; font-size: 13px; max-width: 380px; }
+  footer ul { list-style: none; }
+  footer li { padding: 4px 0; }
+  footer a { color: #aaa; }
+  footer a:hover { color: #fff; }
+  footer .foot-bottom { border-top: 1px solid #333; padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: #777; font-size: 12px; max-width: 1120px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+
+  @media (max-width: 1024px) {
+    .bmc-grid { grid-template-columns: repeat(2, 1fr); }
+    .block { min-height: 280px; }
+  }
+  @media (max-width: 600px) {
+    .wrap { padding: 0 20px; }
+    .nav-inner { height: 64px; padding: 0 20px; }
+    .nav-menu { display: none; }
+    .logo img { height: 40px; }
+    .logo { font-size: 18px; }
+    .hero { padding: 48px 0 32px; }
+    .hero h1 { font-size: 26px; }
+    .hero p { font-size: 15px; }
+    .bmc-grid { grid-template-columns: 1fr; gap: 12px; }
+    .block { min-height: auto; padding: 18px; }
+    .summary { padding: 24px 20px; }
+    .summary h2 { font-size: 22px; }
+    .summary > p { font-size: 15px; }
+    .formula { gap: 8px; }
+    .formula .pill { font-size: 12px; padding: 9px 14px; }
+    .change-log { padding: 20px; }
+    .change-log table { font-size: 12px; }
+    footer .foot-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><img src="assets/logo-icon.png" alt="모모케어 로고"><span>모모<b>케어</b></span></a>
+    <div class="nav-menu">
+      <a href="index.html">홈</a>
+      <a href="devices.html">디바이스</a>
+      <a href="gallery.html">자료실</a>
+      <a href="sitemap.html">사이트맵</a>
+    </div>
+    <a href="caregiver-manual.html" class="nav-cta">코디 매뉴얼</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="hero-badge">📋 2026-05-28 · 7차 결정 본</span>
+    <h1>모모케어 <b>비즈니스 모델 캔버스</b></h1>
+    <p>GTM 피봇·디바이스 3단계·5분 송출 본질·코디네이션 호칭·주 수익모델까지 7차 회의 결정 통째 반영한 BMC 9블록 응결.</p>
+    <div class="hero-links">
+      <a href="#bmc" class="primary">9블록 보기</a>
+      <a href="#summary">사업 모델 한 줄</a>
+      <a href="gallery.html">v1 (3차) 비교</a>
+    </div>
+  </div>
+</header>
+
+<main class="bmc" id="bmc">
+  <div class="wrap">
+    <div class="bmc-grid">
+
+      <!-- 1행: KP·KA·VP·CR·CS (고객·관계 갈래) -->
+      <div class="block kp">
+        <div class="block-tag">KP · KEY PARTNERS</div>
+        <h3>핵심 파트너</h3>
+        <ul>
+          <li><strong>펌뱅킹 사업자</strong> · 앱통장 정산 (선정 미정)</li>
+          <li><strong>전자계약 modusign</strong> · 코디 약관·동의</li>
+          <li>단체 배상책임보험 · 낙상·사고</li>
+          <li>병원·요양시설 · 정기 검사·B2B2C</li>
+          <li>케어닥·케어네이션 · 인력 소싱 협력 (수정)</li>
+          <li>ODM · 디바이스 제조</li>
+          <li>통신사 · 메타 안경 한국 출시 트리거</li>
+        </ul>
+        <div class="quote">7차 11.8 — 배상책임보험 = 단체 가입 필수</div>
+      </div>
+
+      <div class="block ka">
+        <div class="block-tag">KA · KEY ACTIVITIES</div>
+        <h3>핵심 활동</h3>
+        <ul>
+          <li><strong>디바이스 무료 배포</strong> · 코디 모객 핵심</li>
+          <li>5분 송출 표준화 · 4구간 라벨링 케어 상황</li>
+          <li>상태일기 자동 리포트 · 음성·모션 → 표준 양식</li>
+          <li>앱통장 자동 정산 · 종료 +24h</li>
+          <li>AI 행동추론 학습 · 모션 데이터 누적</li>
+          <li>디바이스 단계 업그레이드 · 1→2→3단계</li>
+        </ul>
+        <div class="quote">7차 16:20 — 메뉴얼·5분송출·디바이스 3단계 표준화 3축</div>
+      </div>
+
+      <div class="block vp">
+        <div class="block-tag">VP · VALUE PROPOSITIONS ★ CORE</div>
+        <h3>가치 제안 — 보이는 돌봄</h3>
+        <ul>
+          <li><strong>보호자</strong>: 매일 5분 라벨링 케어 영상으로 부모님 일상 확인</li>
+          <li><strong>코디</strong>: 디바이스·일지 자동화 + 수수료 0% + 평생 무료</li>
+          <li><strong>시니어</strong>: 정서적 안심 + 정기 케어</li>
+          <li><strong>차별점</strong>: 영상이 아니라 <strong>라벨링된 케어 상황</strong> (신체·인지·정서·특이)</li>
+          <li><strong>장기</strong>: 슈퍼 디바이스(3단계) 학습 자료 누적</li>
+        </ul>
+        <div class="quote">7차 17:16 — 주 수익모델 = 5분영상 + 상태일기 리포트</div>
+      </div>
+
+      <div class="block cr">
+        <div class="block-tag">CR · CUSTOMER RELATIONSHIPS</div>
+        <h3>고객 관계</h3>
+        <ul>
+          <li><strong>보호자</strong>: 구독형 B2C (월 15,000원)</li>
+          <li><strong>코디 추천인 무료</strong> · 1만명 모객까지 평생 0%</li>
+          <li>기관 B2B2C SaaS 제휴</li>
+          <li>보호자·코디 양쪽 커뮤니티</li>
+          <li>본인인증·전자계약 표준화</li>
+        </ul>
+        <div class="quote">7차 17:40대 — 1만명 모객까지 플랫폼·매칭 수수료 0원</div>
+      </div>
+
+      <div class="block cs">
+        <div class="block-tag">CS · CUSTOMER SEGMENTS</div>
+        <h3>고객 세그먼트</h3>
+        <ul>
+          <li><strong>1차 보호자</strong> · 30~60대 자녀, 결제자</li>
+          <li><strong>2차 시니어</strong> · 65세+ 독거·만성질환</li>
+          <li><strong>3차 코디네이터</strong> · 공급측 (7차 신규)</li>
+          <li>4차 요양시설 · B2B2C SaaS</li>
+          <li>5차 병원·보험사 · 부가 제휴</li>
+        </ul>
+        <div class="quote">7차 14:55 — 간병인 호칭 X → 모모케어 코디네이션 O</div>
+      </div>
+
+      <!-- 2행: KR·(KA 확장)·VP·CH·(CS 확장) -->
+      <div class="block kr">
+        <div class="block-tag">KR · KEY RESOURCES</div>
+        <h3>핵심 자원</h3>
+        <ul>
+          <li><strong>1단계 케어 디바이스 (벨트)</strong> · 무료 배포·GTM 핵심</li>
+          <li><strong>디바이스 모션 데이터</strong> · 슈퍼 디바이스 학습</li>
+          <li>앱통장 정산 시스템</li>
+          <li>5분 송출 표준 매뉴얼</li>
+          <li>오보영 간병인 풀 · 초기 공급</li>
+          <li>데이터 인프라 · LIVE·녹화·STT·AI</li>
+        </ul>
+        <div class="quote">7차 16:33 — 디바이스 공급 = 슈퍼 디바이스 학습 자료 모음</div>
+      </div>
+
+      <div class="block ka">
+        <div class="block-tag">자동화</div>
+        <h3>5분 송출 4구간 (KA 확장)</h3>
+        <ul>
+          <li><strong>A 신체 상태</strong> · 보행·식사·복약 반응 (1분)</li>
+          <li><strong>B 인지 활동</strong> · 인지 질문·회상 대화 (1분)</li>
+          <li><strong>C 대화·정서</strong> · 어르신·보호자 메시지 (1분)</li>
+          <li><strong>D 특이사항</strong> · 낙상·이상·환경 (1분)</li>
+          <li>추천 조합 A1+B1+C1+D1 = 5분</li>
+        </ul>
+        <div class="quote">7차 17:02 — 라벨링된 케어 상황 = 슈퍼 디바이스 학습 단위</div>
+      </div>
+
+      <div class="block ch">
+        <div class="block-tag">CH · CHANNELS</div>
+        <h3>채널</h3>
+        <ul>
+          <li><strong>보호자</strong>: 모바일 웹앱·SNS·맘카페·당근</li>
+          <li><strong>코디</strong>: 디스코드·코디 추천인·간병 커뮤니티</li>
+          <li><strong>시설</strong>: 콜센터·B2B 영업</li>
+          <li><strong>제휴</strong>: 케어닥·케어네이션 (인력 소싱 협력)</li>
+          <li><strong>오픈 이벤트</strong>: 1년 기간제·만명 모객 무료</li>
+        </ul>
+        <div class="quote">7차 15:46 — 코디 추천인 이름 적으면 평생 면제</div>
+      </div>
+
+      <div class="block cs">
+        <div class="block-tag">트리거</div>
+        <h3>기회 신호 (CS 확장)</h3>
+        <ul>
+          <li><strong>노인 학대 88.2%</strong> · 가정 발생 (보건복지부 2024)</li>
+          <li><strong>정서적 학대 47.3%</strong> · 가정 내</li>
+          <li><strong>메타 안경 한국 출시</strong> · 2026-05-25 보이는 돌봄 토양</li>
+          <li>노인 스마트폰 76.6% · 디지털 토양</li>
+          <li>장기요양 인정자 116.5만 명 (+6.1%)</li>
+        </ul>
+        <div class="quote">OVERVIEW — 보호자의 시야 밖에서 가장 많은 학대</div>
+      </div>
+
+      <!-- 3행 placeholder (Costs·RS는 별도 박스로 추가) -->
+    </div>
+
+    <!-- Costs·RS는 풀폭 -->
+    <div class="bmc-grid" style="grid-template-columns: 3fr 2fr; margin-top: 20px;">
+      <div class="block costs">
+        <div class="block-tag">COSTS · COST STRUCTURE</div>
+        <h3>비용 구조</h3>
+        <ul>
+          <li><strong>디바이스 무료 배포 CAPEX</strong> · 1단계 6,900~8,500원 × 1만대 = 6.9~8.5천만원</li>
+          <li>인프라 · LIVE·STT·앱통장 (Lean ~95만원/월)</li>
+          <li>AI 운영비 · 음성·모션 분석</li>
+          <li>디바이스 R&D · 1→2→3단계 업그레이드</li>
+          <li>마케팅 · 보호자·코디 양쪽</li>
+          <li>운영 인력 · CS·검증·정산 검수</li>
+          <li>옛 플랫폼 수수료 → 0% (수익 → 구독으로 이동)</li>
+        </ul>
+        <div class="quote">6차 18:22 — 발표용 7,250만 vs 실집행 Lean 1,320만 두 시나리오</div>
+      </div>
+
+      <div class="block rs">
+        <div class="block-tag">RS · REVENUE STREAMS</div>
+        <h3>수익원</h3>
+        <ul>
+          <li><strong>보호자 구독 월 15,000원 단일</strong> · 본 수익원</li>
+          <li>매칭 수수료 <strong>0%</strong> · 1만명까지</li>
+          <li>기관 SaaS · 시설·병원·보험 B2B2C</li>
+          <li>부가 · 보험 연계·정기 검사·약관·동의</li>
+          <li>장기 · 슈퍼 디바이스 데이터 라이선스</li>
+        </ul>
+        <div class="quote">7차 19:12 — 구독료 1만 5천원 + 수수료 0%·플랫폼 0% 피봇</div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <section class="summary" id="summary">
+      <h2>사업 모델 한 줄 요약</h2>
+      <p>보호자 불안을 <b>매일 5분 라벨링 케어 영상</b>으로 해소하면서, 디바이스 무료 배포로 누적한 모션 데이터를 <b>슈퍼 디바이스 학습 자료</b>로 키우는 <b>구독형 데이터 OS 플랫폼</b>.</p>
+      <div class="formula">
+        <span class="pill">월 15,000원 구독</span>
+        <span class="pill">디바이스 무료</span>
+        <span class="pill">수수료 0%</span>
+        <span class="pill">1만명 모객</span>
+        <span class="pill">슈퍼 디바이스 데이터</span>
+      </div>
+    </section>
+
+    <!-- Change log -->
+    <section class="change-log">
+      <h2>📝 변경 로그 (3차 → 7차)</h2>
+      <table>
+        <thead>
+          <tr><th>블록</th><th>3차 (2026-05-21)</th><th>7차 (2026-05-28)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>VP</strong></td><td>보이는 돌봄 + 정서 안심</td><td>+ 5분 라벨링 케어 + 슈퍼 디바이스 학습 자료</td></tr>
+          <tr><td><strong>CS</strong></td><td>보호자·시니어·요양시설</td><td>+ <strong>코디네이터</strong> (공급측 신규)</td></tr>
+          <tr><td><strong>CH</strong></td><td>모바일 앱·SNS</td><td>+ 디스코드·맘카페·당근·코디 추천인</td></tr>
+          <tr><td><strong>CR</strong></td><td>구독·기관 제휴·커뮤니티</td><td>+ <strong>코디 추천 무료 1만명</strong></td></tr>
+          <tr><td><strong>RS</strong></td><td>월 5~15만원·매칭 10~20%</td><td><strong>월 15,000원 단일</strong> + 매칭 <strong>0%</strong></td></tr>
+          <tr><td><strong>KR</strong></td><td>간병인 풀·LIVE 인프라</td><td>+ <strong>1단계 케어 디바이스(벨트)</strong>·앱통장·모션 데이터</td></tr>
+          <tr><td><strong>KA</strong></td><td>매칭·LIVE·AI 리포트·안부 전화</td><td>+ <strong>디바이스 무료 배포</strong>·5분 송출 표준·디바이스 단계 업그레이드</td></tr>
+          <tr><td><strong>KP</strong></td><td>케어닥·통신사·보험사·병원·시설</td><td>+ <strong>펌뱅킹·전자계약 modusign</strong>·옛 매칭은 협력</td></tr>
+          <tr><td><strong>Costs</strong></td><td>케어 제공자 수수료·LIVE·AI 운영·마케팅</td><td>+ <strong>디바이스 무료 배포 CAPEX</strong>·옛 수수료 0%</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top: 18px; font-size: 13px; color: var(--ink-mute);">📌 본 검증 — <strong>PSM 2026-06-09</strong> 가격 모델 결판 (15,000원 vs 99,000원). 결과 후 본 BMC 재갱신 가능.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo-row">
+        <img src="assets/logo-icon.png" alt="모모케어 로고">
+      </div>
+      <p class="foot-desc">코디네이터(간병인)와 보호자를 잇는 안심 케어 플랫폼. 디바이스 무료, 수수료 0%, 평생 무료로 운영합니다.</p>
+    </div>
+    <div>
+      <h5>BMC 자료</h5>
+      <ul>
+        <li><a href="gallery.html">자료실 (인포그래픽)</a></li>
+        <li><a href="gallery.html">v1 3차 BMC (archive)</a></li>
+        <li><a href="sitemap.html">사이트맵</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>주요 페이지</h5>
+      <ul>
+        <li><a href="index.html">홈 (LP)</a></li>
+        <li><a href="devices.html">디바이스 통합</a></li>
+        <li><a href="caregiver-manual.html">코디 매뉴얼</a></li>
+        <li><a href="five-min.html">5분 송출 매뉴얼</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 모모케어 — 함께 더 나은 돌봄 문화를</span>
+    <span>코드잇 IT창업가 3기 1팀 (MVP 단계)</span>
+  </div>
+</footer>
+
+</body>
+</html>
