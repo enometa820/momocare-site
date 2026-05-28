@@ -237,8 +237,9 @@
   .res-card:hover .go::after { transform: translateX(4px); }
 
   /* Nav logo image */
-  .logo { display: inline-flex; align-items: center; gap: 10px; }
-  .logo img { height: 64px; width: auto; display: block; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--ink); }
+  .logo img { height: 52px; width: auto; display: block; }
+  .logo b { color: var(--green); font-weight: 800; }
 
   /* Device section */
   .device { background: var(--paper); }
@@ -294,8 +295,9 @@
 
   /* Footer brand row with logo */
   footer .foot-logo-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-  footer .foot-logo-row img { height: 44px; width: auto; }
-  footer .foot-logo-row span { color: #fff; font-size: 20px; font-weight: 800; }
+  footer .foot-logo-row img { height: 48px; width: auto; }
+  footer .foot-logo-row span { color: #fff; font-size: 22px; font-weight: 800; letter-spacing: -0.5px; }
+  footer .foot-logo-row b { color: #6ec39e; font-weight: 800; }
 
   /* CTA Section */
   .cta-section {
@@ -355,7 +357,7 @@
 
 <nav class="nav">
   <div class="wrap nav-inner">
-    <a href="#" class="logo"><img src="assets/logo.png" alt="모모케어"></a>
+    <a href="#" class="logo"><img src="assets/logo-icon.png" alt="모모케어 로고"><span>모모<b>케어</b></span></a>
     <div class="nav-menu">
       <a href="#pillars">서비스</a>
       <a href="#how">작동 방식</a>
@@ -620,7 +622,8 @@
     <div class="foot-grid">
       <div>
         <div class="foot-logo-row">
-          <img src="assets/logo.png" alt="모모케어">
+          <img src="assets/logo-icon.png" alt="모모케어 로고">
+          <span>모모<b>케어</b></span>
         </div>
         <p class="foot-desc">코디네이터(간병인)와 보호자를 잇는 안심 케어 플랫폼. 디바이스 무료, 수수료 0%, 평생 무료로 운영합니다.</p>
       </div>
