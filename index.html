@@ -276,6 +276,39 @@
     letter-spacing: 0.5px;
   }
 
+  /* Five-min broadcast section */
+  .five-min { background: var(--paper); }
+  .fm-intro { text-align: center; max-width: 720px; margin: 0 auto 40px; }
+  .fm-intro p { font-size: 16px; color: var(--ink-soft); line-height: 1.75; }
+  .fm-intro b { color: var(--green); font-weight: 700; }
+  .fm-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1040px; margin: 0 auto; }
+  .fm-card {
+    background: var(--bg); border-radius: 18px; padding: 24px 20px;
+    border-top: 4px solid var(--green);
+  }
+  .fm-card.b { border-top-color: #7F77DD; }
+  .fm-card.c { border-top-color: #D85A30; }
+  .fm-card.d { border-top-color: #5F5E5A; }
+  .fm-tag {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 28px; height: 24px; padding: 0 8px;
+    background: var(--green); color: #fff;
+    font-size: 12px; font-weight: 800; border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+  .fm-card.b .fm-tag { background: #7F77DD; }
+  .fm-card.c .fm-tag { background: #D85A30; }
+  .fm-card.d .fm-tag { background: #5F5E5A; }
+  .fm-min { font-size: 12px; color: var(--ink-mute); margin-left: 6px; font-weight: 600; }
+  .fm-card h4 { font-size: 16px; font-weight: 700; margin: 12px 0 10px; letter-spacing: -0.3px; }
+  .fm-card ul { list-style: none; padding: 0; margin: 0; }
+  .fm-card li { font-size: 13px; color: var(--ink-soft); padding: 4px 0; padding-left: 14px; position: relative; }
+  .fm-card li::before { content: "·"; position: absolute; left: 4px; color: var(--green); font-weight: 800; }
+  .fm-card.b li::before { color: #7F77DD; }
+  .fm-card.c li::before { color: #D85A30; }
+  .fm-card.d li::before { color: #5F5E5A; }
+  .fm-foot { text-align: center; margin-top: 32px; font-size: 14px; color: var(--ink-mute); }
+
   /* Model (BMC) section */
   .model { background: var(--green-light); }
   .model-card {
@@ -363,6 +396,9 @@
     .device-text h3 { font-size: 22px; }
     .device-image-wrap { padding: 20px; }
     .model-card { padding: 20px; }
+    .fm-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .fm-card { padding: 18px 16px; }
+    .fm-intro p { font-size: 15px; }
     .cta-row { flex-direction: column; align-items: stretch; gap: 10px; }
     .cta-row .btn { width: 100%; justify-content: center; }
     .pillar { padding: 24px 22px; }
@@ -382,11 +418,11 @@
     <div class="nav-menu">
       <a href="#pillars">서비스</a>
       <a href="#how">작동 방식</a>
+      <a href="#five-min">5분 송출</a>
       <a href="#settle">정산</a>
       <a href="#model">사업 모델</a>
-      <a href="#resources">자료실</a>
     </div>
-    <a href="caregiver-manual.html" class="nav-cta">간병인 매뉴얼</a>
+    <a href="caregiver-manual.html" class="nav-cta">코디 매뉴얼</a>
   </div>
 </nav>
 
@@ -403,7 +439,7 @@
           <span>종료 +24시간 자동 정산</span>
         </div>
         <div class="cta-row">
-          <a href="caregiver-manual.html" class="btn btn-primary">간병인 매뉴얼 보기</a>
+          <a href="caregiver-manual.html" class="btn btn-primary">코디 매뉴얼 보기</a>
           <a href="hub.html" class="btn btn-ghost">자료 전체 보기</a>
         </div>
       </div>
@@ -451,12 +487,12 @@
 
       <div class="pillar">
         <div class="pillar-num">01 / 디바이스</div>
-        <h3>페어 워치</h3>
-        <p>코디네이터와 어르신이 함께 차는 페어 워치. 활동 기록과 안심 알림을 한 손목에서.</p>
+        <h3>1단계 케어 디바이스</h3>
+        <p>코디네이터에게 무료 배포되는 1단계 기록 벨트. 핸드폰을 거치해 매일 5분 1인칭 루틴을 자연스럽게 담아요. 페어 워치는 2단계, 슈퍼 디바이스는 3단계 계획.</p>
         <ul>
           <li>터치 + 음성인식 + 6축 모션</li>
-          <li>집 안 BLE 직결, 외부 통신 없음</li>
-          <li>SOS · 충격 알림 · 복약 알림</li>
+          <li>매일 5분 루틴 자동 기록</li>
+          <li>모션 데이터 = 슈퍼 디바이스 학습 자료</li>
           <li>본 제품은 의료기기가 아닙니다</li>
         </ul>
       </div>
@@ -530,8 +566,8 @@
     </div>
     <div class="device-grid">
       <div class="device-image-wrap">
-        <img src="assets/device_photo.png" alt="모모케어 디바이스 실물">
-        <div class="caption">1단계 — 터치 · 음성인식 · 6축 모션</div>
+        <img src="assets/belt-spec.png" alt="모모케어 1단계 착용 기록 벨트 사양">
+        <div class="caption">1단계 — 핸드폰 거치 벨트로 매일 5분 1인칭 루틴 기록</div>
       </div>
       <div class="device-text">
         <h3>왜 디바이스가 무료인가요?</h3>
@@ -551,6 +587,61 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="five-min" class="five-min">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">주 수익모델</div>
+      <h2>5분 영상은 라벨링된 케어 상황이에요</h2>
+      <p>긴 영상 저장이 아니에요. 매일 같은 시각, 같은 4구간으로 어르신의 변화를 보호자가 한눈에 확인하는 표준 루틴.</p>
+    </div>
+    <div class="fm-intro">
+      <p>모모케어 5분 영상은 <b>신체기능성</b>·<b>실제신체상태</b>·<b>인지기능</b>을 매일 확인할 수 있도록 4구간으로 구조화돼 있어요. 단순 영상이 아니라 라벨링된 데이터라서 보호자는 변화를 비교하고, 모모케어는 슈퍼 디바이스 학습 자료를 쌓아요.</p>
+    </div>
+    <div class="fm-grid">
+      <div class="fm-card">
+        <div><span class="fm-tag">A</span><span class="fm-min">1분</span></div>
+        <h4>신체 상태</h4>
+        <ul>
+          <li>보행 · 자세</li>
+          <li>식사 반응</li>
+          <li>복약 후 반응</li>
+        </ul>
+      </div>
+      <div class="fm-card b">
+        <div><span class="fm-tag">B</span><span class="fm-min">1분</span></div>
+        <h4>인지 활동</h4>
+        <ul>
+          <li>인지 질문</li>
+          <li>회상 대화</li>
+          <li>단어 · 숫자 테스트</li>
+        </ul>
+      </div>
+      <div class="fm-card c">
+        <div><span class="fm-tag">C</span><span class="fm-min">1분</span></div>
+        <h4>대화 · 정서</h4>
+        <ul>
+          <li>어르신 메시지</li>
+          <li>정서 표현</li>
+          <li>보호자께 한마디</li>
+        </ul>
+      </div>
+      <div class="fm-card d">
+        <div><span class="fm-tag">D</span><span class="fm-min">1분</span></div>
+        <h4>특이사항</h4>
+        <ul>
+          <li>낙상 · 통증</li>
+          <li>이상 행동</li>
+          <li>환경 상태</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fm-foot">
+      추천 조합 A1 + B1 + C1 + D1 = 총 5분 · 보호자 요청에 따라 콘텐츠 변경 가능
+      · <a href="five-min.html" style="color:var(--green); font-weight:700;">표준 매뉴얼 보기 →</a>
     </div>
   </div>
 </section>
@@ -600,7 +691,7 @@
     <div class="res-grid">
       <a href="caregiver-manual.html" class="res-card">
         <div class="res-icon">📖</div>
-        <h4>간병인 사용 안내</h4>
+        <h4>코디네이터 사용 안내</h4>
         <p>디바이스부터 앱통장 정산까지 한 페이지 매뉴얼.</p>
         <span class="go">매뉴얼 열기</span>
       </a>
@@ -651,7 +742,7 @@
       <div>
         <h5>자료실</h5>
         <ul>
-          <li><a href="caregiver-manual.html">간병인 매뉴얼</a></li>
+          <li><a href="caregiver-manual.html">코디 매뉴얼</a></li>
           <li><a href="app-screens.html">앱 화면 가이드</a></li>
           <li><a href="watch.html">페어 워치 스펙</a></li>
           <li><a href="education.html">교육 자료</a></li>
