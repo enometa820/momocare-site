@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 앱 화면 — 인터랙티브 가이드</title>
+<style>
+  :root { --green:#1f7a5a; --green-light:#e7f4ee; --green-soft:#cfe9dc; --bg:#f6f4ef; --ink:#1c1c1e; --ink-soft:#555; --line:#e6e3dc; }
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html, body { width:100vw; height:100vh; overflow:hidden; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; }
+  body { display:flex; align-items:center; justify-content:center; }
+  .canvas { width:1600px; height:900px; padding:20px 36px 24px; display:flex; flex-direction:column; transform-origin:center center; background:var(--bg); flex-shrink:0; }
+  header { flex-shrink:0; display:flex; justify-content:space-between; align-items:baseline; padding-bottom:10px; border-bottom:1px solid var(--line); margin-bottom:14px; }
+  header h1 { font-size:22px; font-weight:800; letter-spacing:-0.4px; }
+  header h1 .badge { background:var(--green); color:#fff; font-size:12px; padding:3px 10px; border-radius:999px; margin-right:8px; vertical-align:2px; }
+  header p { color:var(--ink-soft); font-size:13px; }
+  header a { color:var(--green); text-decoration:none; font-weight:700; }
+  main { flex:1; display:flex; align-items:center; justify-content:center; gap:60px; min-height:0; }
+  .phone { width:410px; height:770px; background:#fff; border-radius:46px; position:relative; overflow:hidden; box-shadow:0 18px 44px rgba(0,0,0,0.18), 0 0 0 9px #1c1c1e, 0 0 0 11px #2c2c2e; flex-shrink:0; }
+  .notch { position:absolute; top:13px; left:50%; transform:translateX(-50%); width:130px; height:30px; background:#1c1c1e; border-radius:15px; z-index:10; }
+  .status-bar { position:absolute; top:0; left:0; right:0; height:52px; display:flex; justify-content:space-between; align-items:flex-end; padding:0 30px 8px; font-size:13px; font-weight:600; color:#1c1c1e; z-index:9; }
+  .screen-stage { position:absolute; top:52px; left:0; right:0; bottom:0; overflow:hidden; }
+  .pscreen { position:absolute; inset:0; padding:8px 20px 78px; overflow-y:auto; background:#fff; transition:opacity 0.25s, transform 0.25s; opacity:0; transform:translateX(15px); pointer-events:none; }
+  .pscreen.active { opacity:1; transform:translateX(0); pointer-events:auto; }
+  .pscreen::-webkit-scrollbar { display:none; }
+  .ptop-bar { display:flex; align-items:center; justify-content:space-between; padding:10px 0 12px; }
+  .pback { width:30px; height:30px; border-radius:50%; background:#f3f3f3; display:flex; align-items:center; justify-content:center; cursor:pointer; border:none; font-size:15px; }
+  .pscreen-title { font-size:16px; font-weight:700; }
+  .pvoice-top { display:flex; align-items:center; gap:5px; background:#e6eef9; border:1px solid #c5d6f5; color:#2a6df0; padding:5px 11px; border-radius:999px; font-size:11px; font-weight:600; cursor:pointer; }
+  .puser-card { background:#fafaf7; border:1px solid var(--line); border-radius:12px; padding:11px 13px; display:flex; align-items:center; gap:11px; margin-bottom:11px; }
+  .pavatar { width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,#f0d4b0,#d49b6e); display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .puser-info { flex:1; }
+  .puser-name { font-weight:700; font-size:14px; }
+  .puser-meta { font-size:11px; color:#6b6b6f; }
+  .ppreview-btn { font-size:10px; background:#fff; border:1px solid var(--line); padding:5px 9px; border-radius:7px; cursor:pointer; }
+  .phint { background:#eef3ff; border-radius:9px; padding:9px 11px; font-size:11px; color:#2a6df0; display:flex; gap:6px; align-items:center; margin-bottom:12px; }
+  .psec-label { font-size:13px; font-weight:700; margin:14px 0 7px; display:flex; justify-content:space-between; align-items:center; }
+  .psec-label small { font-weight:500; color:#888; font-size:10px; }
+  .pquick-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
+  .pqcard { aspect-ratio:1/1.05; border-radius:13px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer; border:1px solid transparent; position:relative; transition:transform 0.1s, border-color 0.1s; }
+  .pqcard:active { transform:scale(0.96); }
+  .pqcard.selected { border-color:var(--green); }
+  .pqcard.selected::after { content:"✓"; position:absolute; background:var(--green); color:#fff; width:16px; height:16px; border-radius:50%; font-size:10px; display:flex; align-items:center; justify-content:center; transform:translate(30px,-30px); }
+  .pqicon { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; }
+  .pqlabel { font-size:10px; font-weight:700; }
+  .pqsub { font-size:8px; color:#888; }
+  .pbottom-nav { position:absolute; bottom:0; left:0; right:0; height:66px; background:#fff; border-top:1px solid #f0f0f0; display:grid; grid-template-columns:repeat(7,1fr); align-items:center; padding-bottom:6px; z-index:5; }
+  .pnav-item { display:flex; flex-direction:column; align-items:center; gap:2px; font-size:8px; color:#888; cursor:pointer; padding:5px 0; }
+  .pnav-item.active { color:var(--green); }
+  .pnav-icon { font-size:16px; }
+  .pnav-item.center .pnav-icon { width:38px; height:38px; border-radius:50%; background:#ff8b35; color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; margin-top:-20px; box-shadow:0 6px 14px rgba(255,139,53,0.4); }
+  .psave-bar { position:absolute; bottom:74px; left:14px; right:14px; display:grid; grid-template-columns:2fr 1fr; gap:7px; }
+  .pbtn-primary { background:var(--green); color:#fff; border:none; padding:12px 0; border-radius:11px; font-size:13px; font-weight:700; cursor:pointer; }
+  .pbtn-secondary { background:#f3f3f3; color:#555; border:none; padding:12px 0; border-radius:11px; font-size:13px; font-weight:600; cursor:pointer; }
+  .pdevice-card { background:linear-gradient(135deg,var(--green-light) 0%,#f6f4ef 100%); border-radius:16px; padding:14px; display:flex; gap:11px; align-items:center; margin-bottom:11px; }
+  .pdevice-thumb { width:54px; height:72px; border-radius:10px; flex-shrink:0; background-size:cover; background-position:center; }
+  .pdevice-info { flex:1; }
+  .pdevice-state { font-size:11px; color:var(--green); font-weight:700; display:flex; align-items:center; gap:5px; }
+  .ppulse { width:7px; height:7px; border-radius:50%; background:var(--green); animation:ppulse 1.5s infinite; }
+  @keyframes ppulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+  .pdevice-name { font-size:13px; font-weight:700; margin:2px 0; }
+  .pdevice-bat { font-size:10px; color:#6b6b6f; margin-top:3px; }
+  .pschedule-item { background:#fafaf7; border-radius:11px; padding:12px; display:flex; align-items:center; gap:11px; margin-bottom:7px; cursor:pointer; border:1px solid var(--line); }
+  .psched-time { font-size:12px; font-weight:700; color:var(--green); }
+  .psched-name { font-size:13px; font-weight:600; }
+  .psched-sub { font-size:10px; color:#888; }
+  .psched-status { font-size:9px; padding:3px 7px; border-radius:999px; background:#fff4e6; color:#b56a00; font-weight:700; }
+  .psched-status.done { background:var(--green-light); color:var(--green); }
+  .pvisit-content { display:flex; flex-direction:column; align-items:center; text-align:center; padding-top:10px; }
+  .pdevice-big { width:160px; height:200px; border-radius:20px; background-size:contain; background-repeat:no-repeat; background-position:center; margin:12px 0; cursor:pointer; position:relative; }
+  .pdevice-big::after { content:""; position:absolute; inset:-10px; border-radius:26px; border:3px solid rgba(31,122,90,0.4); animation:ringPulse 1.5s infinite; }
+  @keyframes ringPulse { 0%,100% { transform:scale(1); opacity:0.6; } 50% { transform:scale(1.05); opacity:0; } }
+  .pvisit-cta { background:var(--green); color:#fff; padding:12px 24px; border-radius:12px; font-weight:700; font-size:14px; border:none; cursor:pointer; box-shadow:0 8px 20px rgba(31,122,90,0.3); margin-top:10px; }
+  .pvoice-modal { position:absolute; inset:52px 0 0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:20; }
+  .pvoice-modal.show { display:flex; }
+  .pvoice-box { background:#fff; border-radius:18px; padding:22px; width:86%; text-align:center; }
+  .pmic { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#ff8b35,#ff5a5a); color:#fff; display:flex; align-items:center; justify-content:center; font-size:30px; margin:0 auto 14px; animation:pmicpulse 1.2s infinite; }
+  @keyframes pmicpulse { 0%,100% { box-shadow:0 0 0 0 rgba(255,139,53,0.5); } 50% { box-shadow:0 0 0 16px rgba(255,139,53,0); } }
+  .pstt-text { background:#fafaf7; border-radius:11px; padding:12px; font-size:13px; min-height:50px; text-align:left; color:#1c1c1e; margin-bottom:14px; }
+  .pstt-text .typed { color:var(--green); font-weight:600; }
+  .pvoice-actions { display:flex; gap:7px; }
+  .pnote-area { background:#fafaf7; border:1px solid var(--line); border-radius:11px; padding:11px; font-size:12px; min-height:80px; color:#3a3a3c; margin-bottom:7px; }
+  .pvoice-mini { background:#fff; border:1px solid #ddd; padding:5px 10px; border-radius:999px; font-size:10px; display:inline-flex; gap:4px; align-items:center; cursor:pointer; float:right; }
+  .pvital-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #f0f0f0; }
+  .pvital-label { font-size:13px; font-weight:600; }
+  .pvital-input { background:#fafaf7; border:1px solid var(--line); border-radius:9px; padding:7px 12px; font-size:14px; font-weight:700; min-width:100px; text-align:right; }
+  .pconfirm-section { background:#fafaf7; border-radius:11px; padding:12px; margin-bottom:9px; }
+  .pconfirm-section h4 { font-size:11px; color:#888; margin-bottom:5px; font-weight:600; }
+  .pconfirm-section p { font-size:12px; line-height:1.4; }
+  .psig-pad { background:#fff; border:2px dashed #ccc; border-radius:11px; height:80px; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:12px; cursor:pointer; }
+  .psig-pad.signed { border:2px solid var(--green); color:var(--green); background:var(--green-light); font-weight:700; }
+  .psuccess { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; padding:30px 20px; }
+  .psuccess-check { width:70px; height:70px; border-radius:50%; background:var(--green-light); color:var(--green); display:flex; align-items:center; justify-content:center; font-size:36px; margin-bottom:16px; }
+  .pwarn { background:#f4eaff; border-left:4px solid #6a3aa5; padding:11px 13px; border-radius:7px; font-size:12px; margin:9px 0; }
+  .pwarn b { color:#6a3aa5; }
+  .controls { width:720px; height:100%; display:flex; flex-direction:column; min-height:0; gap:12px; overflow:hidden; }
+  .info-top { display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+  .info-top h2 { font-size:17px; font-weight:800; }
+  .info-top .hint-tag { background:var(--green-light); color:var(--green); font-size:11px; font-weight:700; padding:5px 10px; border-radius:999px; }
+  .screen-list { flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,1fr); gap:12px; min-height:0; }
+  .sitem { background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 20px; cursor:pointer; transition:all 0.2s; display:flex; flex-direction:column; justify-content:center; gap:4px; min-height:0; }
+  .sitem:hover { border-color:var(--green-soft); }
+  .sitem.active { background:var(--green-light); border-color:var(--green); box-shadow:0 6px 16px rgba(31,122,90,0.15); }
+  .sitem .row { display:flex; align-items:center; gap:10px; margin-bottom:4px; }
+  .sitem .snum { background:var(--green); color:#fff; width:26px; height:26px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; flex-shrink:0; }
+  .sitem h4 { font-size:18px; font-weight:800; }
+  .sitem p { font-size:13px; color:var(--ink-soft); margin-bottom:8px; }
+  .sitem ul { list-style:none; padding:0; margin:0; }
+  .sitem ul li { font-size:13px; padding:3px 0 3px 16px; position:relative; color:var(--ink); line-height:1.5; }
+  .sitem ul li::before { content:"·"; position:absolute; left:5px; top:0; color:var(--green); font-weight:700; font-size:18px; }
+  .voice-cta { flex-shrink:0; background:var(--green); color:#fff; padding:14px; border-radius:12px; border:none; font-weight:700; font-size:14px; cursor:pointer; }
+  #dtCard { background-image: url('data:image/jpeg;base64,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'); }
+  #dbBig  { background-image: url('data:image/jpeg;base64,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'); }
+</style>
+</head>
+<body>
+<div class="canvas" id="canvas">
+<header>
+  <h1><span class="badge">📱 인터랙티브</span>모모케어 앱 화면 가이드</h1>
+  <p>오른쪽 카드를 누르면 폰 화면이 바뀌어요 · <a href="https://momocareapp.netlify.app/" target="_blank" rel="noopener">전체 매뉴얼 →</a></p>
+</header>
+<main>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="status-bar"><span>9:41</span><span>•••• 5G ▮▮▮</span></div>
+    <div class="screen-stage">
+
+      <div class="pscreen active" data-pscreen="home">
+        <div class="ptop-bar"><div style="width:30px"></div><div class="pscreen-title">홈</div><button class="pvoice-top" onclick="pOpenVoice()">🎤 음성</button></div>
+        <div class="pdevice-card">
+          <div class="pdevice-thumb" id="dtCard"></div>
+          <div class="pdevice-info">
+            <div class="pdevice-state"><span class="ppulse"></span> 디바이스 연결됨</div>
+            <div class="pdevice-name">모모케어 케어 디바이스</div>
+            <div class="pdevice-bat">🔋 배터리 82% · 동기화 방금 전</div>
+          </div>
+        </div>
+        <div class="psec-label">오늘 일정 <small>5월 28일 (목)</small></div>
+        <div class="pschedule-item" onclick="pGoto('visit')"><div style="flex:1"><div class="psched-time">09:00 - 10:30</div><div class="psched-name">김복순 어르신</div><div class="psched-sub">방문요양 · 1.5시간</div></div><div class="psched-status">예정</div></div>
+        <div class="pschedule-item"><div style="flex:1"><div class="psched-time" style="color:#888">14:00 - 15:30</div><div class="psched-name">이순자 어르신</div><div class="psched-sub">방문요양 · 1.5시간</div></div><div class="psched-status done">완료</div></div>
+        <div class="phint" style="margin-top:12px">✨ 디바이스 버튼 한 번만 누르면 방문 시작!</div>
+      </div>
+
+      <div class="pscreen" data-pscreen="visit">
+        <div class="ptop-bar"><button class="pback" onclick="pGoto('home')">←</button><div class="pscreen-title">방문 시작</div><div style="width:30px"></div></div>
+        <div class="puser-card"><div class="pavatar">👵</div><div class="puser-info"><div class="puser-name">김복순 어르신</div><div class="puser-meta">2026.05.28 · 오전 09:00</div></div></div>
+        <div class="pvisit-content">
+          <p style="font-size:13px; color:#3a3a3c;">디바이스 가운데 <b style="color:var(--green)">하트 버튼</b>을<br>한 번 눌러주세요</p>
+          <p style="font-size:10px; color:#888; margin-top:6px;">시작 시각이 자동으로 기록돼요</p>
+          <div class="pdevice-big" id="dbBig" onclick="pStartVisit()"></div>
+          <button class="pvisit-cta" onclick="pStartVisit()">방문 시작하기 →</button>
+        </div>
+      </div>
+
+      <div class="pscreen" data-pscreen="record">
+        <div class="ptop-bar"><button class="pback" onclick="pGoto('visit')">←</button><div class="pscreen-title">상태기록</div><button class="pvoice-top" onclick="pOpenVoice()">🎤 음성</button></div>
+        <div class="puser-card"><div class="pavatar">👵</div><div class="puser-info"><div class="puser-name">김복순 어르신</div><div class="puser-meta">시작 09:00 · <b style="color:var(--green)">진행 중</b></div></div><button class="ppreview-btn">미리보기</button></div>
+        <div class="phint">✨ 카드 한 번이면 빠르게 기록</div>
+        <div class="psec-label">빠른 기록 <small>자주 쓰는 항목</small></div>
+        <div class="pquick-grid">
+          <div class="pqcard" style="background:#fff0e8" onclick="pToggleCard(this)"><div class="pqicon" style="background:#ffd9c2; color:#ff6b35">🍴</div><div class="pqlabel">식사</div><div class="pqsub">조식</div></div>
+          <div class="pqcard" style="background:#e8f0fc" onclick="pToggleCard(this)"><div class="pqicon" style="background:#c2d6f5; color:#2a6df0">🚽</div><div class="pqlabel">배설</div><div class="pqsub">화장실</div></div>
+          <div class="pqcard" style="background:#e6f4ee" onclick="pToggleCard(this)"><div class="pqicon" style="background:#bce3d2; color:var(--green)">🚿</div><div class="pqlabel">입욕</div><div class="pqsub">샤워</div></div>
+          <div class="pqcard" style="background:#f0eaff" onclick="pToggleCard(this)"><div class="pqicon" style="background:#d6c5f5; color:#6a3aa5">👕</div><div class="pqlabel">청결</div><div class="pqsub">세면</div></div>
+          <div class="pqcard" style="background:#fff8e0" onclick="pToggleCard(this)"><div class="pqicon" style="background:#f5e3a8; color:#b56a00">🚶</div><div class="pqlabel">이동</div><div class="pqsub">실내</div></div>
+          <div class="pqcard" style="background:#e6f4ee" onclick="pToggleCard(this)"><div class="pqicon" style="background:#bce3d2; color:var(--green)">🏥</div><div class="pqlabel">외출</div><div class="pqsub">병원</div></div>
+          <div class="pqcard" style="background:#fff0e8" onclick="pToggleCard(this)"><div class="pqicon" style="background:#ffd9c2; color:#ff6b35">🧹</div><div class="pqlabel">생활</div><div class="pqsub">청소</div></div>
+          <div class="pqcard" style="background:#f3f3f3" onclick="pToggleCard(this)"><div class="pqicon" style="background:#e0e0e0; color:#888">+</div><div class="pqlabel">직접</div><div class="pqsub">상세</div></div>
+        </div>
+        <div class="psec-label">바이탈 <small>직접 입력</small></div>
+        <div class="pschedule-item" onclick="pGoto('vital')" style="background:#f4eaff; border-color:#ddc7f5"><div style="flex:1"><div style="font-size:12px; font-weight:700; color:#6a3aa5">체온·혈압·맥박 입력</div><div class="psched-sub">직접 입력</div></div><div style="color:#6a3aa5;">→</div></div>
+        <div class="psec-label">특이사항 <span class="pvoice-mini" onclick="pOpenVoice()">🎤 음성</span></div>
+        <div class="pnote-area" id="pNoteArea">예) 화장실 이동 시 좌측 발을 약간 끄는 현상이 관찰됨.</div>
+        <div class="psave-bar"><button class="pbtn-primary" onclick="pGoto('confirm')">기록 저장 →</button><button class="pbtn-secondary" onclick="pGoto('home')">취소</button></div>
+      </div>
+
+      <div class="pscreen" data-pscreen="vital">
+        <div class="ptop-bar"><button class="pback" onclick="pGoto('record')">←</button><div class="pscreen-title">바이탈 입력</div><div style="width:30px"></div></div>
+        <div class="pwarn"><b>⚠️ 직접 입력</b><br><span style="font-size:11px;">디바이스가 측정하지 않아요.</span></div>
+        <div class="pvital-row"><div class="pvital-label">체온 (℃)</div><input class="pvital-input" type="text" value="36.5"></div>
+        <div class="pvital-row"><div class="pvital-label">혈압</div><input class="pvital-input" type="text" value="125 / 80"></div>
+        <div class="pvital-row"><div class="pvital-label">맥박 (회/분)</div><input class="pvital-input" type="text" value="72"></div>
+        <div class="pvital-row"><div class="pvital-label">기분·상태</div><div style="display:flex; gap:5px;"><button class="pbtn-secondary" style="padding:7px 11px; font-size:11px; background:var(--green-light); color:var(--green)">양호</button><button class="pbtn-secondary" style="padding:7px 11px; font-size:11px">보통</button><button class="pbtn-secondary" style="padding:7px 11px; font-size:11px">불량</button></div></div>
+        <button class="pbtn-primary" onclick="pGoto('record')" style="width:100%; margin-top:22px;">저장하고 돌아가기</button>
+      </div>
+
+      <div class="pscreen" data-pscreen="confirm">
+        <div class="ptop-bar"><button class="pback" onclick="pGoto('record')">←</button><div class="pscreen-title">일지 확정</div><div style="width:30px"></div></div>
+        <div class="phint">✨ 자동 초안 확인 + 서명만 받으면 끝</div>
+        <div class="pconfirm-section"><h4>방문 시각 (자동)</h4><p>09:00 시작 → 10:28 종료 · 총 88분</p></div>
+        <div class="pconfirm-section"><h4>돌봄 기록 (체크 4건)</h4><p>✓ 식사 · ✓ 배설 · ✓ 입욕 · ✓ 이동</p></div>
+        <div class="pconfirm-section"><h4>바이탈</h4><p>체온 36.5℃ · 혈압 125/80 · 맥박 72 · 양호</p></div>
+        <div class="pconfirm-section"><h4>관찰 메모 (음성)</h4><p style="color:#555">화장실 이동 시 좌측 발 끄는 현상. 입욕 중 피부 양호.</p></div>
+        <h4 style="font-size:12px; margin: 12px 0 7px;">보호자 서명</h4>
+        <div class="psig-pad" id="pSigPad" onclick="pSignIt()">서명하려면 여기 터치</div>
+        <button class="pbtn-primary" onclick="pGoto('done')" style="width:100%; margin-top:16px;">확정 및 전송 →</button>
+      </div>
+
+      <div class="pscreen" data-pscreen="done">
+        <div class="psuccess">
+          <div class="psuccess-check">✓</div>
+          <h2 style="font-size:18px; margin-bottom:8px">일지 전송 완료</h2>
+          <p style="color:#888; font-size:12px;">보호자에게 자동 알림</p>
+          <p style="color:#888; font-size:12px; margin-bottom: 26px">총 작성 시간: 약 2분</p>
+          <button class="pbtn-primary" onclick="pGoto('home')" style="padding: 12px 36px">홈으로</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pvoice-modal" id="pVoiceModal">
+      <div class="pvoice-box">
+        <div class="pmic">🎤</div>
+        <h3 style="font-size:14px; margin-bottom:12px">듣고 있어요...</h3>
+        <div class="pstt-text" id="pSttText"></div>
+        <div class="pvoice-actions"><button class="pbtn-secondary" onclick="pCloseVoice()" style="flex:1">취소</button><button class="pbtn-primary" onclick="pApplyVoice()" style="flex:2">적용 →</button></div>
+      </div>
+    </div>
+
+    <div class="pbottom-nav">
+      <div class="pnav-item" onclick="pGoto('home')"><div class="pnav-icon">🏠</div>홈</div>
+      <div class="pnav-item" onclick="pGoto('confirm')"><div class="pnav-icon">📋</div>리포트</div>
+      <div class="pnav-item center" onclick="pGoto('visit')"><div class="pnav-icon">+</div>LIVE</div>
+      <div class="pnav-item"><div class="pnav-icon">🔔</div>알림</div>
+      <div class="pnav-item"><div class="pnav-icon">⚙️</div>설정</div>
+      <div class="pnav-item active" onclick="pGoto('record')"><div class="pnav-icon">📝</div>기록</div>
+      <div class="pnav-item"><div class="pnav-icon">👤</div>마이</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="info-top"><h2>화면 6개 · 클릭해서 보기</h2><span class="hint-tag">현재 선택 ↓</span></div>
+    <div class="screen-list">
+      <div class="sitem active" data-pscreen="home" onclick="pGoto('home')"><div class="row"><span class="snum">1</span><h4>홈</h4></div><p>앱 켜자마자 첫 화면</p><ul><li>디바이스 연결 상태</li><li>오늘 방문 일정</li><li>음성 빠른 시작</li></ul></div>
+      <div class="sitem" data-pscreen="visit" onclick="pGoto('visit')"><div class="row"><span class="snum">2</span><h4>방문 시작</h4></div><p>디바이스 하트 버튼 안내</p><ul><li>시작 시각 자동 기록</li><li>어르신 정보 미리보기</li><li>버튼 1번이면 끝</li></ul></div>
+      <div class="sitem" data-pscreen="record" onclick="pGoto('record')"><div class="row"><span class="snum">3</span><h4>상태기록</h4></div><p>메인 기록 화면</p><ul><li>빠른 기록 카드 8종</li><li>음성으로 메모 입력</li><li>탭 1번에 즉시 저장</li></ul></div>
+      <div class="sitem" data-pscreen="vital" onclick="pGoto('vital')"><div class="row"><span class="snum">4</span><h4>바이탈</h4></div><p>의료 데이터 별도 화면</p><ul><li>체온·혈압·맥박 입력</li><li>의료법상 디바이스 분리</li><li>기분·상태 3단계</li></ul></div>
+      <div class="sitem" data-pscreen="confirm" onclick="pGoto('confirm')"><div class="row"><span class="snum">5</span><h4>일지 확정</h4></div><p>자동 초안 + 서명</p><ul><li>자동 채워진 4개 섹션</li><li>보호자 손가락 서명</li><li>2분이면 끝</li></ul></div>
+      <div class="sitem" data-pscreen="done" onclick="pGoto('done')"><div class="row"><span class="snum">6</span><h4>완료</h4></div><p>보호자 자동 전송</p><ul><li>전송 확인 + 작성 시간</li><li>보호자에게 푸시 알림</li><li>24h 뒤 앱통장 입금</li></ul></div>
+    </div>
+    <button class="voice-cta" onclick="pOpenVoice()">🎤 음성 입력 시연 보기</button>
+  </div>
+</main>
+</div>
+<script>
+  function fitCanvas() {
+    const canvas = document.getElementById('canvas');
+    const baseW = 1600, baseH = 900;
+    const s = Math.min(window.innerWidth / baseW, window.innerHeight / baseH);
+    canvas.style.transform = `scale(${s})`;
+  }
+  window.addEventListener('resize', fitCanvas);
+  window.addEventListener('load', fitCanvas);
+  fitCanvas();
+  function pGoto(name) {
+    document.querySelectorAll('.pscreen').forEach(s => s.classList.remove('active'));
+    const target = document.querySelector(`.pscreen[data-pscreen="${name}"]`);
+    if (target) target.classList.add('active');
+    document.querySelectorAll('.sitem').forEach(s => s.classList.toggle('active', s.dataset.pscreen === name));
+  }
+  function pStartVisit() { pGoto('record'); }
+  function pToggleCard(el) { el.classList.toggle('selected'); }
+  function pOpenVoice() {
+    document.getElementById('pVoiceModal').classList.add('show');
+    const text = '오늘 어르신 기분은 양호하셨고 식사 80퍼센트 드셨어요. 화장실 이동 시 좌측 발을 약간 끄는 모습이 보였습니다.';
+    const target = document.getElementById('pSttText');
+    target.innerHTML = '';
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i >= text.length) { clearInterval(timer); return; }
+      target.innerHTML = '<span class="typed">' + text.slice(0, i+1) + '</span><span style="color:#aaa">|</span>';
+      i++;
+    }, 35);
+  }
+  function pCloseVoice() { document.getElementById('pVoiceModal').classList.remove('show'); }
+  function pApplyVoice() {
+    const text = document.getElementById('pSttText').innerText.replace('|','');
+    const note = document.getElementById('pNoteArea');
+    if (note) note.innerText = text;
+    pCloseVoice(); pGoto('record');
+  }
+  function pSignIt() {
+    const pad = document.getElementById('pSigPad');
+    pad.classList.add('signed');
+    pad.innerHTML = '✓ 김보호 (보호자) 서명 완료';
+  }
+</script>
+</body>
+</html>

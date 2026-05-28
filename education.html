@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 간병인 교육 — 인터랙티브 표준 매뉴얼 v3</title>
+<style>
+  :root {
+    --bg: #f6f8f7;
+    --card: #ffffff;
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --teal: #0a9396;
+    --teal-dark: #005f73;
+    --teal-light: #e6f4f4;
+    --amber: #ca6702;
+    --amber-light: #fff4e0;
+    --blue: #1e40af;
+    --blue-light: #e0eaff;
+    --red: #ae2012;
+    --red-light: #ffe4e1;
+    --green: #2a9d4a;
+    --green-light: #e3f5e9;
+    --gray-light: #f4f4f2;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --shadow: 0 4px 12px rgba(0,0,0,0.06);
+    --shadow-lg: 0 12px 28px rgba(0,0,0,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.7; font-size: 16px;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  input, textarea { font-family: inherit; }
+
+  /* ===== Top Bar ===== */
+  .progress-bar-wrap {
+    position: fixed; top: 0; left: 0; right: 0; height: 4px;
+    background: rgba(0,0,0,0.05); z-index: 100;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+    width: 0%; transition: width 0.2s ease-out;
+  }
+  .topnav {
+    position: fixed; top: 4px; left: 0; right: 0;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 20px; z-index: 99;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .topnav .logo { font-weight: 800; color: var(--teal-dark); font-size: 16px; display: flex; align-items: center; gap: 6px; }
+  .topnav .nav-right { display: flex; gap: 10px; align-items: center; font-size: 13px; flex-wrap: wrap; }
+  .topnav .score-badge {
+    background: var(--teal-light); color: var(--teal-dark);
+    padding: 4px 10px; border-radius: 20px; font-weight: 700;
+  }
+  .topnav .badge-pill {
+    background: var(--amber-light); color: var(--amber);
+    padding: 4px 10px; border-radius: 20px; font-weight: 700;
+    transition: transform 0.3s;
+  }
+  .topnav .badge-pill.flash { animation: pulse 0.6s; }
+  .topnav .step-indicator { color: var(--muted); }
+  .topnav .step-indicator b { color: var(--teal-dark); }
+  .topnav .reset-btn {
+    background: transparent; border: 1px solid var(--line);
+    color: var(--muted); padding: 4px 10px; border-radius: 20px;
+    font-size: 12px;
+  }
+  .topnav .reset-btn:hover { color: var(--red); border-color: var(--red); }
+
+  /* ===== Hero — Caregiver-friendly warm version ===== */
+  .hero {
+    min-height: 92vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    padding: 80px 24px 60px;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 217, 173, 0.4) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(166, 218, 199, 0.4) 0%, transparent 50%),
+      linear-gradient(135deg, #fef9f3 0%, #fff4e6 50%, #f0f9f4 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Soft decorative shapes */
+  .hero::before, .hero::after {
+    content: ''; position: absolute; border-radius: 50%; pointer-events: none;
+  }
+  .hero::before {
+    width: 280px; height: 280px;
+    background: rgba(255, 200, 150, 0.25);
+    top: -100px; left: -80px;
+    filter: blur(40px);
+  }
+  .hero::after {
+    width: 320px; height: 320px;
+    background: rgba(140, 200, 170, 0.25);
+    bottom: -120px; right: -100px;
+    filter: blur(50px);
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  .hero .hero-illust {
+    font-size: 64px;
+    margin-bottom: 18px;
+    line-height: 1;
+    letter-spacing: 4px;
+    animation: gentleBob 4s ease-in-out infinite;
+  }
+  .hero .greeting {
+    display: inline-block;
+    background: white;
+    padding: 8px 18px;
+    border-radius: 30px;
+    color: #a25b1a;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 14px rgba(202, 103, 2, 0.12);
+    border: 1px solid rgba(202, 103, 2, 0.15);
+  }
+  .hero h1 {
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1.35;
+    max-width: 720px;
+    margin-bottom: 18px;
+    color: #2d3e3e;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 .hl {
+    background: linear-gradient(180deg, transparent 60%, #ffd699 60%);
+    padding: 0 4px;
+    border-radius: 4px;
+  }
+  .hero .sub {
+    color: #5a6868;
+    font-size: 18px;
+    max-width: 540px;
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+  .hero .stats {
+    display: flex; gap: 14px; margin-bottom: 40px;
+    flex-wrap: wrap; justify-content: center;
+  }
+  .hero .stat {
+    background: white;
+    padding: 16px 22px;
+    border-radius: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid rgba(255,255,255,0.8);
+  }
+  .hero .stat .stat-emoji { font-size: 28px; line-height: 1; }
+  .hero .stat .stat-text { font-size: 13px; color: #5a6868; font-weight: 600; }
+
+  .hero .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #2a9d4a, var(--teal-dark));
+    color: white;
+    padding: 18px 36px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 22px rgba(42, 157, 74, 0.25);
+  }
+  .hero .cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(42, 157, 74, 0.35);
+  }
+  .hero .reassure {
+    margin-top: 24px;
+    font-size: 13px;
+    color: #7a6c5d;
+    background: rgba(255,255,255,0.6);
+    padding: 8px 16px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  @keyframes gentleBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* ===== Sections ===== */
+  section.lesson {
+    padding: 70px 24px;
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .lesson-head { text-align: center; margin-bottom: 36px; }
+  .lesson-num {
+    display: inline-block; background: var(--teal); color: white;
+    padding: 4px 12px; border-radius: 20px; font-size: 12px;
+    font-weight: 700; letter-spacing: 0.05em; margin-bottom: 12px;
+  }
+  .lesson-head h2 { font-size: 28px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+  .lesson-head p { color: var(--muted); font-size: 15px; max-width: 600px; margin: 0 auto; }
+
+  /* Learning objectives box */
+  .objective-box {
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+    padding: 14px 18px;
+    max-width: 600px;
+    margin: 18px auto 0;
+    text-align: left;
+  }
+  .objective-box .obj-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .objective-box .obj-content {
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ===== Pre/Post Test ===== */
+  .test-panel {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    padding: 32px;
+    margin-bottom: 24px;
+    border-top: 6px solid var(--purple);
+  }
+  .test-panel .test-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+  }
+  .test-panel .test-tag {
+    background: var(--purple); color: white;
+    padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700;
+  }
+  .test-panel h3 { font-size: 22px; }
+  .test-panel .test-sub {
+    color: var(--muted); font-size: 14px; margin-bottom: 22px;
+  }
+  .test-progress {
+    display: flex; gap: 6px; margin-bottom: 18px;
+  }
+  .test-progress .dot {
+    flex: 1; height: 4px; background: var(--gray-light); border-radius: 2px;
+    transition: background 0.3s;
+  }
+  .test-progress .dot.active { background: var(--purple); }
+  .test-progress .dot.done { background: var(--teal); }
+  .test-question {
+    display: none;
+  }
+  .test-question.active { display: block; animation: fadeIn 0.3s; }
+  .test-question .q-num { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .test-question .q-text { font-size: 17px; font-weight: 600; margin-bottom: 16px; }
+  .test-opts { display: flex; flex-direction: column; gap: 8px; }
+  .test-opt {
+    background: white; border: 2px solid var(--line);
+    border-radius: 10px; padding: 12px 16px; text-align: left;
+    font-size: 14px; transition: all 0.2s; color: var(--ink);
+  }
+  .test-opt:hover:not(:disabled) { border-color: var(--purple); background: var(--purple-light); }
+  .test-opt.selected { border-color: var(--purple); background: var(--purple-light); font-weight: 600; }
+  .test-actions { margin-top: 18px; display: flex; justify-content: space-between; gap: 10px; }
+
+  .test-result {
+    display: none;
+    text-align: center;
+    padding: 24px;
+    background: var(--purple-light);
+    border-radius: 12px;
+    margin-top: 16px;
+  }
+  .test-result.show { display: block; animation: fadeInUp 0.5s; }
+  .test-result .big-num {
+    font-size: 48px; font-weight: 800; color: var(--purple); line-height: 1;
+  }
+  .test-result .small { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+  /* ===== Value cards (Lesson 1) ===== */
+  .value-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .value-card {
+    background: white; border-radius: 14px; padding: 26px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--teal);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .value-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .value-card .ico { font-size: 32px; margin-bottom: 12px; }
+  .value-card h3 { font-size: 17px; margin-bottom: 6px; color: var(--teal-dark); }
+  .value-card p { font-size: 14px; color: var(--muted); }
+
+  /* ===== Form tabs ===== */
+  .form-tabs {
+    display: flex; gap: 8px; margin-bottom: 24px;
+    overflow-x: auto; padding-bottom: 8px;
+  }
+  .form-tab {
+    flex-shrink: 0; padding: 10px 16px; background: white;
+    border: 1px solid var(--line); border-radius: 30px;
+    font-size: 13px; color: var(--ink); font-weight: 500;
+    transition: all 0.2s;
+  }
+  .form-tab:hover { border-color: var(--teal); color: var(--teal-dark); }
+  .form-tab.active { background: var(--teal-dark); color: white; border-color: var(--teal-dark); }
+  .form-content {
+    display: none; background: white; border-radius: 14px;
+    padding: 30px; box-shadow: var(--shadow); animation: fadeIn 0.4s;
+  }
+  .form-content.active { display: block; }
+  .form-content h3 { font-size: 20px; color: var(--teal-dark); margin-bottom: 8px; }
+  .form-content .form-sub {
+    font-size: 13px; color: var(--muted);
+    margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--line);
+  }
+  .form-content h4 { font-size: 14px; margin: 16px 0 8px; }
+  .form-content ul { list-style: none; padding: 0; }
+  .form-content ul li {
+    padding: 8px 12px; background: var(--gray-light);
+    border-radius: 8px; margin: 6px 0; font-size: 14px;
+    display: flex; gap: 10px;
+  }
+  .form-content ul li::before { content: "✓"; color: var(--teal); font-weight: 700; }
+  .form-content .tip {
+    background: var(--teal-light); border-left: 3px solid var(--teal);
+    padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-top: 14px;
+  }
+
+  /* ===== Simulator ===== */
+  .simulator {
+    background: white; border-radius: 16px;
+    box-shadow: var(--shadow-lg); overflow: hidden; margin-bottom: 24px;
+  }
+  .sim-header {
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+    color: white; padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .sim-header h3 { font-size: 17px; margin-bottom: 4px; }
+  .sim-header .sub { font-size: 12px; opacity: 0.85; }
+  .sim-timer {
+    background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px;
+    font-family: 'SF Mono', monospace; font-size: 16px; font-weight: 700;
+  }
+  .sim-patient {
+    background: var(--teal-light); padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--line);
+  }
+  .sim-patient .avatar {
+    width: 50px; height: 50px; border-radius: 50%; background: white;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .sim-patient .info { flex: 1; }
+  .sim-patient .info .name { font-weight: 700; font-size: 14px; }
+  .sim-patient .info .note { font-size: 12px; color: var(--muted); }
+
+  .sim-body { padding: 22px 24px; }
+  .sim-body h4 {
+    font-size: 12px; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--muted);
+    margin: 18px 0 10px;
+  }
+  .sim-body h4:first-child { margin-top: 0; }
+  .sim-vital-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .sim-vital { background: var(--gray-light); padding: 10px 12px; border-radius: 8px; }
+  .sim-vital label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+  .sim-vital input {
+    width: 100%; border: none; background: transparent;
+    font-size: 14px; font-weight: 600; color: var(--ink); outline: none;
+  }
+
+  .sim-checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .sim-check {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px; background: var(--gray-light);
+    border-radius: 8px; font-size: 13.5px;
+    cursor: pointer; transition: all 0.2s; user-select: none;
+  }
+  .sim-check:hover { background: #ebebe9; }
+  .sim-check input { display: none; }
+  .sim-check .box {
+    width: 18px; height: 18px; border: 2px solid var(--muted);
+    border-radius: 4px; display: flex; align-items: center;
+    justify-content: center; transition: all 0.2s; flex-shrink: 0;
+  }
+  .sim-check input:checked + .box { background: var(--teal); border-color: var(--teal); }
+  .sim-check input:checked + .box::after { content: "✓"; color: white; font-size: 12px; font-weight: 800; }
+  .sim-check input:checked ~ .lbl { color: var(--teal-dark); font-weight: 600; }
+
+  .sim-textarea {
+    width: 100%; border: 1px solid var(--line); border-radius: 8px;
+    padding: 12px; font-size: 14px; resize: vertical;
+    min-height: 80px; outline: none; transition: border-color 0.2s;
+  }
+  .sim-textarea:focus { border-color: var(--teal); }
+  .sim-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+
+  /* ===== Buttons ===== */
+  .btn {
+    padding: 12px 20px; border: none; border-radius: 30px;
+    font-weight: 600; font-size: 14px; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--teal-dark); color: white; }
+  .btn-primary:hover { background: var(--teal); transform: translateY(-1px); }
+  .btn-ghost { background: var(--gray-light); color: var(--ink); }
+  .btn-ghost:hover { background: #ebebe9; }
+  .btn-danger { background: var(--red-light); color: var(--red); }
+  .btn-purple { background: var(--purple); color: white; }
+  .btn-purple:hover { background: #6d28d9; transform: translateY(-1px); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  /* AI report output */
+  .sim-output {
+    margin-top: 24px; padding: 22px;
+    background: linear-gradient(135deg, #f9fcfb, var(--teal-light));
+    border-radius: 12px; border: 1px solid var(--teal);
+    display: none; animation: fadeInUp 0.6s ease-out;
+  }
+  .sim-output.show { display: block; }
+  .sim-output h4 { color: var(--teal-dark); margin-bottom: 14px; font-size: 14px; }
+  .sim-output .ai-tag {
+    display: inline-block; background: var(--teal-dark); color: white;
+    padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-bottom: 8px;
+  }
+  .sim-output .report-line {
+    background: white; padding: 12px 14px;
+    border-radius: 8px; margin: 8px 0; font-size: 14px;
+    border-left: 3px solid var(--teal);
+  }
+  .sim-output .preview-msg {
+    background: white; padding: 14px;
+    border-radius: 12px; margin-top: 14px;
+    font-size: 13.5px; border: 1px dashed var(--teal);
+  }
+  .sim-output .preview-msg .from { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+
+  /* ===== Scenario branching ===== */
+  .scenario-card {
+    background: white; border-radius: 16px;
+    padding: 26px; box-shadow: var(--shadow-lg);
+    margin-bottom: 24px; border-left: 6px solid var(--amber);
+  }
+  .scenario-card .sc-tag {
+    display: inline-block; background: var(--amber); color: white;
+    padding: 3px 10px; border-radius: 12px; font-size: 11px;
+    font-weight: 700; margin-bottom: 10px;
+  }
+  .scenario-card .sc-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .scenario-card .sc-story {
+    background: var(--amber-light); padding: 14px;
+    border-radius: 10px; font-size: 14px;
+    line-height: 1.7; margin: 14px 0;
+  }
+  .scenario-card .sc-question { font-weight: 600; font-size: 15px; margin-bottom: 12px; }
+  .scenario-choices { display: flex; flex-direction: column; gap: 8px; }
+  .scenario-choice {
+    background: white; border: 2px solid var(--line);
+    padding: 14px 16px; border-radius: 10px;
+    text-align: left; font-size: 14px; transition: all 0.2s;
+    color: var(--ink);
+  }
+  .scenario-choice:hover:not(:disabled) { border-color: var(--amber); background: var(--amber-light); }
+  .scenario-choice.best {
+    background: var(--green-light); border-color: var(--green);
+    color: var(--green); font-weight: 700;
+  }
+  .scenario-choice.ok {
+    background: var(--blue-light); border-color: var(--blue);
+    color: var(--blue);
+  }
+  .scenario-choice.bad {
+    background: var(--red-light); border-color: var(--red); color: var(--red);
+  }
+  .scenario-feedback {
+    margin-top: 14px; padding: 14px;
+    border-radius: 10px; font-size: 13.5px;
+    display: none;
+  }
+  .scenario-feedback.show { display: block; animation: fadeInUp 0.4s; }
+  .scenario-feedback.best { background: var(--green-light); color: var(--green); border-left: 4px solid var(--green); }
+  .scenario-feedback.ok { background: var(--blue-light); color: var(--blue); border-left: 4px solid var(--blue); }
+  .scenario-feedback.bad { background: var(--red-light); color: var(--red); border-left: 4px solid var(--red); }
+  .scenario-feedback b { display: block; margin-bottom: 4px; }
+
+  /* ===== 5분 timer ===== */
+  .video-timer-panel {
+    background: white; border-radius: 16px;
+    padding: 26px; box-shadow: var(--shadow-lg);
+    margin-bottom: 24px; text-align: center;
+  }
+  .timer-display {
+    font-family: 'SF Mono', monospace; font-size: 64px;
+    font-weight: 800; color: var(--teal-dark);
+    letter-spacing: -2px; margin: 10px 0; transition: color 0.3s;
+  }
+  .timer-display.warning { color: var(--amber); }
+  .timer-display.danger { color: var(--red); }
+  .timer-status { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+  .timer-status .step-now { color: var(--teal-dark); font-weight: 700; }
+  .timer-controls {
+    display: flex; gap: 10px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 14px;
+  }
+  .timer-bar {
+    height: 8px; background: var(--gray-light);
+    border-radius: 4px; overflow: hidden; margin-top: 10px;
+  }
+  .timer-bar-fill {
+    height: 100%; background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+    width: 0%; transition: width 0.5s linear;
+  }
+
+  .video-step {
+    background: white; border-radius: 14px; padding: 16px 20px;
+    box-shadow: var(--shadow); display: flex; gap: 16px;
+    align-items: flex-start; margin-bottom: 10px;
+    transition: all 0.3s; border-left: 4px solid transparent;
+  }
+  .video-step.active {
+    border-left-color: var(--teal); background: var(--teal-light);
+    transform: scale(1.02); box-shadow: var(--shadow-lg);
+  }
+  .video-step.done { opacity: 0.5; }
+  .video-step .num-circle {
+    background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+    color: white; width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; flex-shrink: 0;
+  }
+  .video-step.active .num-circle { animation: pulse 1.5s ease-in-out infinite; }
+  .video-step.done .num-circle { background: var(--green); }
+  .video-step .vs-body h4 { font-size: 14px; margin-bottom: 4px; }
+  .video-step .vs-body p { color: var(--muted); font-size: 13px; }
+  .video-step .time {
+    display: inline-block; background: var(--teal-light); color: var(--teal-dark);
+    padding: 2px 8px; border-radius: 6px; font-size: 11px;
+    font-weight: 600; margin-top: 6px;
+  }
+
+  /* ===== Good vs Bad examples ===== */
+  .example-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin-top: 20px;
+  }
+  .example-card {
+    background: white; border-radius: 14px;
+    padding: 20px; box-shadow: var(--shadow);
+  }
+  .example-card.good { border-left: 4px solid var(--green); }
+  .example-card.bad { border-left: 4px solid var(--red); }
+  .example-card .ex-head {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .example-card.good .ex-head { color: var(--green); }
+  .example-card.bad .ex-head { color: var(--red); }
+  .example-card .quote {
+    background: var(--gray-light); padding: 12px 14px;
+    border-radius: 8px; font-size: 14px;
+    line-height: 1.6; font-style: italic;
+  }
+  .example-card .reason {
+    font-size: 13px; color: var(--muted); margin-top: 10px;
+  }
+
+  /* ===== Quiz with explanation ===== */
+  .quiz-box {
+    background: var(--teal-light); border-radius: 14px;
+    padding: 24px; margin-top: 24px;
+  }
+  .quiz-box h3 { font-size: 15px; color: var(--teal-dark); margin-bottom: 14px; }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-option {
+    background: white; border: 2px solid transparent;
+    border-radius: 10px; padding: 12px 16px; text-align: left;
+    font-size: 14px; transition: all 0.2s; color: var(--ink);
+  }
+  .quiz-option:hover:not(:disabled) { border-color: var(--teal); }
+  .quiz-option.correct {
+    background: var(--green-light); border-color: var(--green);
+    color: var(--green); font-weight: 600;
+  }
+  .quiz-option.wrong {
+    background: var(--red-light); border-color: var(--red); color: var(--red);
+  }
+  .quiz-feedback {
+    margin-top: 14px; padding: 12px;
+    border-radius: 8px; font-size: 13.5px; display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: var(--green-light); color: var(--green); }
+  .quiz-feedback.wrong { background: var(--red-light); color: var(--red); }
+  .quiz-feedback .explain {
+    font-size: 12.5px; margin-top: 6px; opacity: 0.85;
+  }
+
+  /* ===== Warning Cards ===== */
+  .warning-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .warning-card {
+    background: white; border-radius: 14px; padding: 22px;
+    box-shadow: var(--shadow); border-left: 4px solid var(--amber);
+  }
+  .warning-card .icon { font-size: 28px; margin-bottom: 10px; }
+  .warning-card h3 { font-size: 16px; color: var(--amber); margin-bottom: 6px; }
+  .warning-card p { font-size: 13.5px; }
+
+  /* ===== Final Quiz (spaced repetition) ===== */
+  .final-quiz {
+    background: white; border-radius: 16px;
+    padding: 28px; box-shadow: var(--shadow-lg); margin-top: 24px;
+    border-top: 6px solid var(--purple);
+  }
+  .final-quiz .fq-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 8px; flex-wrap: wrap;
+  }
+  .final-quiz .fq-tag {
+    background: var(--purple); color: white;
+    padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 700;
+  }
+  .final-quiz h3 { font-size: 20px; }
+  .final-quiz .fq-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .final-quiz-progress {
+    display: flex; gap: 4px; margin-bottom: 18px;
+  }
+  .final-quiz-progress .pdot {
+    flex: 1; height: 4px; background: var(--gray-light); border-radius: 2px;
+  }
+  .final-quiz-progress .pdot.done { background: var(--purple); }
+  .final-quiz-progress .pdot.active { background: var(--purple); animation: pulse 1.5s infinite; }
+  .fq-question { display: none; }
+  .fq-question.active { display: block; animation: fadeIn 0.3s; }
+  .fq-question .q-num { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .fq-question .q-text { font-size: 16px; font-weight: 600; margin-bottom: 14px; }
+  .fq-actions { margin-top: 18px; }
+
+  /* ===== Badges section ===== */
+  .badges-row {
+    display: flex; gap: 12px; justify-content: center;
+    margin: 20px 0; flex-wrap: wrap;
+  }
+  .badge-item {
+    background: white; border-radius: 12px;
+    padding: 14px 12px; min-width: 100px; text-align: center;
+    border: 2px solid var(--line); opacity: 0.4;
+    transition: all 0.4s;
+  }
+  .badge-item.earned {
+    opacity: 1; border-color: var(--amber);
+    background: var(--amber-light); transform: scale(1.05);
+  }
+  .badge-item .emoji { font-size: 32px; }
+  .badge-item .name { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 600; }
+  .badge-item.earned .name { color: var(--amber); }
+
+  /* ===== Complete + Certificate ===== */
+  .complete {
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+    color: white; padding: 60px 24px; text-align: center;
+  }
+  .complete h2 { font-size: 32px; margin-bottom: 14px; }
+  .complete .sub { opacity: 0.9; font-size: 16px; max-width: 500px; margin: 0 auto 30px; }
+  .complete .checkmark {
+    width: 80px; height: 80px;
+    background: rgba(255,255,255,0.2); border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 40px; margin-bottom: 22px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .complete .score-summary {
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 16px;
+    max-width: 480px; margin: 0 auto 24px;
+    display: flex; justify-content: space-around; gap: 12px; flex-wrap: wrap;
+  }
+  .score-item .num { font-size: 24px; font-weight: 800; }
+  .score-item .lbl { font-size: 11px; opacity: 0.8; text-transform: uppercase; }
+
+  /* Improvement compare */
+  .compare-box {
+    background: rgba(255,255,255,0.12); border-radius: 12px;
+    padding: 18px 22px; max-width: 480px;
+    margin: 0 auto 24px; text-align: left;
+  }
+  .compare-box .ttl { font-size: 12px; opacity: 0.85; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .compare-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.15);
+    font-size: 14px;
+  }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row .label { opacity: 0.9; }
+  .compare-row .val { font-weight: 700; font-size: 18px; }
+  .compare-row .delta {
+    background: rgba(255,255,255,0.2); padding: 2px 8px;
+    border-radius: 10px; font-size: 12px; font-weight: 600;
+  }
+  .compare-row .delta.up { background: rgba(42, 157, 74, 0.3); }
+
+  /* Certificate */
+  .cert-card {
+    background: white; color: var(--ink);
+    border-radius: 16px; padding: 36px 28px;
+    max-width: 540px; margin: 0 auto;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    border: 8px double var(--teal-dark); position: relative;
+  }
+  .cert-card::before { content: "🌱"; position: absolute; top: 16px; left: 16px; font-size: 22px; }
+  .cert-card::after { content: "🌱"; position: absolute; top: 16px; right: 16px; font-size: 22px; }
+  .cert-card h3 {
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 0.15em; margin-bottom: 8px;
+  }
+  .cert-card .title {
+    font-size: 24px; font-weight: 800; color: var(--teal-dark); margin-bottom: 20px;
+  }
+  .cert-card .body { font-size: 13.5px; color: var(--muted); margin-bottom: 20px; line-height: 1.8; }
+  .cert-card .name-display {
+    font-size: 28px; font-weight: 800; color: var(--ink);
+    padding: 14px; border-bottom: 2px solid var(--teal);
+    margin: 0 auto 16px; max-width: 300px; min-height: 56px;
+  }
+  .cert-card .name-display.placeholder {
+    color: var(--line); font-weight: 400; font-size: 16px;
+  }
+  .cert-card .footer-meta { font-size: 12px; color: var(--muted); margin-top: 18px; }
+  .cert-input-row {
+    display: flex; gap: 8px; max-width: 400px; margin: 20px auto;
+  }
+  .cert-input-row input {
+    flex: 1; padding: 12px 16px; border: 1px solid var(--line);
+    border-radius: 10px; font-size: 14px; outline: none;
+  }
+  .cert-input-row input:focus { border-color: var(--teal); }
+
+  /* Print */
+  @media print {
+    .topnav, .progress-bar-wrap, .hero, .lesson, footer, .complete > *:not(.cert-card) { display: none; }
+    .complete { background: white; color: black; padding: 0; }
+    .cert-card { box-shadow: none; }
+  }
+
+  /* ===== Animations ===== */
+  @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+  .shake { animation: shake 0.3s; }
+
+  /* Toast (badge notification) */
+  .toast {
+    position: fixed; top: 70px; right: 20px;
+    background: linear-gradient(135deg, var(--amber), #d97706);
+    color: white; padding: 12px 18px;
+    border-radius: 12px; font-size: 14px; font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 200; display: flex; align-items: center; gap: 10px;
+    transform: translateX(400px); opacity: 0;
+    transition: all 0.4s ease-out;
+  }
+  .toast.show { transform: translateX(0); opacity: 1; }
+  .toast .badge-emoji { font-size: 24px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 720px) {
+    .hero h1 { font-size: 28px; }
+    .hero .sub { font-size: 15px; }
+    .lesson-head h2 { font-size: 22px; }
+    .value-grid, .warning-grid, .sim-checks, .sim-vital-grid, .example-grid {
+      grid-template-columns: 1fr;
+    }
+    section.lesson { padding: 50px 18px; }
+    .timer-display { font-size: 48px; }
+    .topnav { flex-wrap: wrap; gap: 8px; }
+    .topnav .nav-right { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+  <nav class="topnav">
+    <div class="logo">🌱 모모케어</div>
+    <div class="nav-right">
+      <span class="score-badge">⭐ <span id="scoreNow">0</span>점</span>
+      <span class="badge-pill" id="badgeCount">🏅 0/5</span>
+      <span class="step-indicator">지금 <b id="stepNow">0</b>단계</span>
+      <button class="reset-btn" id="resetAllBtn">다시 시작</button>
+    </div>
+  </nav>
+
+  <!-- Toast for badge notification -->
+  <div class="toast" id="badgeToast">
+    <span class="badge-emoji" id="toastEmoji">🏅</span>
+    <span><b>배지 획득!</b><br><span id="toastName">-</span></span>
+  </div>
+
+  <!-- ===== Hero — 간병인 친화 버전 ===== -->
+  <section class="hero">
+    <div class="hero-illust">👵 💛 🧑‍⚕️</div>
+    <div class="greeting">오늘도 수고 많으세요</div>
+
+    <h1>
+      기록은 <span class="hl">1분</span>,<br>
+      안심은 <span class="hl">평생</span>이에요
+    </h1>
+    <p class="sub">
+      처음 보시는 분도 천천히 따라오시면 됩니다.<br>
+      5분이면 모모케어 사용법을 익힐 수 있어요.
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-emoji">🕔</span>
+        <div class="stat-text">5분이면 끝</div>
+      </div>
+      <div class="stat">
+        <span class="stat-emoji">🪴</span>
+        <div class="stat-text">천천히 5단계</div>
+      </div>
+      <div class="stat">
+        <span class="stat-emoji">🏅</span>
+        <div class="stat-text">배지도 모아요</div>
+      </div>
+    </div>
+
+    <a class="cta" href="#preTest">천천히 시작해볼까요 →</a>
+
+    <div class="reassure">💡 중간에 멈췄다 다시 오셔도 진도와 점수가 그대로 있어요</div>
+  </section>
+
+  <!-- ===== Pre-Test ===== -->
+  <section class="lesson" id="preTest" data-step="0">
+    <div class="lesson-head reveal">
+      <span class="lesson-num" style="background: var(--purple);">🧠 시작 전 가볍게</span>
+      <h2>지금 알고 계신 만큼만 답해주세요</h2>
+      <p>3문제, 1분이면 끝나요. 틀려도 괜찮습니다 — 학습 후에 얼마나 늘었는지 비교용이에요.</p>
+    </div>
+
+    <div class="test-panel reveal" id="preTestPanel">
+      <div class="test-header">
+        <span class="test-tag">시작 전 체크</span>
+      </div>
+      <h3>간병 기본 지식 가볍게 확인</h3>
+      <div class="test-sub">모르시면 그냥 직감으로 골라주세요. 정답·오답은 표시되지 않고 학습 후에 다시 비교됩니다.</div>
+
+      <div class="test-progress">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+
+      <div class="test-question active" data-q="1">
+        <div class="q-num">1 / 3</div>
+        <div class="q-text">간병 시 가장 먼저 기록해야 하는 것은?</div>
+        <div class="test-opts">
+          <button class="test-opt" data-correct="false" data-pre-q="1">이용자의 식사량</button>
+          <button class="test-opt" data-correct="true" data-pre-q="1">서비스 시작 시각 (분 단위)</button>
+          <button class="test-opt" data-correct="false" data-pre-q="1">청소 도구 확인</button>
+        </div>
+      </div>
+
+      <div class="test-question" data-q="2">
+        <div class="q-num">2 / 3</div>
+        <div class="q-text">보호자에게 영상으로 전달할 때 피해야 하는 표현은?</div>
+        <div class="test-opts">
+          <button class="test-opt" data-correct="false" data-pre-q="2">"오늘 잘 드셨어요"</button>
+          <button class="test-opt" data-correct="false" data-pre-q="2">"낮잠 1시간 주무셨어요"</button>
+          <button class="test-opt" data-correct="true" data-pre-q="2">"증상이 악화된 것 같아요"</button>
+        </div>
+      </div>
+
+      <div class="test-question" data-q="3">
+        <div class="q-num">3 / 3</div>
+        <div class="q-text">법적 효력 발생을 위해 필수인 절차는?</div>
+        <div class="test-opts">
+          <button class="test-opt" data-correct="true" data-pre-q="3">이용자·가족 확인 서명</button>
+          <button class="test-opt" data-correct="false" data-pre-q="3">간병인 자필 메모</button>
+          <button class="test-opt" data-correct="false" data-pre-q="3">사진 첨부</button>
+        </div>
+      </div>
+
+      <div class="test-actions">
+        <button class="btn btn-ghost" id="preNextBtn" disabled>다음 →</button>
+      </div>
+
+      <div class="test-result" id="preResult">
+        <div class="big-num"><span id="preScore">0</span>/3</div>
+        <div class="small">사전 진단 완료. 학습이 끝나면 동일 문제로 다시 확인합니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Lesson 1 ===== -->
+  <section class="lesson" data-step="1">
+    <div class="lesson-head reveal">
+      <span class="lesson-num">STEP 1 / 5</span>
+      <h2>모모케어란 무엇인가요?</h2>
+      <div class="objective-box">
+        <div class="obj-title">🎯 학습 목표</div>
+        <div class="obj-content">모모케어가 간병인에게 주는 4가지 가치를 설명할 수 있다.</div>
+      </div>
+    </div>
+
+    <div class="value-grid">
+      <div class="value-card reveal">
+        <div class="ico">📝</div>
+        <h3>1. 기록 자동화</h3>
+        <p>음성·체크만으로 일지 초안 자동 작성. 작성 시간 90% 단축.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="ico">💬</div>
+        <h3>2. 설명 감소</h3>
+        <p>보호자 반복 문의를 리포트가 대신해요.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="ico">🛡️</div>
+        <h3>3. 자기보호</h3>
+        <p>특이사항이 객관적 증빙으로 남아요.</p>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="ico">⭐</div>
+        <h3>4. 더 많은 일감</h3>
+        <p>꾸준한 기록은 신뢰 배지. 우선 매칭.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Lesson 2 ===== -->
+  <section class="lesson" data-step="2">
+    <div class="lesson-head reveal">
+      <span class="lesson-num">STEP 2 / 5</span>
+      <h2>핵심 6서식 사용법</h2>
+      <div class="objective-box">
+        <div class="obj-title">🎯 학습 목표</div>
+        <div class="obj-content">6개 표준 운영서식의 용도와 매핑되는 모모케어 화면을 구별할 수 있다.</div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="form-tabs">
+        <button class="form-tab active" data-form="1">1. 방문기록</button>
+        <button class="form-tab" data-form="2">2. 보호자 리포트</button>
+        <button class="form-tab" data-form="3">3. 상태변화</button>
+        <button class="form-tab" data-form="4">4. 복약관리</button>
+        <button class="form-tab" data-form="5">5. 인지활동</button>
+        <button class="form-tab" data-form="6">6. 사례관리</button>
+      </div>
+
+      <div class="form-content active" data-form="1">
+        <h3>1. 방문기록 자동기록</h3>
+        <div class="form-sub">기반 서식: 100. 장기요양급여 제공기록지 (방문요양)</div>
+        <h4>자동 기록</h4>
+        <ul><li>방문 시작·종료 시각 (분 단위)</li><li>총 방문 시간 자동 계산</li></ul>
+        <h4>간병인 체크</h4>
+        <ul><li>돌봄 체크리스트 7개</li><li>입실 시 바이탈</li></ul>
+        <div class="tip">💡 시작 시각은 도착 즉시 누르세요. 청구 근거가 됩니다.</div>
+      </div>
+      <div class="form-content" data-form="2">
+        <h3>2. 보호자 리포트</h3>
+        <div class="form-sub">기록 → AI 요약 → 보호자에게 푸시</div>
+        <ul><li>신체활동 완료율</li><li>인지·정서 시간</li><li>변화 상태</li><li>특이사항 건수</li></ul>
+      </div>
+      <div class="form-content" data-form="3">
+        <h3>3. 상태변화 추적</h3>
+        <div class="form-sub">주간·월간·3개월 추이</div>
+        <ul><li>신체 기능</li><li>식사 기능</li><li>인지 기능</li><li>정서 상태</li></ul>
+      </div>
+      <div class="form-content" data-form="4">
+        <h3>4. 복약관리 트래커</h3>
+        <div class="form-sub">시간대별 복용 체크</div>
+        <ul><li>약 시각 자동 알림</li><li>완료/대기/미복용 3단계</li></ul>
+        <div class="tip">⚠️ 미복용 시 보호자 즉시 알림. 사유 메모 필수.</div>
+      </div>
+      <div class="form-content" data-form="5">
+        <h3>5. 인지활동 기록</h3>
+        <ul><li>인지자극 (그림카드)</li><li>말벗·격려</li><li>기타 (음악·노래)</li></ul>
+      </div>
+      <div class="form-content" data-form="6">
+        <h3>6. 사례관리 메모</h3>
+        <ul><li>위험군 분류</li><li>상황 서술</li><li>조치 + 보호자 안내</li></ul>
+        <div class="tip">⚠️ 응급 키워드는 AI가 자동 감지해 관리자에게 알림.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Lesson 3: Simulator + Scenarios ===== -->
+  <section class="lesson" data-step="3">
+    <div class="lesson-head reveal">
+      <span class="lesson-num">STEP 3 / 5 · 🎮 실습</span>
+      <h2>방문 시뮬레이터 + 시나리오 훈련</h2>
+      <div class="objective-box">
+        <div class="obj-title">🎯 학습 목표</div>
+        <div class="obj-content">표준 양식을 따라 1회 방문을 완수하고, 돌발 상황에 적절히 판단할 수 있다.</div>
+      </div>
+    </div>
+
+    <div class="simulator reveal">
+      <div class="sim-header">
+        <div>
+          <h3>📋 모의 방문 — 김순자 어르신</h3>
+          <div class="sub">방문요양 90분 코스</div>
+        </div>
+        <div class="sim-timer" id="simTimer">00:00</div>
+      </div>
+
+      <div class="sim-patient">
+        <div class="avatar">👵</div>
+        <div class="info">
+          <div class="name">김순자 (78세) · 여성</div>
+          <div class="note">고혈압 · 가벼운 무릎관절통 · 인지 양호</div>
+        </div>
+      </div>
+
+      <div class="sim-body">
+        <h4>1. 입실 시 바이탈</h4>
+        <div class="sim-vital-grid">
+          <div class="sim-vital"><label>체온 (℃)</label><input type="text" id="simTemp" placeholder="36.5"></div>
+          <div class="sim-vital"><label>혈압 (mmHg)</label><input type="text" id="simBp" placeholder="125/80"></div>
+          <div class="sim-vital"><label>맥박 (회/분)</label><input type="text" id="simPulse" placeholder="72"></div>
+        </div>
+
+        <h4>2. 신체 활동 지원</h4>
+        <div class="sim-checks">
+          <label class="sim-check"><input type="checkbox" data-check="식사 지원"><span class="box"></span><span class="lbl">식사 지원</span></label>
+          <label class="sim-check"><input type="checkbox" data-check="배설 지원"><span class="box"></span><span class="lbl">배설 지원</span></label>
+          <label class="sim-check"><input type="checkbox" data-check="입욕 지원"><span class="box"></span><span class="lbl">입욕 지원</span></label>
+          <label class="sim-check"><input type="checkbox" data-check="신체 청결"><span class="box"></span><span class="lbl">신체 청결</span></label>
+          <label class="sim-check"><input type="checkbox" data-check="이동 지원"><span class="box"></span><span class="lbl">이동 지원</span></label>
+          <label class="sim-check"><input type="checkbox" data-check="외출 동행"><span class="box"></span><span class="lbl">외출 동행</span></label>
+        </div>
+
+        <h4>3. 일상생활 원조</h4>
+        <div class="sim-checks">
+          <label class="sim-check"><input type="checkbox" data-check="조리"><span class="box"></span><span class="lbl">조리</span></label>
+          <label class="sim-check"><input type="checkbox" data-check="청소"><span class="box"></span><span class="lbl">청소</span></label>
+          <label class="sim-check"><input type="checkbox" data-check="세탁"><span class="box"></span><span class="lbl">세탁</span></label>
+          <label class="sim-check"><input type="checkbox" data-check="쇼핑 대행"><span class="box"></span><span class="lbl">쇼핑 대행</span></label>
+        </div>
+
+        <h4>4. 종합 관찰 기록</h4>
+        <textarea class="sim-textarea" id="simMemo" placeholder="예: 점심 식사량 평소보다 적었음. 보행 시 좌측 발을 약간 끄는 모습 관찰."></textarea>
+
+        <div class="sim-actions">
+          <button class="btn btn-primary" id="simStartBtn">▶ 방문 시작</button>
+          <button class="btn btn-ghost" id="simEndBtn" disabled>방문 종료 → AI 리포트</button>
+          <button class="btn btn-danger" id="simResetBtn">처음부터</button>
+        </div>
+
+        <div class="sim-output" id="simOutput">
+          <span class="ai-tag">🤖 AI 요약 결과</span>
+          <h4>보호자에게 전송될 리포트 미리보기</h4>
+          <div id="simReportBody"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario 1 -->
+    <div class="scenario-card reveal" data-scenario="1">
+      <span class="sc-tag">🎬 시나리오 1</span>
+      <div class="sc-title">갑작스러운 어지러움 호소</div>
+      <div class="sc-story">
+        오후 3시, 김순자 어르신이 일어나려다 "어지럽다"고 말씀하시며 다시 앉으셨어요. 표정은 평소와 비슷하지만 약간 창백해 보입니다. 어떻게 하시겠어요?
+      </div>
+      <div class="sc-question">가장 적절한 첫 대응은?</div>
+      <div class="scenario-choices">
+        <button class="scenario-choice" data-grade="bad">즉시 119에 신고한다</button>
+        <button class="scenario-choice" data-grade="best">안전한 자세로 모시고, 시각·증상을 메모하며 5분 관찰</button>
+        <button class="scenario-choice" data-grade="ok">바로 보호자에게 전화해 의견을 묻는다</button>
+        <button class="scenario-choice" data-grade="bad">"별 거 아니다" 라고 안심시키고 활동 계속</button>
+      </div>
+      <div class="scenario-feedback"></div>
+    </div>
+
+    <!-- Scenario 2 -->
+    <div class="scenario-card reveal" data-scenario="2">
+      <span class="sc-tag">🎬 시나리오 2</span>
+      <div class="sc-title">복약 시간을 지나친 상황</div>
+      <div class="sc-story">
+        혈압약 복용 시각이 30분이 지났는데 모모케어 앱에 미복용 알림이 떴어요. 어르신이 약을 잊으셨다고 합니다. 어떻게 처리할까요?
+      </div>
+      <div class="sc-question">가장 적절한 행동은?</div>
+      <div class="scenario-choices">
+        <button class="scenario-choice" data-grade="bad">2알 한꺼번에 복용시킨다</button>
+        <button class="scenario-choice" data-grade="ok">다음 시각까지 기다린다</button>
+        <button class="scenario-choice" data-grade="best">앱에 "미복용" 사유 메모 + 보호자 자동 알림 + 다음 복약 시각 안내</button>
+        <button class="scenario-choice" data-grade="bad">기록 없이 그냥 넘어간다</button>
+      </div>
+      <div class="scenario-feedback"></div>
+    </div>
+
+    <div class="quiz-box reveal">
+      <h3>📌 잠깐 체크 — 청구 근거가 되는 정보는?</h3>
+      <div class="quiz-options" data-quiz data-explain="시간 정보가 청구의 직접 근거입니다. 분 단위까지 정확히 기록해야 해요.">
+        <button class="quiz-option" data-correct="false">이용자의 기분 상태</button>
+        <button class="quiz-option" data-correct="true">서비스 시작·종료 시각 (분 단위)</button>
+        <button class="quiz-option" data-correct="false">청소한 방의 개수</button>
+        <button class="quiz-option" data-correct="false">간병인의 식사 시간</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </section>
+
+  <!-- ===== Lesson 4: Timer + Good/Bad Examples ===== -->
+  <section class="lesson" data-step="4">
+    <div class="lesson-head reveal">
+      <span class="lesson-num">STEP 4 / 5 · ⏱ 실습</span>
+      <h2>5분 영상 송출 — 실전 연습</h2>
+      <div class="objective-box">
+        <div class="obj-title">🎯 학습 목표</div>
+        <div class="obj-content">5단계 구조에 맞춰 5분 영상을 만들고, 의학적 판단 표현을 피할 수 있다.</div>
+      </div>
+    </div>
+
+    <div class="video-timer-panel reveal">
+      <div class="timer-status">현재 단계: <span class="step-now" id="timerStepName">대기 중</span></div>
+      <div class="timer-display" id="timerDisplay">05:00</div>
+      <div class="timer-controls">
+        <button class="btn btn-primary" id="timerStartBtn">▶ 시작</button>
+        <button class="btn btn-ghost" id="timerPauseBtn" disabled>⏸ 일시정지</button>
+        <button class="btn btn-danger" id="timerResetBtn">↻ 처음으로</button>
+      </div>
+      <div class="timer-bar"><div class="timer-bar-fill" id="timerBarFill"></div></div>
+    </div>
+
+    <div id="videoSteps">
+      <div class="video-step reveal" data-step-idx="0">
+        <div class="num-circle">1</div>
+        <div class="vs-body">
+          <h4>인사 + 오늘의 상태 한 줄</h4>
+          <p>"안녕하세요, 오늘 어머님 컨디션 좋으십니다."</p>
+          <span class="time">⏱ 30초</span>
+        </div>
+      </div>
+      <div class="video-step reveal reveal-delay-1" data-step-idx="1">
+        <div class="num-circle">2</div>
+        <div class="vs-body">
+          <h4>주요 신체 활동 보여주기</h4>
+          <p>식사·보행·화장실 등 1~2가지 짧게 촬영</p>
+          <span class="time">⏱ 1분 30초</span>
+        </div>
+      </div>
+      <div class="video-step reveal reveal-delay-2" data-step-idx="2">
+        <div class="num-circle">3</div>
+        <div class="vs-body">
+          <h4>인지·정서 활동 장면</h4>
+          <p>말벗 대화, 그림카드 활동 등</p>
+          <span class="time">⏱ 1분 30초</span>
+        </div>
+      </div>
+      <div class="video-step reveal reveal-delay-3" data-step-idx="3">
+        <div class="num-circle">4</div>
+        <div class="vs-body">
+          <h4>특이사항·변화 멘트</h4>
+          <p>객관적 관찰 위주, 의학적 판단 X</p>
+          <span class="time">⏱ 1분</span>
+        </div>
+      </div>
+      <div class="video-step reveal" data-step-idx="4">
+        <div class="num-circle">5</div>
+        <div class="vs-body">
+          <h4>마무리 인사 + 다음 안내</h4>
+          <p>다음 방문 시각 안내까지</p>
+          <span class="time">⏱ 30초</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Good vs Bad Examples -->
+    <h3 style="text-align:center; font-size:18px; margin-top:30px;">✏️ 영상 멘트 — 좋은 예 vs 나쁜 예</h3>
+    <div class="example-grid">
+      <div class="example-card good reveal">
+        <div class="ex-head">✅ 좋은 예 (관찰 사실)</div>
+        <div class="quote">"오늘 점심 식사 80% 정도 드셨고, 점심 후 30분 정도 산책하셨어요."</div>
+        <div class="reason">관찰한 사실과 수치만 전달. 보호자가 객관적 정보를 얻음.</div>
+      </div>
+      <div class="example-card bad reveal reveal-delay-1">
+        <div class="ex-head">❌ 나쁜 예 (의학적 판단)</div>
+        <div class="quote">"오늘 식욕이 떨어지신 걸 보니 치매가 진행되고 있는 것 같아요."</div>
+        <div class="reason">진단·판단 표현은 의료법 위반 소지 + 보호자에게 큰 불안 유발.</div>
+      </div>
+      <div class="example-card good reveal reveal-delay-2">
+        <div class="ex-head">✅ 좋은 예</div>
+        <div class="quote">"어제보다 손 떨림이 조금 더 있는 것처럼 보였어요. 추가 관찰이 필요할 수도 있겠습니다."</div>
+        <div class="reason">변화는 객관적으로 묘사. 판단은 보호자·의료진에게 위임.</div>
+      </div>
+      <div class="example-card bad reveal reveal-delay-3">
+        <div class="ex-head">❌ 나쁜 예</div>
+        <div class="quote">"파킨슨이 악화된 것 같으니 약을 늘려야 할 것 같아요."</div>
+        <div class="reason">진단 + 치료 권유. 둘 다 의료인 영역. 절대 금지.</div>
+      </div>
+    </div>
+
+    <div class="quiz-box reveal">
+      <h3>📌 다음 중 영상에서 절대 쓰면 안 되는 표현은?</h3>
+      <div class="quiz-options" data-quiz data-explain="질병 진단명을 언급하거나 증상이 악화/호전됐다는 의학적 판단은 의료인만 할 수 있어요. 간병인은 관찰 사실만.">
+        <button class="quiz-option" data-correct="false">"오늘은 잘 드셨어요"</button>
+        <button class="quiz-option" data-correct="true">"치매가 더 진행된 것 같아요"</button>
+        <button class="quiz-option" data-correct="false">"기분이 좋아 보이세요"</button>
+        <button class="quiz-option" data-correct="false">"잘 주무셨다고 하시네요"</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+  </section>
+
+  <!-- ===== Lesson 5: Warnings + Spaced Repetition Final Quiz ===== -->
+  <section class="lesson" data-step="5">
+    <div class="lesson-head reveal">
+      <span class="lesson-num">STEP 5 / 5</span>
+      <h2>주의사항 + 종합 평가</h2>
+      <div class="objective-box">
+        <div class="obj-title">🎯 학습 목표</div>
+        <div class="obj-content">법적 효력에 직결되는 3가지 원칙을 지키고, 5단계 학습 내용을 종합 적용할 수 있다.</div>
+      </div>
+    </div>
+
+    <div class="warning-grid">
+      <div class="warning-card reveal">
+        <div class="icon">✍️</div>
+        <h3>① 서명·날인 필수</h3>
+        <p>이용자/가족에게 내용 설명 + 확인 서명. 법적 효력 발생 조건.</p>
+      </div>
+      <div class="warning-card reveal reveal-delay-1">
+        <div class="icon">⏰</div>
+        <h3>② 시간 엄수</h3>
+        <p>시작·종료 시각은 청구의 직접 근거. 분 단위.</p>
+      </div>
+      <div class="warning-card reveal reveal-delay-2">
+        <div class="icon">📱</div>
+        <h3>③ 전자기록 우선</h3>
+        <p>모모케어 앱 입력 우선. 자동 백업·검색·공유.</p>
+      </div>
+    </div>
+
+    <!-- Final Quiz (spaced repetition) -->
+    <div class="final-quiz reveal" id="finalQuiz">
+      <div class="fq-head">
+        <span class="fq-tag">📝 종합 평가</span>
+      </div>
+      <h3>5문제로 전체 학습 내용 점검</h3>
+      <div class="fq-sub">앞에서 배운 내용을 다시 한 번 짚어요. 간격 반복으로 장기기억에 저장됩니다.</div>
+
+      <div class="final-quiz-progress" id="fqProgress">
+        <div class="pdot active"></div>
+        <div class="pdot"></div>
+        <div class="pdot"></div>
+        <div class="pdot"></div>
+        <div class="pdot"></div>
+      </div>
+
+      <div class="fq-question active" data-fq="1">
+        <div class="q-num">1 / 5 · 응급 대응</div>
+        <div class="q-text">어르신이 갑자기 "어지럽다"고 호소하실 때 가장 먼저 해야 할 일은?</div>
+        <div class="test-opts">
+          <button class="test-opt" data-correct="false" data-fq-q="1">즉시 119에 신고한다</button>
+          <button class="test-opt" data-correct="true" data-fq-q="1">안전한 자세로 모시고 5분 관찰하며 시각·증상을 기록한다</button>
+          <button class="test-opt" data-correct="false" data-fq-q="1">보호자에게 먼저 전화해 의견을 묻는다</button>
+        </div>
+      </div>
+
+      <div class="fq-question" data-fq="2">
+        <div class="q-num">2 / 5 · 청구</div>
+        <div class="q-text">서비스 시작·종료 시각이 중요한 이유는?</div>
+        <div class="test-opts">
+          <button class="test-opt" data-correct="false" data-fq-q="2">보호자가 보기 좋아서</button>
+          <button class="test-opt" data-correct="true" data-fq-q="2">장기요양보수 청구의 직접 근거이기 때문</button>
+          <button class="test-opt" data-correct="false" data-fq-q="2">간병인 평가에 사용되어서</button>
+        </div>
+      </div>
+
+      <div class="fq-question" data-fq="3">
+        <div class="q-num">3 / 5 · 영상</div>
+        <div class="q-text">5분 영상 송출에서 2번째 단계(1분 30초)에 들어가는 내용은?</div>
+        <div class="test-opts">
+          <button class="test-opt" data-correct="false" data-fq-q="3">인사 한마디</button>
+          <button class="test-opt" data-correct="true" data-fq-q="3">주요 신체 활동 (식사·보행 등)</button>
+          <button class="test-opt" data-correct="false" data-fq-q="3">마무리 인사</button>
+        </div>
+      </div>
+
+      <div class="fq-question" data-fq="4">
+        <div class="q-num">4 / 5 · 표현</div>
+        <div class="q-text">보호자에게 절대 쓰면 안 되는 표현은?</div>
+        <div class="test-opts">
+          <button class="test-opt" data-correct="false" data-fq-q="4">"점심 80% 드셨어요"</button>
+          <button class="test-opt" data-correct="false" data-fq-q="4">"오늘은 표정이 밝으세요"</button>
+          <button class="test-opt" data-correct="true" data-fq-q="4">"파킨슨이 악화된 것 같아요"</button>
+        </div>
+      </div>
+
+      <div class="fq-question" data-fq="5">
+        <div class="q-num">5 / 5 · 법적</div>
+        <div class="q-text">법적 효력 발생을 위해 반드시 필요한 것은?</div>
+        <div class="test-opts">
+          <button class="test-opt" data-correct="false" data-fq-q="5">관리자 결재</button>
+          <button class="test-opt" data-correct="true" data-fq-q="5">이용자·가족 확인 서명</button>
+          <button class="test-opt" data-correct="false" data-fq-q="5">사진 첨부</button>
+        </div>
+      </div>
+
+      <div class="fq-actions">
+        <button class="btn btn-purple" id="fqNextBtn" disabled>다음 →</button>
+      </div>
+
+      <div class="test-result" id="fqResult">
+        <div class="big-num"><span id="fqScore">0</span>/5</div>
+        <div class="small">종합 평가 완료! 결과는 다음 화면에서 확인하세요.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Complete: Certificate + Pre/Post compare ===== -->
+  <section class="complete" data-step="complete">
+    <div class="checkmark">✓</div>
+    <h2>5단계 교육 완료!</h2>
+    <p class="sub">사전 진단 대비 향상도를 확인하고, 수료증을 발급받으세요.</p>
+
+    <!-- Badges -->
+    <div class="badges-row" id="badgesRow">
+      <div class="badge-item" data-badge="firstStep">
+        <div class="emoji">🌱</div>
+        <div class="name">학습 시작</div>
+      </div>
+      <div class="badge-item" data-badge="simulator">
+        <div class="emoji">📋</div>
+        <div class="name">방문 마스터</div>
+      </div>
+      <div class="badge-item" data-badge="timer">
+        <div class="emoji">⏱</div>
+        <div class="name">영상 완주</div>
+      </div>
+      <div class="badge-item" data-badge="scenario">
+        <div class="emoji">🎬</div>
+        <div class="name">위기 대응</div>
+      </div>
+      <div class="badge-item" data-badge="perfect">
+        <div class="emoji">🏆</div>
+        <div class="name">종합 만점</div>
+      </div>
+    </div>
+
+    <!-- Score summary -->
+    <div class="score-summary">
+      <div class="score-item">
+        <div class="num"><span id="finalScore">0</span>점</div>
+        <div class="lbl">총 점수</div>
+      </div>
+      <div class="score-item">
+        <div class="num"><span id="finalFqCorrect">0</span>/5</div>
+        <div class="lbl">종합평가</div>
+      </div>
+      <div class="score-item">
+        <div class="num" id="finalGrade">-</div>
+        <div class="lbl">등급</div>
+      </div>
+    </div>
+
+    <!-- Pre vs Post comparison -->
+    <div class="compare-box">
+      <div class="ttl">📈 사전 → 사후 향상도</div>
+      <div class="compare-row">
+        <span class="label">사전 진단 점수</span>
+        <span class="val"><span id="preScoreDisplay">-</span>/3</span>
+      </div>
+      <div class="compare-row">
+        <span class="label">종합 평가 점수</span>
+        <span class="val"><span id="postScoreDisplay">-</span>/5</span>
+      </div>
+      <div class="compare-row">
+        <span class="label">정답률 향상</span>
+        <span class="delta up" id="improveDelta">-</span>
+      </div>
+    </div>
+
+    <!-- Cert input -->
+    <div class="cert-input-row">
+      <input type="text" id="certName" placeholder="성함을 입력하세요" maxlength="20">
+      <button class="btn btn-primary" id="certIssueBtn">수료증 발급</button>
+    </div>
+
+    <!-- Certificate card -->
+    <div class="cert-card" id="certCard">
+      <h3>CERTIFICATE OF COMPLETION</h3>
+      <div class="title">모모케어 간병인 교육 수료증</div>
+      <div class="body">
+        아래 분께서<br>
+        모모케어 표준 간병인 교육 과정(5단계)을<br>
+        성실히 이수하였음을 증명합니다.
+      </div>
+      <div class="name-display placeholder" id="certNameDisplay">성함이 여기 표시됩니다</div>
+      <div class="footer-meta">
+        <div>발급일: <span id="certDate"></span></div>
+        <div>발급기관: 모모케어 (MOMO CARE)</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <button class="btn btn-ghost" id="certPrintBtn" style="background:white; color:var(--teal-dark);">🖨 수료증 인쇄</button>
+    </div>
+  </section>
+
+  <footer style="text-align:center;padding:30px 20px;color:var(--muted);font-size:12px;background:var(--gray-light);">
+    모모케어 표준 간병인 교육 메뉴얼 v3.0 인터랙티브 · 2026-05-28 · 베스트 프랙티스 적용 (사전·사후 진단 + 시나리오 + 간격 반복 + 게이미피케이션)
+  </footer>
+
+<script>
+(function() {
+  'use strict';
+
+  // ===== State (localStorage) =====
+  const STATE_KEY = 'momocare_edu_state_v3';
+  let state = loadState();
+
+  function defaultState() {
+    return {
+      score: 0,
+      badges: {},
+      preTest: { answers: {}, score: null, done: false },
+      finalQuiz: { answers: {}, score: null, done: false },
+      simDone: false,
+      timerDone: false,
+      scenariosBest: {},
+      certName: ''
+    };
+  }
+  function loadState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STATE_KEY));
+      return saved || defaultState();
+    } catch(e) { return defaultState(); }
+  }
+  function saveState() {
+    try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  // ===== Score & Badges =====
+  const scoreEl = document.getElementById('scoreNow');
+  const badgeCountEl = document.getElementById('badgeCount');
+  const toast = document.getElementById('badgeToast');
+  const toastEmoji = document.getElementById('toastEmoji');
+  const toastName = document.getElementById('toastName');
+
+  const BADGES = {
+    firstStep: { emoji: '🌱', name: '학습 시작' },
+    simulator: { emoji: '📋', name: '방문 마스터' },
+    timer:     { emoji: '⏱', name: '영상 완주' },
+    scenario:  { emoji: '🎬', name: '위기 대응' },
+    perfect:   { emoji: '🏆', name: '종합 만점' }
+  };
+
+  function updateScoreUI() {
+    scoreEl.textContent = state.score;
+    const count = Object.keys(state.badges).length;
+    badgeCountEl.textContent = '🏅 ' + count + '/5';
+  }
+
+  function addScore(n) {
+    state.score += n;
+    scoreEl.parentElement.style.animation = 'pulse 0.4s';
+    setTimeout(() => scoreEl.parentElement.style.animation = '', 400);
+    updateScoreUI();
+    saveState();
+  }
+
+  function earnBadge(key) {
+    if (state.badges[key]) return;
+    state.badges[key] = true;
+    saveState();
+    updateScoreUI();
+    badgeCountEl.classList.add('flash');
+    setTimeout(() => badgeCountEl.classList.remove('flash'), 600);
+
+    const b = BADGES[key];
+    if (b) {
+      toastEmoji.textContent = b.emoji;
+      toastName.textContent = b.name;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+    // Update badge in complete section
+    const badgeEl = document.querySelector('.badge-item[data-badge="' + key + '"]');
+    if (badgeEl) badgeEl.classList.add('earned');
+  }
+
+  // Init UI from state
+  updateScoreUI();
+  Object.keys(state.badges).forEach(key => {
+    const el = document.querySelector('.badge-item[data-badge="' + key + '"]');
+    if (el) el.classList.add('earned');
+  });
+
+  // ===== Reset =====
+  document.getElementById('resetAllBtn').addEventListener('click', () => {
+    if (confirm('학습 진도와 점수가 모두 초기화됩니다. 계속할까요?')) {
+      localStorage.removeItem(STATE_KEY);
+      location.reload();
+    }
+  });
+
+  // ===== Progress bar =====
+  const progressBar = document.getElementById('progressBar');
+  const stepNow = document.getElementById('stepNow');
+  function updateProgress() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = Math.min((scrollTop / docHeight) * 100, 100) + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // ===== Reveal observer =====
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  // ===== Step indicator =====
+  const stepObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const step = entry.target.getAttribute('data-step');
+        if (step === 'complete') stepNow.textContent = '5';
+        else if (step === '0') stepNow.textContent = '0';
+        else stepNow.textContent = step;
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-step]').forEach(el => stepObs.observe(el));
+
+  // ===== Form tabs =====
+  const tabs = document.querySelectorAll('.form-tab');
+  const contents = document.querySelectorAll('.form-content');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.getAttribute('data-form');
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelector('.form-content[data-form="' + id + '"]').classList.add('active');
+    });
+  });
+
+  // ===== Pre-Test =====
+  const preQs = document.querySelectorAll('#preTestPanel .test-question');
+  const preDots = document.querySelectorAll('#preTestPanel .test-progress .dot');
+  const preNextBtn = document.getElementById('preNextBtn');
+  const preResult = document.getElementById('preResult');
+  const preScoreSpan = document.getElementById('preScore');
+  let preCurrent = 0;
+  let preCorrect = 0;
+
+  document.querySelectorAll('#preTestPanel .test-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const q = opt.getAttribute('data-pre-q');
+      // Mark selected
+      opt.parentElement.querySelectorAll('.test-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      state.preTest.answers[q] = opt.getAttribute('data-correct') === 'true';
+      preNextBtn.disabled = false;
+      saveState();
+    });
+  });
+
+  preNextBtn.addEventListener('click', () => {
+    // Lock current
+    const currentQ = preQs[preCurrent];
+    currentQ.querySelectorAll('.test-opt').forEach(o => o.disabled = true);
+    preDots[preCurrent].classList.add('done');
+    preDots[preCurrent].classList.remove('active');
+
+    if (preCurrent < preQs.length - 1) {
+      preCurrent++;
+      currentQ.classList.remove('active');
+      preQs[preCurrent].classList.add('active');
+      preDots[preCurrent].classList.add('active');
+      preNextBtn.disabled = true;
+    } else {
+      // Calculate score
+      preCorrect = Object.values(state.preTest.answers).filter(v => v === true).length;
+      state.preTest.score = preCorrect;
+      state.preTest.done = true;
+      saveState();
+      preScoreSpan.textContent = preCorrect;
+      preResult.classList.add('show');
+      preNextBtn.style.display = 'none';
+      earnBadge('firstStep');
+      addScore(10);
+    }
+  });
+
+  // Restore preTest if done
+  if (state.preTest.done) {
+    preQs.forEach(q => q.classList.remove('active'));
+    preDots.forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
+    preScoreSpan.textContent = state.preTest.score;
+    preResult.classList.add('show');
+    preNextBtn.style.display = 'none';
+  }
+
+  // ===== Regular quizzes (with explanation) =====
+  document.querySelectorAll('[data-quiz]').forEach(quiz => {
+    const feedback = quiz.parentElement.querySelector('.quiz-feedback');
+    const explain = quiz.getAttribute('data-explain') || '';
+    const options = quiz.querySelectorAll('.quiz-option');
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (opt.disabled) return;
+        const correct = opt.getAttribute('data-correct') === 'true';
+        options.forEach(o => {
+          o.disabled = true;
+          if (o.getAttribute('data-correct') === 'true') o.classList.add('correct');
+        });
+        if (correct) {
+          feedback.innerHTML = '✓ 정답입니다! +15점' + (explain ? '<div class="explain">💡 ' + explain + '</div>' : '');
+          feedback.className = 'quiz-feedback show correct';
+          addScore(15);
+        } else {
+          opt.classList.add('wrong');
+          feedback.innerHTML = '× 다시 확인해보세요.' + (explain ? '<div class="explain">💡 ' + explain + '</div>' : '');
+          feedback.className = 'quiz-feedback show wrong';
+        }
+      });
+    });
+  });
+
+  // ===== Scenario branching =====
+  const SC_FEEDBACK = {
+    1: {
+      best: { title: '✅ 최선의 선택입니다!', body: '안전 확보 → 관찰 → 기록이 표준 절차예요. 5분 관찰 후에도 호전이 없으면 보호자·119에 연락. 시각·증상은 모모케어 메모에 즉시 기록하면 사례관리 데이터로 남아요.' },
+      ok:   { title: '⚠️ 나쁘진 않지만 순서가 어긋났어요', body: '보호자 연락은 1차 관찰 후가 더 적절해요. 갑작스러운 어지러움은 일시적일 수 있고, 보호자가 매번 즉시 결정 내리기는 부담입니다.' },
+      bad:  { title: '❌ 위험한 선택', body: '119 즉시 신고는 응급 상황 (의식 상실·심한 통증)일 때만. "별 거 아니다" 처리는 더 위험 — 작은 신호도 객관 기록이 필요해요.' }
+    },
+    2: {
+      best: { title: '✅ 표준 절차 그대로!', body: '미복용은 반드시 사유 메모 + 자동 알림 + 다음 시각 안내가 모모케어 표준 흐름. 보호자에게 즉시 알려야 약 추가 처방·의료진 상담 결정이 가능해요.' },
+      ok:   { title: '⚠️ 기다리는 건 위험', body: '혈압약은 시간 간격이 중요. 기다리면서도 기록은 즉시 해야 합니다. 미복용 기록 없이 다음 시각 가면 보호자가 영영 모를 수 있어요.' },
+      bad:  { title: '❌ 절대 금지', body: '2알 한꺼번에 = 의료적 판단. 절대 간병인이 결정하면 안 돼요. 기록 없이 넘기는 것도 자기보호 측면에서 큰 리스크.' }
+    }
+  };
+
+  document.querySelectorAll('.scenario-card').forEach(card => {
+    const sid = card.getAttribute('data-scenario');
+    const choices = card.querySelectorAll('.scenario-choice');
+    const feedback = card.querySelector('.scenario-feedback');
+    choices.forEach(choice => {
+      choice.addEventListener('click', () => {
+        if (choice.disabled) return;
+        const grade = choice.getAttribute('data-grade');
+        choices.forEach(c => {
+          c.disabled = true;
+          const g = c.getAttribute('data-grade');
+          if (g === 'best') c.classList.add('best');
+          else if (g === 'ok' && c === choice) c.classList.add('ok');
+          else if (g === 'bad' && c === choice) c.classList.add('bad');
+        });
+        const f = SC_FEEDBACK[sid][grade];
+        feedback.innerHTML = '<b>' + f.title + '</b>' + f.body;
+        feedback.className = 'scenario-feedback show ' + grade;
+
+        if (grade === 'best') {
+          addScore(20);
+          state.scenariosBest[sid] = true;
+          saveState();
+          // earn 'scenario' badge if both best
+          if (state.scenariosBest['1'] && state.scenariosBest['2']) {
+            earnBadge('scenario');
+          }
+        } else if (grade === 'ok') {
+          addScore(8);
+        }
+      });
+    });
+  });
+
+  // ===== Simulator =====
+  const simTimer = document.getElementById('simTimer');
+  const simStartBtn = document.getElementById('simStartBtn');
+  const simEndBtn = document.getElementById('simEndBtn');
+  const simResetBtn = document.getElementById('simResetBtn');
+  const simOutput = document.getElementById('simOutput');
+  const simReportBody = document.getElementById('simReportBody');
+  let simInterval = null, simSeconds = 0, simStarted = false;
+
+  function fmt(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+  }
+
+  simStartBtn.addEventListener('click', () => {
+    if (simStarted) return;
+    simStarted = true; simSeconds = 0;
+    simInterval = setInterval(() => {
+      simSeconds++;
+      simTimer.textContent = fmt(simSeconds);
+    }, 1000);
+    simStartBtn.disabled = true;
+    simStartBtn.textContent = '⏱ 방문 진행 중...';
+    simEndBtn.disabled = false;
+  });
+
+  simEndBtn.addEventListener('click', () => {
+    if (!simStarted) return;
+    clearInterval(simInterval);
+    simStarted = false;
+    simStartBtn.disabled = false;
+    simStartBtn.textContent = '▶ 방문 시작';
+    simEndBtn.disabled = true;
+    generateAIReport();
+    if (!state.simDone) {
+      addScore(30);
+      state.simDone = true;
+      earnBadge('simulator');
+      saveState();
+    }
+  });
+
+  simResetBtn.addEventListener('click', () => {
+    clearInterval(simInterval);
+    simStarted = false; simSeconds = 0;
+    simTimer.textContent = '00:00';
+    simStartBtn.disabled = false;
+    simStartBtn.textContent = '▶ 방문 시작';
+    simEndBtn.disabled = true;
+    simOutput.classList.remove('show');
+    document.querySelectorAll('.sim-checks input').forEach(el => el.checked = false);
+    ['simTemp', 'simBp', 'simPulse', 'simMemo'].forEach(id => document.getElementById(id).value = '');
+  });
+
+  function generateAIReport() {
+    const temp = document.getElementById('simTemp').value || '미입력';
+    const bp = document.getElementById('simBp').value || '미입력';
+    const pulse = document.getElementById('simPulse').value || '미입력';
+    const memo = document.getElementById('simMemo').value || '특이사항 없음';
+    const checks = Array.from(document.querySelectorAll('.sim-checks input:checked'))
+                        .map(el => el.getAttribute('data-check'));
+    const physical = ['식사 지원','배설 지원','입욕 지원','신체 청결','이동 지원','외출 동행'];
+    const life = ['조리','청소','세탁','쇼핑 대행'];
+    const pc = checks.filter(c => physical.includes(c));
+    const lc = checks.filter(c => life.includes(c));
+    const minutes = Math.max(1, Math.round(simSeconds / 60));
+    let status = '양호';
+    if (/아프|통증|어지러|발열|불편/.test(memo)) status = '주의';
+    else if (/호전|좋|밝|미소/.test(memo)) status = '호전';
+
+    simReportBody.innerHTML = `
+      <div class="report-line"><b>방문 시간</b><br>${fmt(simSeconds)} (총 ${minutes}분)</div>
+      <div class="report-line"><b>입실 바이탈</b><br>체온 ${temp} · 혈압 ${bp} · 맥박 ${pulse}</div>
+      <div class="report-line"><b>제공 서비스 (${checks.length}건)</b><br>
+        신체: ${pc.length ? pc.join(', ') : '없음'}<br>
+        생활: ${lc.length ? lc.join(', ') : '없음'}
+      </div>
+      <div class="report-line"><b>오늘 상태</b><br>${status}</div>
+      <div class="report-line"><b>관찰 메모</b><br>${memo}</div>
+      <div class="preview-msg">
+        <div class="from">📱 보호자에게 전송 (모모케어 알림)</div>
+        김순자 어르신 오늘 방문 완료. 신체 ${pc.length}건, 생활 ${lc.length}건 진행, 상태 <b>${status}</b>입니다.
+      </div>
+    `;
+    simOutput.classList.add('show');
+    simOutput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // ===== 5min Timer =====
+  const TOTAL = 5 * 60;
+  const timerDisplay = document.getElementById('timerDisplay');
+  const timerStartBtn = document.getElementById('timerStartBtn');
+  const timerPauseBtn = document.getElementById('timerPauseBtn');
+  const timerResetBtn = document.getElementById('timerResetBtn');
+  const timerBarFill = document.getElementById('timerBarFill');
+  const timerStepName = document.getElementById('timerStepName');
+  const videoSteps = document.querySelectorAll('#videoSteps .video-step');
+  let vInterval = null, vLeft = TOTAL, vRunning = false;
+  const stepNames = ['1단계 — 인사', '2단계 — 신체 활동', '3단계 — 인지·정서', '4단계 — 특이사항', '5단계 — 마무리'];
+  const stepDur = [30, 90, 90, 60, 30];
+
+  function updateVStep() {
+    const elapsed = TOTAL - vLeft;
+    let cumul = 0, active = -1;
+    for (let i = 0; i < stepDur.length; i++) {
+      cumul += stepDur[i];
+      if (elapsed < cumul) { active = i; break; }
+    }
+    videoSteps.forEach((s, idx) => {
+      s.classList.remove('active', 'done');
+      if (idx < active) s.classList.add('done');
+      else if (idx === active) s.classList.add('active');
+    });
+    timerStepName.textContent = active >= 0 ? stepNames[active] : '완료!';
+    if (active < 0) videoSteps.forEach(s => { s.classList.remove('active'); s.classList.add('done'); });
+  }
+
+  function updateVDisplay() {
+    const m = Math.floor(vLeft / 60);
+    const s = vLeft % 60;
+    timerDisplay.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    timerDisplay.classList.remove('warning', 'danger');
+    if (vLeft <= 30) timerDisplay.classList.add('danger');
+    else if (vLeft <= 60) timerDisplay.classList.add('warning');
+    timerBarFill.style.width = ((TOTAL - vLeft) / TOTAL * 100) + '%';
+    updateVStep();
+  }
+
+  timerStartBtn.addEventListener('click', () => {
+    if (vRunning) return;
+    vRunning = true;
+    timerStartBtn.disabled = true;
+    timerPauseBtn.disabled = false;
+    vInterval = setInterval(() => {
+      vLeft--;
+      updateVDisplay();
+      if (vLeft <= 0) {
+        clearInterval(vInterval);
+        vRunning = false;
+        timerStartBtn.disabled = false;
+        timerPauseBtn.disabled = true;
+        if (!state.timerDone) {
+          addScore(30);
+          state.timerDone = true;
+          earnBadge('timer');
+          saveState();
+        }
+      }
+    }, 1000);
+  });
+  timerPauseBtn.addEventListener('click', () => {
+    clearInterval(vInterval); vRunning = false;
+    timerStartBtn.disabled = false; timerPauseBtn.disabled = true;
+    timerStartBtn.textContent = '▶ 이어서';
+  });
+  timerResetBtn.addEventListener('click', () => {
+    clearInterval(vInterval); vRunning = false; vLeft = TOTAL;
+    updateVDisplay();
+    timerStartBtn.disabled = false; timerPauseBtn.disabled = true;
+    timerStartBtn.textContent = '▶ 시작';
+    timerStepName.textContent = '대기 중';
+    videoSteps.forEach(s => s.classList.remove('active', 'done'));
+  });
+
+  // ===== Final Quiz =====
+  const fqQs = document.querySelectorAll('#finalQuiz .fq-question');
+  const fqDots = document.querySelectorAll('#fqProgress .pdot');
+  const fqNextBtn = document.getElementById('fqNextBtn');
+  const fqResult = document.getElementById('fqResult');
+  const fqScoreSpan = document.getElementById('fqScore');
+  let fqCurrent = 0, fqCorrect = 0;
+
+  document.querySelectorAll('#finalQuiz .test-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const q = opt.getAttribute('data-fq-q');
+      opt.parentElement.querySelectorAll('.test-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      state.finalQuiz.answers[q] = opt.getAttribute('data-correct') === 'true';
+      fqNextBtn.disabled = false;
+      saveState();
+    });
+  });
+
+  fqNextBtn.addEventListener('click', () => {
+    const currentQ = fqQs[fqCurrent];
+    currentQ.querySelectorAll('.test-opt').forEach(o => o.disabled = true);
+    fqDots[fqCurrent].classList.add('done');
+    fqDots[fqCurrent].classList.remove('active');
+
+    if (fqCurrent < fqQs.length - 1) {
+      fqCurrent++;
+      currentQ.classList.remove('active');
+      fqQs[fqCurrent].classList.add('active');
+      fqDots[fqCurrent].classList.add('active');
+      fqNextBtn.disabled = true;
+    } else {
+      fqCorrect = Object.values(state.finalQuiz.answers).filter(v => v === true).length;
+      state.finalQuiz.score = fqCorrect;
+      state.finalQuiz.done = true;
+      saveState();
+      fqScoreSpan.textContent = fqCorrect;
+      fqResult.classList.add('show');
+      fqNextBtn.style.display = 'none';
+      addScore(fqCorrect * 10);
+      if (fqCorrect === 5) earnBadge('perfect');
+      updateFinalSummary();
+    }
+  });
+
+  // Restore final quiz if done
+  if (state.finalQuiz.done) {
+    fqQs.forEach(q => q.classList.remove('active'));
+    fqDots.forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
+    fqScoreSpan.textContent = state.finalQuiz.score;
+    fqResult.classList.add('show');
+    fqNextBtn.style.display = 'none';
+  }
+
+  // ===== Final summary =====
+  const finalScore = document.getElementById('finalScore');
+  const finalFqCorrect = document.getElementById('finalFqCorrect');
+  const finalGrade = document.getElementById('finalGrade');
+  const preScoreDisplay = document.getElementById('preScoreDisplay');
+  const postScoreDisplay = document.getElementById('postScoreDisplay');
+  const improveDelta = document.getElementById('improveDelta');
+
+  function updateFinalSummary() {
+    finalScore.textContent = state.score;
+    finalFqCorrect.textContent = state.finalQuiz.score !== null ? state.finalQuiz.score : 0;
+
+    let grade = '-';
+    const s = state.score;
+    if (s >= 180) grade = 'S';
+    else if (s >= 130) grade = 'A';
+    else if (s >= 80) grade = 'B';
+    else if (s > 0) grade = 'C';
+    finalGrade.textContent = grade;
+
+    if (state.preTest.score !== null) preScoreDisplay.textContent = state.preTest.score;
+    if (state.finalQuiz.score !== null) postScoreDisplay.textContent = state.finalQuiz.score;
+
+    if (state.preTest.score !== null && state.finalQuiz.score !== null) {
+      const prePct = (state.preTest.score / 3) * 100;
+      const postPct = (state.finalQuiz.score / 5) * 100;
+      const diff = Math.round(postPct - prePct);
+      improveDelta.textContent = (diff >= 0 ? '+' : '') + diff + '%p';
+    }
+  }
+
+  // Update on entering complete section
+  const completeObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) updateFinalSummary();
+    });
+  }, { threshold: 0.2 });
+  completeObs.observe(document.querySelector('.complete'));
+
+  // ===== Certificate =====
+  const certName = document.getElementById('certName');
+  const certNameDisplay = document.getElementById('certNameDisplay');
+  const certIssueBtn = document.getElementById('certIssueBtn');
+  const certDate = document.getElementById('certDate');
+  const certPrintBtn = document.getElementById('certPrintBtn');
+
+  const today = new Date();
+  certDate.textContent = today.getFullYear() + '년 ' + (today.getMonth() + 1) + '월 ' + today.getDate() + '일';
+
+  // Restore name
+  if (state.certName) {
+    certName.value = state.certName;
+    certNameDisplay.textContent = state.certName + ' 님';
+    certNameDisplay.classList.remove('placeholder');
+  }
+
+  certIssueBtn.addEventListener('click', () => {
+    const name = certName.value.trim();
+    if (!name) {
+      certName.focus();
+      certName.parentElement.classList.add('shake');
+      setTimeout(() => certName.parentElement.classList.remove('shake'), 400);
+      return;
+    }
+    certNameDisplay.textContent = name + ' 님';
+    certNameDisplay.classList.remove('placeholder');
+    state.certName = name;
+    saveState();
+    updateFinalSummary();
+  });
+
+  certPrintBtn.addEventListener('click', () => {
+    if (certNameDisplay.classList.contains('placeholder')) {
+      alert('먼저 성함을 입력하고 수료증을 발급해주세요.');
+      return;
+    }
+    window.print();
+  });
+
+  certName.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') certIssueBtn.click();
+  });
+
+  // Initial summary refresh
+  updateFinalSummary();
+
+})();
+</script>
+
+</body>
+</html>

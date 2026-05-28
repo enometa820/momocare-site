@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>모모케어 — 손글씨 일지는 끝</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a100d;
+    --card: #15201c;
+    --card-2: #1c2a25;
+    --line: #2a3a34;
+    --mint: #5fe3b6;
+    --mint-2: #38c899;
+    --mint-soft: #2d6b56;
+    --mint-bg: #0f2a22;
+    --mint-pill: #cdebde;
+    --gray-1: #f1f5f3;
+    --gray-2: #c8d0cc;
+    --gray-3: #8a9591;
+    --gray-4: #5a6562;
+    --paper: #f4ecd8;
+    --paper-line: #c8b88a;
+    --paper-ink: #3a3326;
+    --red: #ff6b6b;
+  }
+
+  html, body {
+    background: #1a1f1d;
+    font-family: 'Pretendard', 'Noto Color Emoji', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--gray-1);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 8mm 10mm;
+    margin: 0 auto;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    gap: 4mm;
+    overflow: hidden;
+  }
+  section, header, .hero, .compare-visual, .differentiators, .vs-bar, .footer { break-inside: avoid; page-break-inside: avoid; }
+
+  /* ===== 헤더 ===== */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 8.5pt;
+    color: var(--gray-3);
+    letter-spacing: 1px;
+  }
+  .topbar .brand {
+    color: var(--mint);
+    font-weight: 800;
+    font-size: 11pt;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== 히어로 ===== */
+  .hero {
+    text-align: center;
+    padding: 1mm 0 1mm;
+  }
+  .hero .kicker {
+    display: inline-block;
+    color: var(--mint);
+    background: var(--mint-bg);
+    border: 1px solid var(--mint-soft);
+    padding: 1.5mm 4mm;
+    border-radius: 999px;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 2.5mm;
+  }
+  .hero h1 {
+    font-size: 22pt;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    color: var(--gray-1);
+  }
+  .hero h1 .mint { color: var(--mint); }
+  .hero h1 .strike {
+    color: var(--gray-4);
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+    text-decoration-color: var(--red);
+  }
+  .hero .sub {
+    margin-top: 2.5mm;
+    color: var(--gray-2);
+    font-size: 10pt;
+    font-weight: 500;
+  }
+
+  /* ===== Before/After 핵심 비주얼 ===== */
+  .compare-visual {
+    display: grid;
+    grid-template-columns: 1fr 14mm 1fr;
+    gap: 0;
+    align-items: stretch;
+    margin-top: 2mm;
+  }
+  .compare-visual .arrow-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22pt;
+    color: var(--mint);
+    font-weight: 800;
+  }
+  .panel {
+    border-radius: 8px;
+    padding: 4mm 4mm 4mm;
+    position: relative;
+  }
+  .panel .label {
+    position: absolute;
+    top: -3mm;
+    left: 5mm;
+    background: var(--bg);
+    padding: 0 2mm;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* 종이 일지 (Before) */
+  .panel.paper {
+    background: var(--paper);
+    color: var(--paper-ink);
+    box-shadow: 0 1mm 0 #c4b48a;
+    transform: rotate(-1deg);
+  }
+  .panel.paper .label { color: var(--red); border: 1px solid var(--red); border-radius: 3px; background: var(--paper); }
+  .paper-title {
+    text-align: center;
+    font-family: 'Gaegu', cursive;
+    font-size: 13pt;
+    font-weight: 700;
+    border-bottom: 1.5px solid var(--paper-ink);
+    padding-bottom: 1.5mm;
+    margin-bottom: 3mm;
+    margin-top: 2mm;
+  }
+  .paper-row {
+    display: grid;
+    grid-template-columns: 12mm 1fr;
+    gap: 2mm;
+    border-bottom: 1px dashed var(--paper-line);
+    padding: 1.5mm 0;
+    font-family: 'Gaegu', cursive;
+    font-size: 9pt;
+    line-height: 1.3;
+    min-height: 7mm;
+  }
+  .paper-row .date {
+    color: var(--paper-ink);
+    opacity: 0.7;
+    font-weight: 700;
+  }
+  .paper-row .text {
+    color: var(--paper-ink);
+  }
+  .paper-row.empty .text::before {
+    content: "";
+    display: block;
+    height: 1px;
+    width: 80%;
+    border-bottom: 1px solid var(--paper-line);
+    margin-top: 3mm;
+  }
+  .paper-footnote {
+    margin-top: 3mm;
+    font-family: 'Gaegu', cursive;
+    font-size: 8.5pt;
+    color: #a04040;
+    text-align: center;
+  }
+
+  /* 모모케어 카드 (After) */
+  .panel.momo {
+    background: linear-gradient(180deg, #102822, #0c1f1a);
+    border: 1px solid var(--mint-soft);
+    box-shadow: 0 0 20px rgba(95, 227, 182, 0.08);
+  }
+  .panel.momo .label { color: var(--mint); border: 1px solid var(--mint); border-radius: 3px; background: var(--bg); }
+  .momo-screen {
+    margin-top: 1mm;
+  }
+  .momo-screen .video {
+    background: #000;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    height: 18mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 3mm;
+  }
+  .momo-screen .video::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 50%, rgba(95,227,182,0.15), transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(95,227,182,0.1), transparent 50%);
+  }
+  .momo-screen .video .rec {
+    position: absolute;
+    top: 2mm; left: 2mm;
+    color: var(--red);
+    font-size: 7pt;
+    font-weight: 700;
+    background: rgba(0,0,0,0.6);
+    padding: 0.5mm 2mm;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 1mm;
+  }
+  .momo-screen .video .rec::before {
+    content: "";
+    width: 1.5mm;
+    height: 1.5mm;
+    background: var(--red);
+    border-radius: 50%;
+    animation: blink 1s infinite;
+  }
+  .momo-screen .video .timer {
+    position: absolute;
+    top: 2mm; right: 2mm;
+    color: #fff;
+    font-size: 7.5pt;
+    font-weight: 600;
+    background: rgba(0,0,0,0.6);
+    padding: 0.5mm 2mm;
+    border-radius: 2px;
+  }
+  .momo-screen .video .play {
+    width: 8mm;
+    height: 8mm;
+    border-radius: 50%;
+    background: var(--mint);
+    color: #0a100d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9pt;
+    font-weight: 800;
+    z-index: 1;
+  }
+  @keyframes blink { 50% { opacity: 0.3; } }
+
+  .auto-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 2mm;
+    font-size: 8.5pt;
+    color: var(--gray-3);
+    margin-bottom: 2.5mm;
+  }
+  .auto-tag-row .auto {
+    background: var(--mint);
+    color: #0a100d;
+    font-weight: 800;
+    padding: 0.7mm 2mm;
+    border-radius: 3px;
+    font-size: 7.5pt;
+    letter-spacing: 0.5px;
+  }
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5mm;
+    margin-bottom: 3mm;
+  }
+  .tag {
+    background: var(--mint-bg);
+    color: var(--mint);
+    border: 1px solid var(--mint-soft);
+    padding: 1mm 2.5mm;
+    border-radius: 999px;
+    font-size: 8pt;
+    font-weight: 600;
+  }
+  .metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2mm;
+  }
+  .metric {
+    background: rgba(95,227,182,0.05);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 2mm;
+    text-align: center;
+  }
+  .metric .v {
+    color: var(--mint);
+    font-size: 11pt;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .metric .k {
+    color: var(--gray-3);
+    font-size: 7pt;
+    margin-top: 0.5mm;
+  }
+
+  /* ===== 핵심 차별점 카드 3개 ===== */
+  .differentiators {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4mm;
+  }
+  .diff {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 4mm 4mm;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+  }
+  .diff .icon {
+    font-size: 16pt;
+    margin-bottom: 0;
+  }
+  .diff .num {
+    color: var(--mint);
+    font-size: 7.5pt;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+  .diff h3 {
+    font-size: 11pt;
+    font-weight: 800;
+    color: var(--gray-1);
+    line-height: 1.25;
+  }
+  .diff p {
+    font-size: 8.5pt;
+    color: var(--gray-3);
+    line-height: 1.45;
+  }
+
+  /* ===== 비교 한 줄 ===== */
+  .vs-bar {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 3mm 4mm;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    column-gap: 3mm;
+    align-items: center;
+  }
+  .vs-bar .cell {
+    padding: 1.4mm 0;
+    font-size: 8.5pt;
+    border-bottom: 1px dashed var(--line);
+  }
+  .vs-bar .head {
+    padding-bottom: 2.5mm;
+    border-bottom: 1px solid var(--line);
+    font-size: 8pt;
+    color: var(--gray-3);
+    letter-spacing: 1px;
+    font-weight: 700;
+  }
+  .vs-bar .head.momo { color: var(--mint); }
+  .vs-bar .k { color: var(--gray-2); font-weight: 600; }
+  .vs-bar .momo { color: var(--mint); font-weight: 700; }
+  .vs-bar .other { color: var(--gray-3); }
+  .vs-bar .last { border-bottom: none; }
+  .check { color: var(--mint); font-weight: 800; }
+  .x { color: var(--gray-4); }
+
+  /* ===== 푸터 ===== */
+  .footer {
+    margin-top: auto;
+    padding-top: 3mm;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    font-size: 7.5pt;
+    color: var(--gray-4);
+    line-height: 1.5;
+  }
+  .footer .brand { color: var(--mint); font-weight: 700; }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    html, body { background: var(--bg); }
+    .page { box-shadow: none; margin: 0; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- 상단 바 -->
+    <div class="topbar">
+      <div class="brand">MOMOCARE</div>
+      <div>차별화 한 장 요약 · 2026.05 · 팀 배포용</div>
+    </div>
+
+    <!-- 히어로 -->
+    <section class="hero">
+      <div class="kicker">✋ 케어인을 위한 돌봄 OS</div>
+      <h1>
+        <span class="strike">손글씨 일지</span> 는 <span class="mint">이제 끝.</span><br/>
+        하루 <span class="mint">5분 영상</span> 한 번이면 됩니다.
+      </h1>
+      <div class="sub">
+        영상이 자동으로 라벨링되어 <b>매일의 케어 기록</b>이 됩니다.<br/>
+        그 기록이 쌓여 <b>노화 progression(노화 진행 데이터)</b> 이 됩니다.
+      </div>
+    </section>
+
+    <!-- Before / After 비주얼 -->
+    <section class="compare-visual">
+      <!-- BEFORE: 종이 일지 -->
+      <div class="panel paper">
+        <div class="label">BEFORE</div>
+        <div class="paper-title">○월 상태변화 기록지</div>
+        <div class="paper-row">
+          <div class="date">월 일</div>
+          <div class="text">오늘은 어르신이 방금 하신 말도 깜빡 잊어버리시고 같은 말을 반복하신다…</div>
+        </div>
+        <div class="paper-row">
+          <div class="date">월 일</div>
+          <div class="text">무릎이 자주 아프시다. 찜질팩을 올려드렸다.</div>
+        </div>
+        <div class="paper-row empty">
+          <div class="date">월 일</div>
+          <div class="text"></div>
+        </div>
+        <div class="paper-row empty">
+          <div class="date">월 일</div>
+          <div class="text"></div>
+        </div>
+        <div class="paper-footnote">✏️ 매일 손으로 쓰기 · 필체마다 제각각 · 빠뜨리기 일쑤</div>
+      </div>
+
+      <div class="arrow-box">➜</div>
+
+      <!-- AFTER: 모모케어 -->
+      <div class="panel momo">
+        <div class="label">AFTER · MOMOCARE</div>
+        <div class="momo-screen">
+          <div class="video">
+            <div class="rec">REC</div>
+            <div class="timer">05:00</div>
+            <div class="play">▶</div>
+          </div>
+          <div class="auto-tag-row">
+            <span class="auto">AUTO</span>
+            <span>영상에서 자동 인식된 케어 상황</span>
+          </div>
+          <div class="tag-list">
+            <span class="tag">🚶 보행 보조</span>
+            <span class="tag">💊 복약</span>
+            <span class="tag">🍚 식사</span>
+            <span class="tag">😴 인지 반응</span>
+            <span class="tag">🛌 자세 변경</span>
+          </div>
+          <div class="metric-grid">
+            <div class="metric"><div class="v">5분</div><div class="k">기록 시간</div></div>
+            <div class="metric"><div class="v">0회</div><div class="k">손글씨</div></div>
+            <div class="metric"><div class="v">∞</div><div class="k">시계열 누적</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 핵심 차별점 3가지 -->
+    <section class="differentiators">
+      <div class="diff">
+        <div class="icon">✋</div>
+        <div class="num">01 · 케어인을 위한 것</div>
+        <h3>손글씨 일지 끝.<br/>5분이면 끝.</h3>
+        <p>케어인이 매일 손으로 쓰던 상태변화 기록지를, 5분 영상 한 번으로 대신합니다.</p>
+      </div>
+      <div class="diff">
+        <div class="icon">📈</div>
+        <div class="num">02 · 시간이 모일수록 강해짐</div>
+        <h3>노화 데이터가<br/>시계열로 쌓임</h3>
+        <p>매일의 신체·인지 상태가 자동으로 누적됩니다. 시간이 지날수록 따라올 수 없는 데이터 moat가 됩니다.</p>
+      </div>
+      <div class="diff">
+        <div class="icon">🤖</div>
+        <div class="num">03 · AI로 진화</div>
+        <h3>위험감지·리포트<br/>AI 돌봄 OS로</h3>
+        <p>쌓인 데이터로 자동 위험감지, 실시간 음성 리포트, 모션분석 AI로 진화하는 SaaS(서비스형 소프트웨어).</p>
+      </div>
+    </section>
+
+    <!-- 비교 한 줄 표 -->
+    <section class="vs-bar">
+      <div class="cell head">항목</div>
+      <div class="cell head momo">모모케어</div>
+      <div class="cell head">케어닥</div>
+      <div class="cell head">케어네이션</div>
+
+      <div class="cell k">케어인 손글씨 일지</div>
+      <div class="cell momo"><span class="check">✓</span> 자동 라벨링</div>
+      <div class="cell other"><span class="x">✕</span> 수기 작성</div>
+      <div class="cell other"><span class="x">✕</span> 수기 작성</div>
+
+      <div class="cell k">5분 영상 케어 기록</div>
+      <div class="cell momo"><span class="check">✓</span> 매일 자동 박제</div>
+      <div class="cell other"><span class="x">✕</span> 없음</div>
+      <div class="cell other"><span class="x">✕</span> 없음</div>
+
+      <div class="cell k">노화 progression 누적</div>
+      <div class="cell momo"><span class="check">✓</span> 시계열 데이터</div>
+      <div class="cell other"><span class="x">✕</span> 매칭 데이터</div>
+      <div class="cell other"><span class="x">✕</span> 입찰 데이터</div>
+
+      <div class="cell k">입력장치 선택</div>
+      <div class="cell momo"><span class="check">✓</span> 메타안경·바디캠·폰</div>
+      <div class="cell other">앱 (텍스트)</div>
+      <div class="cell other">앱 (텍스트)</div>
+
+      <div class="cell k last">서비스 본질</div>
+      <div class="cell momo last">돌봄 데이터 OS</div>
+      <div class="cell other last">간병인·시설 매칭</div>
+      <div class="cell other last">간병인 역경매 매칭</div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+      <div>출처 : 케어닥·케어네이션 공식 홈페이지 및 공개 보도자료 (2026.05 기준 확인)</div>
+      <div class="brand">MOMOCARE — 노화 Progression OS</div>
+    </footer>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 페어 워치 — MVP 웰니스 안전권 설계안</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --card: #ffffff;
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --teal: #0a9396;
+    --teal-dark: #005f73;
+    --amber: #ca6702;
+    --amber-light: #fff4e0;
+    --blue: #1e40af;
+    --blue-light: #e0eaff;
+    --red: #ae2012;
+    --red-light: #ffe4e1;
+    --green: #2a9d4a;
+    --green-light: #e3f5e9;
+    --gray-light: #f4f4f2;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    padding: 32px 16px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+    color: white;
+    padding: 40px 36px;
+    border-radius: 16px;
+    margin-bottom: 28px;
+  }
+  header .tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+  header h1 { margin: 0 0 8px; font-size: 28px; font-weight: 700; }
+  header p { margin: 0; opacity: 0.92; font-size: 15px; }
+  header .legal-strip {
+    margin-top: 16px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 8px;
+    font-size: 12.5px;
+    border-left: 3px solid #ffe066;
+  }
+
+  /* Sections */
+  section {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+  }
+  section h2 {
+    margin: 0 0 6px;
+    font-size: 19px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  section h2 .num {
+    background: var(--teal);
+    color: white;
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  section .sub {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0 0 20px;
+  }
+
+  /* Legal boundary table */
+  .boundary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .boundary-table th, .boundary-table td {
+    padding: 11px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .boundary-table th {
+    background: var(--gray-light);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .pill-keep { background: var(--green-light); color: var(--green); }
+  .pill-drop { background: var(--red-light); color: var(--red); }
+  .pill-guard { background: var(--amber-light); color: var(--amber); }
+
+  /* Concept boxes */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .concept-box {
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid;
+  }
+  .concept-box.caregiver { border-color: var(--blue); background: var(--blue-light); }
+  .concept-box.patient { border-color: var(--amber); background: var(--amber-light); }
+  .concept-box .role {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .concept-box.caregiver .role { color: var(--blue); }
+  .concept-box.patient .role { color: var(--amber); }
+  .concept-box .name { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .concept-box .desc { font-size: 13px; color: var(--ink); }
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--teal);
+  }
+
+  /* Scenarios */
+  .scenario-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .scenario {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    background: #fafafa;
+  }
+  .scenario-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .scenario-badge {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .badge-red { background: var(--red-light); color: var(--red); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .scenario-title { font-weight: 600; font-size: 15px; }
+  .flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 8px;
+    font-size: 13.5px;
+  }
+  .flow-box {
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: white;
+    border: 1px dashed var(--line);
+  }
+  .flow-box b { color: var(--teal-dark); font-size: 12px; display: block; margin-bottom: 4px; }
+
+  /* Spec comparison */
+  .specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .spec-card {
+    border-radius: 12px;
+    padding: 22px;
+    border: 2px solid;
+  }
+  .spec-card.caregiver { border-color: var(--blue); }
+  .spec-card.patient { border-color: var(--amber); }
+  .spec-card h3 {
+    margin: 0 0 4px;
+    font-size: 17px;
+  }
+  .spec-card.caregiver h3 { color: var(--blue); }
+  .spec-card.patient h3 { color: var(--amber); }
+  .spec-card .role-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 18px;
+  }
+  .spec-block { margin-bottom: 16px; }
+  .spec-block h4 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+  .spec-block .item {
+    font-size: 13.5px;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .spec-block .item:last-child { border-bottom: none; }
+  .spec-block .item .k { color: var(--muted); }
+  .spec-block .item .v { color: var(--ink); font-weight: 500; text-align: right; }
+
+  /* Wording rules */
+  .wording-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .wording-card {
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+  }
+  .wording-card.bad { background: var(--red-light); border-left: 4px solid var(--red); }
+  .wording-card.good { background: var(--green-light); border-left: 4px solid var(--green); }
+  .wording-card h5 {
+    margin: 0 0 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .wording-card.bad h5 { color: var(--red); }
+  .wording-card.good h5 { color: var(--green); }
+  .wording-card ul { margin: 0; padding-left: 18px; }
+  .wording-card li { margin: 4px 0; }
+
+  /* Decision */
+  .decision-grid { display: grid; gap: 10px; }
+  .decision {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 14px;
+    padding: 14px;
+    background: #fafafa;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    font-size: 13.5px;
+    align-items: start;
+  }
+  .decision .label { font-weight: 600; }
+  .decision .choice { color: var(--teal-dark); font-weight: 600; }
+  .decision .reason { color: var(--muted); }
+
+  /* Cost */
+  .cost-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .cost-table th, .cost-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .cost-table th {
+    background: var(--gray-light);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cost-table .total { background: #fafafa; font-weight: 700; }
+  .cost-table td.right { text-align: right; }
+  .cost-table .strike { color: var(--red); text-decoration: line-through; }
+
+  /* Roadmap */
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .roadmap-step {
+    padding: 18px;
+    border-radius: 12px;
+    background: var(--gray-light);
+    border-top: 4px solid var(--teal);
+  }
+  .roadmap-step.v1 { border-color: var(--green); }
+  .roadmap-step.v2 { border-color: var(--amber); }
+  .roadmap-step.v3 { border-color: var(--blue); }
+  .roadmap-step h4 {
+    margin: 0 0 4px;
+    font-size: 15px;
+  }
+  .roadmap-step .ver {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+  .roadmap-step p { font-size: 13px; margin: 0 0 8px; }
+  .roadmap-step .scope {
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 8px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* Note */
+  .note {
+    background: #fff8e1;
+    border-left: 4px solid var(--amber);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-top: 16px;
+    font-size: 13.5px;
+  }
+  .note b { color: var(--amber); }
+  .note.green { background: var(--green-light); border-color: var(--green); }
+  .note.green b { color: var(--green); }
+
+  /* Sources */
+  .sources {
+    background: var(--gray-light);
+    border-radius: 10px;
+    padding: 18px 22px;
+    font-size: 13px;
+  }
+  .sources a {
+    color: var(--teal-dark);
+    text-decoration: none;
+    display: block;
+    padding: 4px 0;
+  }
+  .sources a:hover { text-decoration: underline; }
+
+  /* Watch */
+  .watch-row {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin: 24px 0 28px;
+    flex-wrap: wrap;
+  }
+  .watch { text-align: center; }
+  .watch-face {
+    width: 140px;
+    height: 140px;
+    border-radius: 30px;
+    border: 6px solid #2a2a2a;
+    margin: 0 auto 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+  .watch-face.caregiver { background: linear-gradient(135deg, #0c1d3d, #1e40af); }
+  .watch-face.patient { background: linear-gradient(135deg, #5c3a1f, #ca6702); }
+  .watch-face .time { font-size: 28px; font-weight: 700; }
+  .watch-face .info { font-size: 11px; opacity: 0.9; margin-top: 4px; }
+  .watch-label { font-weight: 600; color: var(--ink); }
+  .watch-sub { font-size: 12px; color: var(--muted); }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    .concept-grid { grid-template-columns: 1fr; }
+    .arrow { transform: rotate(90deg); padding: 8px 0; }
+    .specs, .flow, .wording-grid, .roadmap { grid-template-columns: 1fr; }
+    .decision { grid-template-columns: 1fr; }
+    header { padding: 28px 22px; }
+    section { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <span class="tag">MOMO CARE / 페어 워치 v0.2 — MVP 웰니스 안전권</span>
+    <h1>의료기기 분류 회피형 최소기능(MVP) 설계</h1>
+    <p>식약처 "의료기기 vs 웰니스 판단기준"에 따라 진단·측정 기능 제거. 호출·알림·통화 중심으로 재설계.</p>
+    <div class="legal-strip">
+      ⚖️ <b>법적 포지셔닝</b> — 본 제품은 <b>공산품(웰니스 기기)</b>로 출시. 인증·신고 불필요. 표시·광고는 식약처 웰니스 가이드라인 준수.
+    </div>
+  </header>
+
+  <!-- 1. 무엇이 바뀌었는가 -->
+  <section>
+    <h2><span class="num">1</span>v0.1 → v0.2 변경 핵심</h2>
+    <p class="sub">의료기기 분류 위험 기능을 제거하고 "안전 알림" 중심으로 좁힘</p>
+
+    <table class="boundary-table">
+      <thead>
+        <tr>
+          <th>기능</th>
+          <th>v0.1 (위험)</th>
+          <th>v0.2 (안전)</th>
+          <th>판정</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>SpO2 산소포화도</b></td>
+          <td>탑재</td>
+          <td>제거</td>
+          <td><span class="pill pill-drop">DROP</span></td>
+        </tr>
+        <tr>
+          <td><b>심박 이상 자동 감지</b></td>
+          <td>임계치 초과 시 자동 경고</td>
+          <td>심박 "참고용 표시"만, 판단 없음</td>
+          <td><span class="pill pill-drop">DROP</span></td>
+        </tr>
+        <tr>
+          <td><b>HRV / 부정맥 분석</b></td>
+          <td>탑재</td>
+          <td>제거</td>
+          <td><span class="pill pill-drop">DROP</span></td>
+        </tr>
+        <tr>
+          <td><b>피부 온도 발열 감지</b></td>
+          <td>탑재</td>
+          <td>제거</td>
+          <td><span class="pill pill-drop">DROP</span></td>
+        </tr>
+        <tr>
+          <td><b>만성질환자 모니터링</b></td>
+          <td>타겟에 포함</td>
+          <td>타겟에서 제외 (일반 고령자·거동불편자만)</td>
+          <td><span class="pill pill-drop">DROP</span></td>
+        </tr>
+        <tr>
+          <td><b>SOS 물리 버튼 호출</b></td>
+          <td>유지</td>
+          <td>유지 (단순 호출 시스템)</td>
+          <td><span class="pill pill-keep">KEEP</span></td>
+        </tr>
+        <tr>
+          <td><b>충격·낙상 감지 알림</b></td>
+          <td>"낙상 진단"</td>
+          <td>"충격 감지" 표현으로 변경, 진단 표현 없음</td>
+          <td><span class="pill pill-guard">GUARD</span></td>
+        </tr>
+        <tr>
+          <td><b>심박수 표시</b></td>
+          <td>"이상 감지"</td>
+          <td>"운동·활동 참고용" 표시만</td>
+          <td><span class="pill pill-guard">GUARD</span></td>
+        </tr>
+        <tr>
+          <td><b>양방향 음성 통화</b></td>
+          <td>유지</td>
+          <td>유지 (통신 기능)</td>
+          <td><span class="pill pill-keep">KEEP</span></td>
+        </tr>
+        <tr>
+          <td><b>복약·일정 알림</b></td>
+          <td>유지</td>
+          <td>유지 (단순 알림)</td>
+          <td><span class="pill pill-keep">KEEP</span></td>
+        </tr>
+        <tr>
+          <td><b>BLE 근접 / 이탈 감지</b></td>
+          <td>유지</td>
+          <td>유지 (연결 상태 표시)</td>
+          <td><span class="pill pill-keep">KEEP</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note green">
+      <b>참고 사례</b> — Apple Watch의 낙상감지·심박수는 한국에서 비의료기기로 판매 중. 다만 ECG(심전도)·SpO2 같은 진단 기능만 의료기기 인증을 받고 운영. 우리도 같은 전략.
+    </div>
+  </section>
+
+  <!-- 2. 핵심 컨셉 -->
+  <section>
+    <h2><span class="num">2</span>핵심 컨셉</h2>
+    <p class="sub">"건강 모니터링 워치"가 아닌 <b>"안전 알림 워치"</b>로 포지셔닝</p>
+
+    <div class="watch-row">
+      <div class="watch">
+        <div class="watch-face caregiver">
+          <div class="time">14:32</div>
+          <div class="info">A실 김씨 · 정상</div>
+        </div>
+        <div class="watch-label">간병인 워치</div>
+        <div class="watch-sub">AMOLED 터치 · 음성</div>
+      </div>
+      <div class="watch">
+        <div class="watch-face patient">
+          <div class="time">14:32</div>
+          <div class="info">심박 72 (참고)</div>
+        </div>
+        <div class="watch-label">대상자 워치</div>
+        <div class="watch-sub">메모리 LCD · 큰 글씨</div>
+      </div>
+    </div>
+
+    <div class="concept-grid">
+      <div class="concept-box caregiver">
+        <div class="role">CAREGIVER</div>
+        <div class="name">간병인 워치 — "호출 수신 + 업무"</div>
+        <div class="desc">대상자 호출 수신 · 음성 응답 · 업무 체크리스트 · 활동량 표시</div>
+      </div>
+      <div class="arrow">⇄</div>
+      <div class="concept-box patient">
+        <div class="role">PATIENT</div>
+        <div class="name">대상자 워치 — "호출 + 알림"</div>
+        <div class="desc">SOS 버튼 호출 · 충격 감지 알림 · 복약 알림 · 양방향 음성 · 심박수 참고 표시</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 시나리오 -->
+  <section>
+    <h2><span class="num">3</span>MVP 시나리오 (5개)</h2>
+    <p class="sub">의료기기 분류 위험이 없는 시나리오만 유지. v0.1의 "S3 생체신호 이상"은 제거</p>
+
+    <div class="scenario-list">
+
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="scenario-badge badge-red">응급 · 수동</span>
+          <span class="scenario-title">S1. SOS 버튼 호출</span>
+        </div>
+        <div class="flow">
+          <div class="flow-box">
+            <b>대상자 워치</b>
+            물리 SOS 버튼 3초 길게 누름 → 즉시 발신 + 자동 마이크 켜짐
+          </div>
+          <div class="flow-box">
+            <b>간병인 워치</b>
+            진동 + 알림음 + 양방향 음성 자동 연결 → BLE 신호 강도로 대략 위치
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="scenario-badge badge-amber">감지 · 알림</span>
+          <span class="scenario-title">S2. 충격 감지 알림 (낙상 의심)</span>
+        </div>
+        <div class="flow">
+          <div class="flow-box">
+            <b>대상자 워치</b>
+            6축 IMU가 강한 충격 + 무동작 5초 감지 → 대상자에게 "괜찮으세요?" 알림 → 10초 내 응답 없으면 간병인에게 알림
+          </div>
+          <div class="flow-box">
+            <b>간병인 워치</b>
+            "A실 김씨 충격 감지" 알림 → 음성 연결로 직접 확인
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="scenario-badge badge-amber">위치</span>
+          <span class="scenario-title">S3. 연결 끊김 알림 (이탈 감지)</span>
+        </div>
+        <div class="flow">
+          <div class="flow-box">
+            <b>대상자 워치</b>
+            BLE 신호 점차 약화 → 연결 끊김 → 마지막 신호 강도 기록
+          </div>
+          <div class="flow-box">
+            <b>간병인 워치</b>
+            "BLE 신호 약화 → 끊김" 단계별 알림. 마지막 연결 위치·시각 표시
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="scenario-badge badge-blue">알림</span>
+          <span class="scenario-title">S4. 복약 / 일정 알림</span>
+        </div>
+        <div class="flow">
+          <div class="flow-box">
+            <b>대상자 워치</b>
+            정해진 시각에 진동 + "약 드세요" 큰 글씨 → 확인 버튼 누르면 완료
+          </div>
+          <div class="flow-box">
+            <b>간병인 워치</b>
+            확인 시간 초과 시 알림 ("미확인 10분 경과")
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-head">
+          <span class="scenario-badge badge-green">업무</span>
+          <span class="scenario-title">S5. 간병 업무 체크리스트</span>
+        </div>
+        <div class="flow">
+          <div class="flow-box">
+            <b>간병인 워치</b>
+            오늘 할 일 (체위변경·식사보조·청결관리 등) 리스트 · 음성으로 완료 처리 ("완료" 한마디)
+          </div>
+          <div class="flow-box">
+            <b>대상자 워치</b>
+            해당 없음 (간병인 전용 기능)
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <b>표현 변경 핵심</b> — "낙상 감지" → "충격 감지", "이상 감지" → "알림", "측정" → "표시"로 모두 변경. 진단·판단을 사용자(간병인)에게 위임하는 구조.
+    </div>
+  </section>
+
+  <!-- 4. 워치 스펙 -->
+  <section>
+    <h2><span class="num">4</span>워치별 상세 스펙 (MVP)</h2>
+    <p class="sub">의료기기 영역 센서 모두 제거. 안전·통신·알림에 집중</p>
+
+    <div class="specs">
+
+      <!-- Caregiver -->
+      <div class="spec-card caregiver">
+        <h3>간병인 워치</h3>
+        <div class="role-sub">CAREGIVER WATCH — 호출 수신 · 음성 응답 · 업무</div>
+
+        <div class="spec-block">
+          <h4>디스플레이</h4>
+          <div class="item"><span class="k">종류</span><span class="v">AMOLED 터치</span></div>
+          <div class="item"><span class="k">크기 / 해상도</span><span class="v">1.4" / 466×466</span></div>
+          <div class="item"><span class="k">상시표시</span><span class="v">AOD 지원</span></div>
+        </div>
+
+        <div class="spec-block">
+          <h4>입력</h4>
+          <div class="item"><span class="k">터치</span><span class="v">정전식 멀티터치</span></div>
+          <div class="item"><span class="k">음성인식</span><span class="v">온디바이스 (양손 사용 중 대응)</span></div>
+          <div class="item"><span class="k">사이드 버튼</span><span class="v">2개 (홈 / 응답)</span></div>
+        </div>
+
+        <div class="spec-block">
+          <h4>센서 (웰니스 안전권)</h4>
+          <div class="item"><span class="k">6축 IMU</span><span class="v">활동량·걸음수 (참고용)</span></div>
+          <div class="item"><span class="k">PPG</span><span class="v">심박수 표시만 (진단 X)</span></div>
+          <div class="item"><span class="k">마이크 / 스피커</span><span class="v">양방향 통화 + 음성인식</span></div>
+        </div>
+
+        <div class="spec-block">
+          <h4>통신</h4>
+          <div class="item"><span class="k">BLE</span><span class="v">5.3 (대상자 워치 직결)</span></div>
+          <div class="item"><span class="k">WiFi</span><span class="v">2.4 / 5GHz</span></div>
+        </div>
+
+        <div class="spec-block">
+          <h4>피드백 · 물리</h4>
+          <div class="item"><span class="k">진동 모터</span><span class="v">강력 LRA</span></div>
+          <div class="item"><span class="k">방수</span><span class="v">IP67</span></div>
+          <div class="item"><span class="k">배터리</span><span class="v">400 mAh / 24~36시간</span></div>
+        </div>
+      </div>
+
+      <!-- Patient -->
+      <div class="spec-card patient">
+        <h3>대상자 워치</h3>
+        <div class="role-sub">PATIENT WATCH — 호출 발신 · 단순 알림 · 장시간 배터리</div>
+
+        <div class="spec-block">
+          <h4>디스플레이</h4>
+          <div class="item"><span class="k">종류</span><span class="v">반사형 메모리 LCD</span></div>
+          <div class="item"><span class="k">이유</span><span class="v">배터리 5~7일 + 야외 가독성</span></div>
+          <div class="item"><span class="k">글씨 크기</span><span class="v">최소 24pt 고정</span></div>
+        </div>
+
+        <div class="spec-block">
+          <h4>입력</h4>
+          <div class="item"><span class="k">SOS 버튼</span><span class="v">물리, 빨간색, 3초 길게 누름</span></div>
+          <div class="item"><span class="k">확인 버튼</span><span class="v">물리, 1개 (복약 확인 등)</span></div>
+          <div class="item"><span class="k">터치</span><span class="v">미탑재</span></div>
+        </div>
+
+        <div class="spec-block">
+          <h4>센서 (웰니스 안전권)</h4>
+          <div class="item"><span class="k">6축 IMU</span><span class="v">충격 감지 (BMI270)</span></div>
+          <div class="item"><span class="k">PPG</span><span class="v">심박수 표시만 (참고용)</span></div>
+          <div class="item"><span class="k strike" style="color:#ae2012;">SpO2</span><span class="v" style="color:#ae2012;">미탑재 (의료기기 영역)</span></div>
+          <div class="item"><span class="k strike" style="color:#ae2012;">피부 온도</span><span class="v" style="color:#ae2012;">미탑재 (의료기기 영역)</span></div>
+          <div class="item"><span class="k">마이크 / 스피커</span><span class="v">양방향 통화</span></div>
+        </div>
+
+        <div class="spec-block">
+          <h4>통신</h4>
+          <div class="item"><span class="k">BLE</span><span class="v">5.3 (간병인 워치 직결)</span></div>
+          <div class="item"><span class="k">위치 추정</span><span class="v">BLE RSSI (대략적)</span></div>
+        </div>
+
+        <div class="spec-block">
+          <h4>피드백 · 물리</h4>
+          <div class="item"><span class="k">진동 모터</span><span class="v">강력 LRA</span></div>
+          <div class="item"><span class="k">방수</span><span class="v">IPX5 (생활방수)</span></div>
+          <div class="item"><span class="k">배터리</span><span class="v">350 mAh / 5~7일</span></div>
+          <div class="item"><span class="k">무게</span><span class="v">30g 이하</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. 표시·광고 가이드 -->
+  <section>
+    <h2><span class="num">5</span>표시·광고 가이드 (필수)</h2>
+    <p class="sub">웰니스 제품은 "의료기기 아님" 문구가 의무. 표현 하나로 의료기기로 재분류될 수 있음</p>
+
+    <div class="wording-grid">
+      <div class="wording-card bad">
+        <h5>❌ 쓰면 안 되는 표현</h5>
+        <ul>
+          <li>"낙상 감지" / "낙상 진단"</li>
+          <li>"심박 이상 측정" / "부정맥 감지"</li>
+          <li>"건강 모니터링" / "질병 예방"</li>
+          <li>"의료용" / "환자용"</li>
+          <li>"진단·치료·예방"</li>
+          <li>"생체신호 분석"</li>
+        </ul>
+      </div>
+      <div class="wording-card good">
+        <h5>✅ 안전한 표현</h5>
+        <ul>
+          <li>"충격 감지 알림"</li>
+          <li>"심박수 참고 표시"</li>
+          <li>"안전 알림 기기"</li>
+          <li>"고령자용 / 일상 안전"</li>
+          <li>"호출·알림"</li>
+          <li>"활동·운동 참고"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>필수 기재 사항</b> (식약처 웰니스 가이드라인) — 제품·앱·광고 모두에 다음 두 문구 명시 필요:<br>
+      ① "본 제품은 의료기기가 아닙니다" &nbsp;&nbsp; ② "질병의 유무를 판단할 수 없습니다"
+    </div>
+  </section>
+
+  <!-- 6. 핵심 기술 결정 -->
+  <section>
+    <h2><span class="num">6</span>핵심 기술 결정 (v0.2)</h2>
+    <p class="sub">MVP 안전권에 맞춰 재조정</p>
+
+    <div class="decision-grid">
+
+      <div class="decision">
+        <div class="label">법적 포지셔닝</div>
+        <div class="choice">공산품 (웰니스)</div>
+        <div class="reason">식약처·산자부 인증 불필요. 신속 출시 가능. 표시문구 준수 필수</div>
+      </div>
+
+      <div class="decision">
+        <div class="label">통신 방식</div>
+        <div class="choice">BLE 5.3 직결</div>
+        <div class="reason">집 안 한정 → GPS·LTE 제외, 원가 절감</div>
+      </div>
+
+      <div class="decision">
+        <div class="label">대상자 디스플레이</div>
+        <div class="choice">메모리 LCD</div>
+        <div class="reason">OLED 대비 전력 5~10배 낮음 → 5~7일 배터리</div>
+      </div>
+
+      <div class="decision">
+        <div class="label">충격 감지 로직</div>
+        <div class="choice">IMU 단독 + 대상자 확인</div>
+        <div class="reason">의료적 판단을 워치가 하지 않음. 대상자가 응답 안하면 간병인이 판단. 책임 소재 명확</div>
+      </div>
+
+      <div class="decision">
+        <div class="label">자동 호출 정책</div>
+        <div class="choice">10초 사용자 확인 후 호출</div>
+        <div class="reason">"완전 자동 진단·호출"은 의료기기 영역. 사용자(대상자/간병인) 확인 단계 두면 안전권 유지</div>
+      </div>
+
+      <div class="decision">
+        <div class="label">데이터 저장</div>
+        <div class="choice">로컬 우선, 클라우드 최소화</div>
+        <div class="reason">건강정보 클라우드 저장 시 의료법·개인정보보호법 적용. 호출/알림 로그 위주만 저장</div>
+      </div>
+
+      <div class="decision">
+        <div class="label">대상자 방수</div>
+        <div class="choice">IPX5 (생활방수)</div>
+        <div class="reason">IP68 (수영 가능)은 의료기기 인식 유발 가능성. 생활방수로 충분</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 7. 원가 -->
+  <section>
+    <h2><span class="num">7</span>원가 추정 (v0.1 대비)</h2>
+    <p class="sub">의료기기 영역 부품 제거로 추가 원가 감소</p>
+
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>항목</th>
+          <th class="right">v0.1 (원)</th>
+          <th class="right">v0.2 (원)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="3" style="background:var(--blue-light); color:var(--blue); font-weight:600;">간병인</td>
+          <td>AMOLED 1.4"</td>
+          <td class="right">12,000~18,000</td>
+          <td class="right">12,000~18,000</td>
+        </tr>
+        <tr>
+          <td>MCU + 음성인식</td>
+          <td class="right">8,000~12,000</td>
+          <td class="right">8,000~12,000</td>
+        </tr>
+        <tr>
+          <td>마이크 + 스피커</td>
+          <td class="right">3,000~5,000</td>
+          <td class="right">3,000~5,000</td>
+        </tr>
+
+        <tr>
+          <td rowspan="6" style="background:var(--amber-light); color:var(--amber); font-weight:600;">대상자</td>
+          <td>BMI270 IMU (충격)</td>
+          <td class="right">3,000~5,000</td>
+          <td class="right">3,000~5,000</td>
+        </tr>
+        <tr>
+          <td>PPG (심박 표시만)</td>
+          <td class="right">3,000~6,000</td>
+          <td class="right">2,000~4,000 (저사양)</td>
+        </tr>
+        <tr>
+          <td>SpO2 센서</td>
+          <td class="right strike">2,000~4,000</td>
+          <td class="right">0 (제거)</td>
+        </tr>
+        <tr>
+          <td>피부 온도 센서</td>
+          <td class="right strike">1,000~3,000</td>
+          <td class="right">0 (제거)</td>
+        </tr>
+        <tr>
+          <td>SOS 버튼 + 케이스</td>
+          <td class="right">2,000~4,000</td>
+          <td class="right">2,000~4,000</td>
+        </tr>
+        <tr>
+          <td>마이크 + 스피커</td>
+          <td class="right">3,000~5,000</td>
+          <td class="right">3,000~5,000</td>
+        </tr>
+        <tr>
+          <td colspan="2">방수 케이스 (IP68 → IPX5)</td>
+          <td class="right">4,000~7,000</td>
+          <td class="right">2,000~3,000</td>
+        </tr>
+        <tr class="total">
+          <td colspan="2">페어 1세트 추가 원가 (예시)</td>
+          <td class="right">41,000~69,000</td>
+          <td class="right">35,000~56,000</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <b>절감 효과 (예시)</b> — 약 6천~1만3천원 절감 + <b>의료기기 인증 비용 (수천만~억 단위)</b>·시간(1~2년) 절약. 양산 단가 아님, RFQ 후 확정 필요.
+    </div>
+  </section>
+
+  <!-- 8. 로드맵 -->
+  <section>
+    <h2><span class="num">8</span>단계적 로드맵</h2>
+    <p class="sub">MVP 출시 → 검증 → 의료기기 라인 분리 출시</p>
+
+    <div class="roadmap">
+      <div class="roadmap-step v1">
+        <div class="ver">v1 — 지금</div>
+        <h4>웰니스 MVP</h4>
+        <p>안전 알림 워치로 출시. 인증 없이 빠르게 시장 검증.</p>
+        <div class="scope">SOS · 충격감지 · 음성통화 · 복약알림 · 심박참고</div>
+      </div>
+      <div class="roadmap-step v2">
+        <div class="ver">v2 — 6~12개월 후</div>
+        <h4>웰니스 확장</h4>
+        <p>v1 데이터로 UX·알고리즘 개선. 간병기관 B2B 확장.</p>
+        <div class="scope">+ 다중 대상자 모니터링 · 기록·리포트 · 가족 앱 연동</div>
+      </div>
+      <div class="roadmap-step v3">
+        <div class="ver">v3 — 1.5~2년 후</div>
+        <h4>의료기기 라인 분리</h4>
+        <p>별도 SKU로 SpO2·ECG 모델 출시. 식약처 2등급 인증.</p>
+        <div class="scope">+ SpO2 · ECG · 부정맥 알림 · 만성질환자 타겟</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. 팀 결정 필요 -->
+  <section>
+    <h2><span class="num">9</span>팀 결정 필요 항목</h2>
+
+    <div class="decision-grid">
+      <div class="decision">
+        <div class="label">충격 감지 정밀도</div>
+        <div class="choice">결정 필요</div>
+        <div class="reason">민감도 ↑ → 오호출 ↑ / 민감도 ↓ → 놓침 ↑. 베타 테스트로 최적값 도출</div>
+      </div>
+      <div class="decision">
+        <div class="label">데이터 저장 범위</div>
+        <div class="choice">결정 필요</div>
+        <div class="reason">호출 로그만 vs 심박수 기록 포함. 후자면 개인정보보호법 강화 적용</div>
+      </div>
+      <div class="decision">
+        <div class="label">법무 검토</div>
+        <div class="choice">필수</div>
+        <div class="reason">출시 전 의료기기 전문 변호사·인증 컨설팅사 1차 자문 (생략 불가)</div>
+      </div>
+      <div class="decision">
+        <div class="label">PL 보험</div>
+        <div class="choice">필수</div>
+        <div class="reason">SOS·충격감지 오작동 시 책임. 제조물책임보험 가입 검토</div>
+      </div>
+      <div class="decision">
+        <div class="label">사용자 약관</div>
+        <div class="choice">필수</div>
+        <div class="reason">"의료적 판단 위해 사용 금지" 명시. 응급상황은 119 우선 안내</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. 출처 -->
+  <section>
+    <h2><span class="num">10</span>참고 출처</h2>
+    <div class="sources">
+      <a href="https://www.mfds.go.kr/brd/m_210/down.do?brd_id=data0010&seq=12068&data_tp=A&file_seq=1" target="_blank">식약처 — 의료기기와 개인용 건강관리(웰니스) 제품 판단기준</a>
+      <a href="https://www.medicaltimes.com/Mobile/News/NewsView.html?ID=1098191" target="_blank">메디칼타임즈 — 웰니스 제품은 공산품, 허가·신고 불필요</a>
+      <a href="http://www.docdocdoc.co.kr/news/articleView.html?idxno=177455" target="_blank">청년의사 — 웰니스 제품 공산품으로 관리</a>
+      <a href="http://www.hitnews.co.kr/news/articleView.html?idxno=31377" target="_blank">히트뉴스 — 의료기기 vs 웰니스, 위해도가 기준</a>
+      <a href="https://m.etnews.com/20200807000197" target="_blank">전자신문 — 애플워치 ECG 식약처 의료기기 허가 (참고 사례)</a>
+      <a href="https://www.shinkim.com/kor/media/newsletter/2828" target="_blank">신&김 — 디지털의료기기 가이드라인 6종 개정</a>
+      <a href="https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1702&ccfNo=5&cciNo=1&cnpClsNo=1" target="_blank">찾기쉬운 생활법령정보 — 보건의료 개인정보보호</a>
+    </div>
+  </section>
+
+  <p style="text-align:center; color:var(--muted); font-size:12px; margin-top:24px;">
+    MOMO CARE · 페어 워치 v0.2 — MVP 웰니스 안전권 · 2026-05-28<br>
+    본 문서는 가설 검증용 설계안이며 양산 스펙 아님. 출시 전 의료기기 전문 법무 자문 필수.
+  </p>
+
+</div>
+</body>
+</html>

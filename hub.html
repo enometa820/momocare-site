@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>모모케어 — 간병인·보호자 안심 케어 플랫폼</title>
+<style>
+  :root { --green:#1f7a5a; --green-light:#e7f4ee; --green-soft:#cfe9dc; --green-dark:#155e44; --bg:#f6f4ef; --ink:#1c1c1e; --ink-soft:#555; --line:#e6e3dc; }
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  html, body { width:100vw; height:100vh; overflow:hidden; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR",sans-serif; background:var(--bg); color:var(--ink); line-height:1.5; }
+  body { display:flex; align-items:center; justify-content:center; }
+  .canvas { width:1600px; height:900px; padding:36px 60px; display:flex; flex-direction:column; transform-origin:center center; background:var(--bg); flex-shrink:0; }
+
+  /* Hero */
+  .hero { display:grid; grid-template-columns:1fr 360px; gap:60px; align-items:center; margin-bottom:36px; flex-shrink:0; }
+  .hero-text .badge { display:inline-flex; align-items:center; gap:6px; background:var(--green-light); color:var(--green); padding:6px 14px; border-radius:999px; font-size:13px; font-weight:700; margin-bottom:16px; }
+  .hero-text h1 { font-size:44px; font-weight:800; line-height:1.2; letter-spacing:-1px; margin-bottom:14px; }
+  .hero-text h1 b { color:var(--green); }
+  .hero-text p { font-size:16px; color:var(--ink-soft); max-width:600px; }
+  .hero-text .meta { display:flex; gap:18px; margin-top:18px; font-size:13px; color:var(--ink-soft); }
+  .hero-text .meta span { display:flex; align-items:center; gap:6px; }
+  .hero-text .meta .dot { width:8px; height:8px; border-radius:50%; background:var(--green); }
+  .hero-img { width:100%; height:240px; background-size:contain; background-repeat:no-repeat; background-position:center; }
+
+  /* Menu */
+  .menu-label { font-size:14px; font-weight:700; color:var(--ink-soft); margin-bottom:12px; letter-spacing:0.5px; text-transform:uppercase; flex-shrink:0; }
+  .menu { flex:1; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(2,1fr); gap:18px; min-height:0; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:20px; padding:24px 26px; text-decoration:none; color:inherit; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; transition:transform 0.2s, box-shadow 0.2s, border-color 0.2s; position:relative; overflow:hidden; }
+  .card:hover { transform:translateY(-4px); box-shadow:0 16px 36px rgba(0,0,0,0.08); border-color:var(--green-soft); }
+  .card .top { display:flex; justify-content:space-between; align-items:flex-start; }
+  .card .icon-circle { width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px; }
+  .card .tag { font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; }
+  .card h3 { font-size:20px; font-weight:800; margin-bottom:6px; letter-spacing:-0.3px; }
+  .card p { font-size:13px; color:var(--ink-soft); line-height:1.5; margin-bottom:12px; }
+  .card .go { display:inline-flex; align-items:center; gap:6px; color:var(--green); font-size:13px; font-weight:700; margin-top:auto; }
+  .card .go::after { content:"→"; transition:transform 0.2s; }
+  .card:hover .go::after { transform:translateX(4px); }
+
+  /* Card colors */
+  .card.c1 .icon-circle { background:var(--green-light); color:var(--green); }
+  .card.c1 .tag { background:var(--green-light); color:var(--green); }
+  .card.c2 .icon-circle { background:#eef3ff; color:#2a6df0; }
+  .card.c2 .tag { background:#eef3ff; color:#2a6df0; }
+  .card.c3 .icon-circle { background:#fff4e6; color:#b56a00; }
+  .card.c3 .tag { background:#fff4e6; color:#b56a00; }
+  .card.c4 .icon-circle { background:#f4eaff; color:#6a3aa5; }
+  .card.c4 .tag { background:#f4eaff; color:#6a3aa5; }
+  .card.c5 .icon-circle { background:#fff0e8; color:#ff6b35; }
+  .card.c5 .tag { background:#fff0e8; color:#ff6b35; }
+  .card.c6 .icon-circle { background:#fafaf7; color:#888; }
+  .card.c6 .tag { background:#fafaf7; color:#888; }
+
+  /* Footer */
+  .foot { display:flex; justify-content:space-between; align-items:center; margin-top:24px; padding-top:16px; border-top:1px solid var(--line); flex-shrink:0; font-size:12px; color:#999; }
+  .foot a { color:var(--green); text-decoration:none; font-weight:700; }
+</style>
+</head>
+<body>
+
+<div class="canvas" id="canvas">
+
+  <section class="hero">
+    <div class="hero-text">
+      <span class="badge">💚 디바이스 무료 · 수수료 0% · 평생 무료</span>
+      <h1>간병이 끝나면,<br><b>일지도 정산도</b> 자동으로 도착해요</h1>
+      <p>모모케어는 간병인(코디네이터)과 보호자를 잇는 안심 케어 플랫폼이에요. 디바이스 + 앱 + 앱통장으로 기록·소통·정산이 한 번에.</p>
+      <div class="meta">
+        <span><span class="dot"></span> 디바이스 무료</span>
+        <span><span class="dot"></span> 수수료 0%</span>
+        <span><span class="dot"></span> 24시간 자동 정산</span>
+      </div>
+    </div>
+    <div class="hero-img" style="background-image:url('data:image/jpeg;base64,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');"></div>
+  </section>
+
+  <div class="menu-label">탐색 — 어떤 자료를 보고 싶으세요?</div>
+
+  <div class="menu">
+
+    <a class="card c1" href="caregiver-manual.html">
+      <div class="top"><div class="icon-circle">📖</div><span class="tag">메인 매뉴얼</span></div>
+      <div>
+        <h3>간병인 사용 안내</h3>
+        <p>디바이스 사용법부터 상태기록 자동화, 앱통장 정산까지 한 페이지에 정리한 친화형 매뉴얼.</p>
+        <span class="go">매뉴얼 열기</span>
+      </div>
+    </a>
+
+    <a class="card c2" href="app-screens.html">
+      <div class="top"><div class="icon-circle">📱</div><span class="tag">인터랙티브</span></div>
+      <div>
+        <h3>앱 화면 가이드</h3>
+        <p>6개 앱 화면을 한 화면에서 클릭으로 미리 체험. 카드 누르면 폰 화면이 바뀌어요.</p>
+        <span class="go">앱 둘러보기</span>
+      </div>
+    </a>
+
+    <a class="card c3" href="education.html">
+      <div class="top"><div class="icon-circle">🎓</div><span class="tag">교육</span></div>
+      <div>
+        <h3>코디네이터 교육 자료</h3>
+        <p>간병인이 모모케어 시스템을 처음 익힐 때 보는 교육 매뉴얼.</p>
+        <span class="go">교육 자료 보기</span>
+      </div>
+    </a>
+
+    <a class="card c4" href="watch.html">
+      <div class="top"><div class="icon-circle">⌚</div><span class="tag">디바이스</span></div>
+      <div>
+        <h3>페어 워치 스펙</h3>
+        <p>어르신용 페어 워치의 하드웨어 사양·디자인·기능 명세서.</p>
+        <span class="go">스펙 보기</span>
+      </div>
+    </a>
+
+    <a class="card c5" href="competitors.html">
+      <div class="top"><div class="icon-circle">📊</div><span class="tag">시장</span></div>
+      <div>
+        <h3>경쟁사 비교</h3>
+        <p>모모케어 vs 케어네이션 vs 기타 플랫폼 포지셔닝 비교 분석.</p>
+        <span class="go">비교 보기</span>
+      </div>
+    </a>
+
+    <a class="card c6" href="#" onclick="alert('곧 추가될 예정입니다 😊'); return false;">
+      <div class="top"><div class="icon-circle">📋</div><span class="tag">준비 중</span></div>
+      <div>
+        <h3>사업 개요 & 아키텍처</h3>
+        <p>프로젝트 개요·시스템 설계·팀 결정사항 등 내부 문서 (정리 후 공개 예정).</p>
+        <span class="go" style="color:#888">곧 공개</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="foot">
+    <span>💚 Momocare — 함께 더 나은 돌봄 문화를</span>
+    <span>2026 · 본 사이트는 내부 검토용 가이드입니다</span>
+  </div>
+
+</div>
+
+<script>
+  function fitCanvas() {
+    const canvas = document.getElementById('canvas');
+    const baseW = 1600, baseH = 900;
+    const s = Math.min(window.innerWidth / baseW, window.innerHeight / baseH);
+    canvas.style.transform = `scale(${s})`;
+  }
+  window.addEventListener('resize', fitCanvas);
+  window.addEventListener('load', fitCanvas);
+  fitCanvas();
+</script>
+
+</body>
+</html>
