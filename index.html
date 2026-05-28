@@ -236,6 +236,67 @@
   .res-card .go::after { content: "→"; transition: transform 0.2s; }
   .res-card:hover .go::after { transform: translateX(4px); }
 
+  /* Nav logo image */
+  .logo { display: inline-flex; align-items: center; gap: 10px; }
+  .logo img { height: 28px; width: auto; display: block; }
+
+  /* Device section */
+  .device { background: var(--paper); }
+  .device-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  .device-text h3 { font-size: 28px; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 14px; }
+  .device-text p { font-size: 16px; color: var(--ink-soft); margin-bottom: 18px; }
+  .device-stages { display: grid; gap: 12px; }
+  .device-stage {
+    background: var(--bg); border-radius: 14px; padding: 16px 20px;
+    display: flex; gap: 14px; align-items: center;
+  }
+  .device-stage .num {
+    width: 32px; height: 32px; border-radius: 10px;
+    background: var(--green); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; flex-shrink: 0;
+  }
+  .device-stage strong { font-size: 15px; font-weight: 700; display: block; margin-bottom: 2px; }
+  .device-stage span { font-size: 13px; color: var(--ink-soft); }
+  .device-image-wrap {
+    background: var(--bg);
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .device-image-wrap img {
+    width: 100%; height: auto;
+    border-radius: 14px;
+    background: #fff;
+  }
+  .device-image-wrap .caption {
+    font-size: 12px; color: var(--ink-mute); text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  /* Model (BMC) section */
+  .model { background: var(--green-light); }
+  .model-card {
+    background: var(--paper); border-radius: 24px;
+    padding: 40px; max-width: 1040px; margin: 0 auto;
+    box-shadow: var(--shadow);
+  }
+  .model-card img {
+    width: 100%; height: auto;
+    border-radius: 12px;
+    display: block;
+  }
+  .model-foot {
+    margin-top: 24px; text-align: center;
+    font-size: 14px; color: var(--ink-mute);
+  }
+
+  /* Footer brand row with logo */
+  footer .foot-logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  footer .foot-logo-row img { height: 32px; width: auto; }
+  footer .foot-logo-row span { color: #fff; font-size: 20px; font-weight: 800; }
+
   /* CTA Section */
   .cta-section {
     background: var(--green); color: #fff;
@@ -284,6 +345,9 @@
     .nav-menu { display: none; }
     .hero-visual { aspect-ratio: auto; overflow: visible; padding: 28px 24px; }
     .hv-stack { gap: 12px; }
+    .device-grid { grid-template-columns: 1fr; gap: 24px; }
+    .device-text h3 { font-size: 24px; }
+    .model-card { padding: 24px; }
   }
 </style>
 </head>
@@ -291,15 +355,15 @@
 
 <nav class="nav">
   <div class="wrap nav-inner">
-    <a href="#" class="logo">모모<span>케어</span></a>
+    <a href="#" class="logo"><img src="assets/logo.png" alt="모모케어"></a>
     <div class="nav-menu">
       <a href="#pillars">서비스</a>
       <a href="#how">작동 방식</a>
       <a href="#settle">정산</a>
+      <a href="#model">사업 모델</a>
       <a href="#resources">자료실</a>
-      <a href="hub.html">전체 문서</a>
     </div>
-    <a href="#cta" class="nav-cta">사전 신청</a>
+    <a href="caregiver-manual.html" class="nav-cta">간병인 매뉴얼</a>
   </div>
 </nav>
 
@@ -316,7 +380,7 @@
           <span>종료 +24시간 자동 정산</span>
         </div>
         <div class="cta-row">
-          <a href="#cta" class="btn btn-primary">사전 신청하기</a>
+          <a href="caregiver-manual.html" class="btn btn-primary">간병인 매뉴얼 보기</a>
           <a href="hub.html" class="btn btn-ghost">자료 전체 보기</a>
         </div>
       </div>
@@ -434,6 +498,40 @@
   </div>
 </section>
 
+<section id="device" class="device">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">디바이스</div>
+      <h2>3단계로 자라는 모모케어 디바이스</h2>
+      <p>최소 기능부터 시작해 슈퍼 디바이스까지. 코디네이터에게 1단계 디바이스는 무료로 배포됩니다.</p>
+    </div>
+    <div class="device-grid">
+      <div class="device-image-wrap">
+        <img src="assets/device_photo.png" alt="모모케어 디바이스 실물">
+        <div class="caption">1단계 — 터치 · 음성인식 · 6축 모션</div>
+      </div>
+      <div class="device-text">
+        <h3>왜 디바이스가 무료인가요?</h3>
+        <p>1단계 디바이스가 모은 모션 데이터는 슈퍼 디바이스(3단계)의 AI 행동추론 학습에 쓰입니다. 코디네이터는 디바이스를 무료로 받고, 모모케어는 데이터를 모으는 정합 구조예요.</p>
+        <div class="device-stages">
+          <div class="device-stage">
+            <div class="num">1</div>
+            <div><strong>최소기능</strong><span>터치 + 음성인식 + 6축 IMU + 녹화 (무료 배포)</span></div>
+          </div>
+          <div class="device-stage">
+            <div class="num">2</div>
+            <div><strong>워치형</strong><span>편리한 착용감 + 기능 탑재 (업그레이드 옵션)</span></div>
+          </div>
+          <div class="device-stage">
+            <div class="num">3</div>
+            <div><strong>슈퍼 디바이스</strong><span>AI 모션 분석 + 음성·모션 위험 알림 + 3시간 송출</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="settle" class="settle">
   <div class="wrap">
     <div class="sec-head">
@@ -451,6 +549,20 @@
         <div><strong>플랫폼 수수료</strong><span>0% (평생 무료)</span></div>
       </div>
       <p style="margin-top: 24px; font-size: 14px; color: var(--ink-mute); text-align: center;">2026년 기준 법정 요율 · 산재보험 미적용 · 정산 주기 24시간</p>
+    </div>
+  </div>
+</section>
+
+<section id="model" class="model">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">사업 모델</div>
+      <h2>한눈에 보는 모모케어 사업 모델</h2>
+      <p>가치 제안부터 수익 구조까지, 모모케어가 어떻게 작동하는지 한 장으로.</p>
+    </div>
+    <div class="model-card">
+      <img src="assets/bmc.png" alt="모모케어 비즈니스 모델 캔버스">
+      <div class="model-foot">2026년 5월 본 자료 · 본 검증(PSM 6/9) 결과에 따라 갱신됩니다</div>
     </div>
   </div>
 </section>
@@ -503,22 +615,14 @@
   </div>
 </section>
 
-<section id="cta" class="cta-section">
-  <div class="wrap">
-    <h2>먼저 모모케어를 만나보세요</h2>
-    <p>사전 신청하면 정식 출시 전 디바이스를 먼저 받아볼 수 있어요.</p>
-    <div class="cta-row" style="justify-content: center;">
-      <a href="mailto:tototal5542@gmail.com?subject=모모케어 사전 신청" class="btn btn-primary">사전 신청하기</a>
-      <a href="mailto:tototal5542@gmail.com?subject=모모케어 코디 등록 문의" class="btn btn-ghost">코디 등록 문의</a>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <div class="foot-logo">모모케어</div>
+        <div class="foot-logo-row">
+          <img src="assets/logo.png" alt="모모케어">
+          <span>모모케어</span>
+        </div>
         <p class="foot-desc">코디네이터(간병인)와 보호자를 잇는 안심 케어 플랫폼. 디바이스 무료, 수수료 0%, 평생 무료로 운영합니다.</p>
       </div>
       <div>
@@ -540,8 +644,8 @@
       </div>
     </div>
     <div class="disclaimer">
-      <strong style="color:#bbb;">의료기기 회피 안내</strong><br>
-      본 제품 및 서비스는 의료기기가 아니며, 질병의 유무를 판단하거나 진단·치료·예방하는 용도가 아닙니다. 모든 자동 기록은 활동 추정으로 표시되며, 코디네이터의 확인을 거쳐 확정됩니다.
+      <strong style="color:#bbb;">모모케어 약속</strong><br>
+      모모케어는 돌봄을 더 투명하게 보여드리는 도구입니다. 활동을 기록·표시·알림으로 전달할 뿐, 의료적 진단·치료·예방을 대신하지 않습니다. 건강 판단은 의료진과 상의해 주세요.
     </div>
     <div class="foot-bottom">
       <span>© 2026 모모케어 — 함께 더 나은 돌봄 문화를</span>
