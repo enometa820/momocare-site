@@ -20,7 +20,6 @@
     --amber: #b86e00;
     --amber-light: #fdf3e3;
     --shadow: 0 4px 14px rgba(0,0,0,0.04);
-    --shadow-hover: 0 12px 32px rgba(0,0,0,0.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -36,9 +35,8 @@
   a { color: var(--green); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 24px; }
 
-  /* Internal banner */
   .internal-banner {
     background: var(--amber-light);
     border-bottom: 2px solid var(--amber);
@@ -50,36 +48,28 @@
     letter-spacing: 0.5px;
   }
 
-  /* Hero */
   .hero {
     background: var(--paper);
     padding: 72px 0 56px;
     border-bottom: 1px solid var(--line);
   }
   .hero h1 {
-    font-size: 36px;
+    font-size: 34px;
     font-weight: 800;
     letter-spacing: -1px;
-    color: var(--ink);
-    margin-bottom: 16px;
     line-height: 1.3;
+    margin-bottom: 20px;
   }
-  .hero .lead {
-    font-size: 18px;
-    color: var(--ink-soft);
-    margin-bottom: 24px;
-    max-width: 720px;
+  .hero .conclusion {
+    background: var(--green-light);
+    border-left: 4px solid var(--green);
+    padding: 20px 24px;
+    border-radius: 8px;
+    font-size: 17px;
+    color: var(--ink);
+    margin-top: 24px;
   }
-  .hero .meta {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    font-size: 14px;
-    color: var(--ink-mute);
-  }
-  .hero .meta span strong { color: var(--green-dark); font-weight: 600; }
-
-  /* Tag chips */
+  .hero .conclusion strong { color: var(--green-dark); }
   .chip {
     display: inline-block;
     background: var(--green-light);
@@ -89,55 +79,37 @@
     font-size: 13px;
     font-weight: 600;
     margin-right: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
-  /* Section */
   section { padding: 56px 0; }
+  section.alt { background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   section h2 {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 800;
-    color: var(--ink);
     margin-bottom: 8px;
     letter-spacing: -0.5px;
   }
-  section .section-sub {
-    font-size: 15px;
+  section .sub {
+    font-size: 14px;
     color: var(--ink-mute);
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
 
-  /* Card */
   .card {
     background: var(--paper);
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 28px;
-    margin-bottom: 16px;
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 14px;
     box-shadow: var(--shadow);
   }
-  .card h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 12px;
-  }
-  .card p { color: var(--ink-soft); margin-bottom: 8px; }
+  section.alt .card { background: var(--bg); }
+  .card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  .card p { color: var(--ink-soft); margin-bottom: 6px; }
+  .card p:last-child { margin-bottom: 0; }
 
-  /* Key callout */
-  .key-callout {
-    background: var(--green-light);
-    border-left: 4px solid var(--green);
-    border-radius: 8px;
-    padding: 20px 24px;
-    margin: 24px 0;
-    font-size: 16px;
-    color: var(--ink);
-  }
-  .key-callout strong { color: var(--green-dark); }
-
-  /* Table */
-  .table-wrap { overflow-x: auto; margin: 16px 0 24px; }
+  .table-wrap { overflow-x: auto; margin: 8px 0; }
   table {
     width: 100%;
     border-collapse: collapse;
@@ -145,11 +117,11 @@
     border-radius: 12px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    font-size: 15px;
+    font-size: 14px;
   }
   th, td {
     text-align: left;
-    padding: 14px 18px;
+    padding: 12px 16px;
     border-bottom: 1px solid var(--line);
     vertical-align: top;
   }
@@ -157,40 +129,51 @@
     background: var(--green-light);
     color: var(--green-dark);
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     white-space: nowrap;
   }
   tr:last-child td { border-bottom: none; }
   td strong { color: var(--green-dark); }
 
-  /* Architecture diagram */
+  /* Architecture */
   .arch {
     background: var(--paper);
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 32px 24px;
+    border-radius: 14px;
+    padding: 28px 20px;
     box-shadow: var(--shadow);
-    margin: 24px 0;
+  }
+  .arch-step {
+    margin-bottom: 20px;
+  }
+  .arch-step:last-child { margin-bottom: 0; }
+  .arch-step-label {
+    background: var(--amber-light);
+    color: var(--amber);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 10px;
   }
   .arch-row {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 12px;
     flex-wrap: wrap;
   }
   .arch-node {
     background: var(--green-light);
     border: 2px solid var(--green-soft);
-    border-radius: 12px;
-    padding: 14px 18px;
+    border-radius: 10px;
+    padding: 12px 14px;
     font-weight: 600;
     color: var(--green-dark);
     font-size: 14px;
+    flex: 1;
     min-width: 140px;
     text-align: center;
-    box-shadow: var(--shadow);
   }
   .arch-node.primary {
     background: var(--green);
@@ -204,54 +187,43 @@
   }
   .arch-node small {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--ink-mute);
     font-weight: 400;
-    margin-top: 4px;
+    margin-top: 3px;
   }
   .arch-node.primary small { color: var(--green-light); }
   .arch-arrow {
     color: var(--green);
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 1;
-  }
-  .arch-step-label {
-    background: var(--amber-light);
-    color: var(--amber);
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 13px;
-    font-weight: 700;
-    margin: 12px 0 6px;
-    display: inline-block;
   }
 
-  /* Decision matrix */
+  /* Decision */
   .decision-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-    margin: 24px 0;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
   }
   .decision-card {
     background: var(--paper);
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 24px;
+    border-radius: 14px;
+    padding: 22px;
     box-shadow: var(--shadow);
   }
   .decision-card .stage {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--ink-mute);
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
   }
   .decision-card .choice {
     font-size: 18px;
     font-weight: 700;
     color: var(--green-dark);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .decision-card .reason {
     font-size: 14px;
@@ -259,29 +231,47 @@
     line-height: 1.6;
   }
 
-  /* Footer */
+  .callout {
+    background: var(--green-light);
+    border-left: 4px solid var(--green);
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-size: 15px;
+    color: var(--ink);
+    margin-top: 16px;
+  }
+  .callout strong { color: var(--green-dark); }
+  .callout.warn {
+    background: var(--amber-light);
+    border-left-color: var(--amber);
+    color: var(--amber);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
   footer {
     background: var(--paper);
     border-top: 1px solid var(--line);
-    padding: 40px 0;
-    margin-top: 56px;
+    padding: 36px 0;
+    margin-top: 40px;
     font-size: 13px;
     color: var(--ink-mute);
   }
-  footer p { margin-bottom: 6px; }
+  footer p { margin-bottom: 4px; }
   footer a { color: var(--green-dark); }
+  footer .footer-title { font-weight: 700; margin-bottom: 10px; color: var(--ink-soft); }
 
-  /* Mobile */
   @media (max-width: 720px) {
     .hero { padding: 48px 0 40px; }
-    .hero h1 { font-size: 26px; }
-    .hero .lead { font-size: 16px; }
+    .hero h1 { font-size: 24px; }
+    .hero .conclusion { font-size: 15px; padding: 16px 18px; }
     section { padding: 40px 0; }
-    section h2 { font-size: 22px; }
-    .card, .arch { padding: 20px; }
-    .arch-node { min-width: 100%; }
-    .arch-arrow { transform: rotate(90deg); }
-    th, td { padding: 10px 12px; font-size: 14px; }
+    section h2 { font-size: 20px; }
+    .card, .arch { padding: 18px; }
+    .arch-node { flex: none; width: 100%; }
+    .arch-arrow { transform: rotate(90deg); margin: 4px auto; }
+    .decision-grid { grid-template-columns: 1fr; }
+    th, td { padding: 10px 12px; font-size: 13px; }
   }
 </style>
 </head>
@@ -294,182 +284,43 @@
 <header class="hero">
   <div class="wrap">
     <div>
-      <span class="chip">사업 기회 검증 수준</span>
       <span class="chip">7차 회의 후속</span>
-      <span class="chip">v1.0 · 2026-05-29</span>
+      <span class="chip">v1.4 · 2026-05-29</span>
     </div>
-    <h1>전자계약 시스템<br>자체 개발 검토</h1>
-    <p class="lead">
-      모두사인 건당 800원이 정말 비싼가, 자체 개발이 가능한가, 언제부터 합리적인가. 베스트프랙티스 조사·아키텍처 맵·비용 추산을 한 페이지에 정리.
-    </p>
-    <div class="meta">
-      <span><strong>한 줄 결론.</strong> 가설 검증 시즌만 모두사인 단기 사용, 운영 진입 직전 Claude Code 자체 개발 디폴트 — 초기 비용 거의 0</span>
+    <h1>전자계약, 자체 개발이 답이다</h1>
+    <div class="conclusion">
+      <strong>한 줄 결론.</strong> Claude Code 페어 개발 + K-Startup 무료 법무 상담으로 외부 비용 사실상 0. 운영 시작부터 모두사인 대비 연 700만~7,000만 원 절감 (규모별).
     </div>
   </div>
 </header>
 
 <section>
   <div class="wrap">
-    <h2>1. 문제 정의</h2>
-    <div class="section-sub">7차 회의 modusign 도입 검토 액션의 시작점</div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>항목</th><th>내용</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>모두사인 단가</td><td>건당 <strong>약 800원</strong> (한국 시장 표준)</td></tr>
-          <tr><td>모모케어 사용처</td><td>7차 회의 기록 3축 — <strong>코디 계약 · 보호자 약관 · 개인정보 동의</strong></td></tr>
-          <tr><td>의문</td><td>800원이 비싸다 — 자체 개발 가능한가</td></tr>
-        </tbody>
-      </table>
-
-    <h3 style="font-size: 18px; font-weight: 700; margin: 32px 0 12px; color: var(--ink);">사용량 시안 (가정 · 1팀 검토 필요)</h3>
-    <p style="color: var(--ink-soft); font-size: 14px; margin-bottom: 16px;">모모케어 OVERVIEW 페르소나(보호자·시니어·코디) + 7차 회의 사용처 3축에서 추정. 실제 사용량은 1팀 검토 시 갈음.</p>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>대상</th><th>가입 시 계약·동의 종류</th><th>1인당 가입 시 (가정)</th><th>1인당 운영 갱신 (가정)</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>보호자</strong></td>
-            <td>서비스 약관 · 개인정보 처리 · 영상 정보 처리(가족 동의) · 자동 결제 · 환불·해지 정책</td>
-            <td>4~5건</td>
-            <td>연 1~2건 (결제·옵션 변경)</td>
-          </tr>
-          <tr>
-            <td><strong>어르신 (시니어)</strong></td>
-            <td>영상 정보 처리(본인) · 모션 데이터 수집 · 서비스 이용 동의</td>
-            <td>2~3건</td>
-            <td>연 1건 (정기 동의 갱신)</td>
-          </tr>
-          <tr>
-            <td><strong>코디</strong></td>
-            <td>근로 계약 · 약관 · 개인정보 처리 · 범죄경력 동의 · 단체 보험 동의</td>
-            <td>3~4건</td>
-            <td>연 1건 (조건 변경·해지)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="key-callout">
-      <strong>규모별 추산 (가정):</strong><br>
-      · 가설 검증 시즌 (보호자 50·시니어 30·코디 8) → 약 <strong>300건</strong>, 약 24만 원<br>
-      · 운영 초기 (보호자·시니어 각 1,000명·코디 100명) → 연 약 <strong>9,500건</strong>, 약 760만 원<br>
-      · 1만 명 모객 시점 (각 1만·코디 1,000명) → 연 약 <strong>94,000건</strong>, 약 7,500만 원
-    </div>
-  </div>
-</section>
-
-<section style="background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
-  <div class="wrap">
-    <h2>2. 800원에 포함된 4가지</h2>
-    <div class="section-sub">단가에 들어 있는 가치를 항목별로 분해</div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>가치</th><th>내용</th><th>자체 개발 시 대체</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>본인 인증</strong></td>
-            <td>휴대폰·카카오·PASS 인증</td>
-            <td>외부 SDK 건당 비용 (40~500원)</td>
-          </tr>
-          <tr>
-            <td><strong>법적 효력</strong></td>
-            <td>전자서명법 준수, 분쟁 시 증거능력</td>
-            <td>자체 검증·법무 자문</td>
-          </tr>
-          <tr>
-            <td><strong>감사 추적</strong></td>
-            <td>IP·타임스탬프·서명 순서·열람 이력 5~10년</td>
-            <td>자체 인프라·DB</td>
-          </tr>
-          <tr>
-            <td><strong>UX·템플릿</strong></td>
-            <td>서명 흐름·자동 알림·템플릿</td>
-            <td>자체 개발 인건비</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>3. 법적 측면 — 자체 개발이 합법인가</h2>
-    <div class="section-sub">2020-12-10 전자서명법 개정이 자체 개발 가능성을 열었다</div>
+    <h2>왜 이 검토를 했나</h2>
+    <p class="sub">7차 회의 modusign 도입 검토 액션</p>
 
     <div class="card">
-      <h3>핵심 사실</h3>
-      <p>2020년 12월 10일 전자서명법 개정으로 <strong>공인전자서명 제도가 폐지</strong>됐다. 이전엔 공인인증서만 법적 추정력이 있었지만 개정 후엔 모든 인증사업자가 발행하는 전자서명이 동등한 효력을 가진다.</p>
-      <p>일반 전자서명도 당사자 간 약정이 있으면 서명·기명날인으로서의 효력을 인정받는다. 단 분쟁이 생겼을 때 진정성·무결성 입증 책임은 본인 부담이다.</p>
-    </div>
-
-    <div class="key-callout">
-      <strong>결론:</strong> 자체 개발한 일반 전자서명도 모두사인과 같은 법적 효력을 가질 수 있다. 단 분쟁 대비 감사 추적·해시 무결성 설계는 필수다.
+      <p>모두사인 건당 800원은 한국 시장 표준 단가다. 1팀이 보호자 약관·코디 계약·개인정보 동의 흐름을 본 도구로 구축하려고 검토 중인데, "800원이 비싸다"는 의문이 시작점이다.</p>
+      <p style="margin-top: 10px;">모모케어가 1만 명 모객 시점에 도달하면 연 9만 건 이상이 발생한다. 본 비용은 결코 작지 않다.</p>
     </div>
   </div>
 </section>
 
-<section style="background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+<section class="alt">
   <div class="wrap">
-    <h2>4. 기술 스택 — 오픈소스 베스트프랙티스</h2>
-    <div class="section-sub">국제 표준 ETSI PAdES 호환 스택</div>
+    <h2>800원에 포함된 4가지</h2>
+    <p class="sub">단가 안에 어떤 가치가 들어 있는지 분해</p>
 
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>컴포넌트</th><th>추천</th><th>사유</th></tr>
+          <tr><th>가치</th><th>내용</th><th>자체 개발 시</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td>PDF 생성</td>
-            <td><code>pdf-lib</code></td>
-            <td>Next.js·Vercel 런타임 호환, 오픈소스</td>
-          </tr>
-          <tr>
-            <td>PDF 서명</td>
-            <td><code>@signpdf/signpdf</code></td>
-            <td>ETSI PAdES 호환, 모듈형</td>
-          </tr>
-          <tr>
-            <td>암호화</td>
-            <td>SHA-256 + RSA 2048+</td>
-            <td>국제 보안 표준</td>
-          </tr>
-          <tr>
-            <td>본인 인증</td>
-            <td>KG이니시스 통합인증 또는 카카오 인증 SDK</td>
-            <td>건당 40원부터, 모두사인 대비 크게 저렴</td>
-          </tr>
-          <tr>
-            <td>타임스탬프</td>
-            <td>RFC 3161 외부 TSA</td>
-            <td>시점 증명, 분쟁 대비</td>
-          </tr>
-          <tr>
-            <td>저장소</td>
-            <td>Vercel Blob 또는 AWS S3 SSE-KMS</td>
-            <td>암호화 + 접근 제어</td>
-          </tr>
-          <tr>
-            <td>감사 로그</td>
-            <td>Postgres append-only</td>
-            <td>위변조 방지 트리거</td>
-          </tr>
-          <tr>
-            <td>알림</td>
-            <td>카카오 알림톡 SDK</td>
-            <td>건당 약 10원</td>
-          </tr>
+          <tr><td><strong>본인 인증</strong></td><td>휴대폰·카카오·PASS</td><td>외부 SDK 약 40원/건</td></tr>
+          <tr><td><strong>법적 효력</strong></td><td>전자서명법 준수</td><td>K-Startup 무료 법무 상담</td></tr>
+          <tr><td><strong>감사 추적</strong></td><td>IP·타임스탬프·서명 순서·열람 이력</td><td>Postgres append-only 자체</td></tr>
+          <tr><td><strong>UX·템플릿</strong></td><td>서명 흐름·자동 알림</td><td>Claude Code 1~2주</td></tr>
         </tbody>
       </table>
     </div>
@@ -478,221 +329,176 @@
 
 <section>
   <div class="wrap">
-    <h2>5. 아키텍처 맵 — 5단계 흐름</h2>
-    <div class="section-sub">코디가 계약 시작부터 완료 알림까지</div>
+    <h2>자체 개발이 합법인가</h2>
+    <p class="sub">2020-12-10 전자서명법 개정이 답을 열었다</p>
+
+    <div class="card">
+      <p>2020년 12월 10일 전자서명법 개정으로 <strong>공인전자서명 제도가 폐지</strong>됐다. 그 전엔 공인인증서만 법적 추정력이 있었지만, 개정 후엔 모든 인증사업자가 발행하는 전자서명이 동등한 효력을 가진다.</p>
+      <p style="margin-top: 8px;">일반 전자서명도 당사자 약정이 있으면 서명·기명날인으로서의 효력을 인정받는다. 자체 개발한 일반 전자서명도 모두사인과 같은 법적 효력을 가질 수 있다.</p>
+    </div>
+    <div class="callout">
+      <strong>전제 조건.</strong> 분쟁 대비 감사 추적·해시 무결성 설계가 필수다. K-Startup 원스톱 지원센터 무료 법무 상담으로 충분히 검증 가능.
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>아키텍처 — 5단계 흐름</h2>
+    <p class="sub">코디·보호자가 계약 시작부터 완료까지</p>
 
     <div class="arch">
-      <div class="arch-step-label">1단계 · 계약 시작</div>
-      <div class="arch-row">
-        <div class="arch-node primary">
-          코디 모바일·웹
-          <small>Next.js 프론트</small>
+      <div class="arch-step">
+        <div class="arch-step-label">1단계 · 계약 시작</div>
+        <div class="arch-row">
+          <div class="arch-node primary">사용자 모바일·웹<small>Next.js</small></div>
         </div>
       </div>
 
-      <div class="arch-step-label">2단계 · 본인 인증</div>
-      <div class="arch-row">
-        <div class="arch-node">
-          본인 인증 요청
-          <small>인증 토큰 발급</small>
-        </div>
-        <span class="arch-arrow">↔</span>
-        <div class="arch-node external">
-          KG이니시스 통합
-          <small>또는 카카오 인증</small>
+      <div class="arch-step">
+        <div class="arch-step-label">2단계 · 본인 인증</div>
+        <div class="arch-row">
+          <div class="arch-node">인증 요청</div>
+          <span class="arch-arrow">↔</span>
+          <div class="arch-node external">KG이니시스 통합<small>또는 카카오 인증</small></div>
         </div>
       </div>
 
-      <div class="arch-step-label">3단계 · PDF 생성·서명</div>
-      <div class="arch-row">
-        <div class="arch-node">
-          PDF 생성
-          <small>pdf-lib</small>
-        </div>
-        <span class="arch-arrow">→</span>
-        <div class="arch-node">
-          서명 배치
-          <small>@signpdf/signpdf</small>
-        </div>
-        <span class="arch-arrow">→</span>
-        <div class="arch-node external">
-          타임스탬프 TSA
-          <small>RFC 3161</small>
+      <div class="arch-step">
+        <div class="arch-step-label">3단계 · PDF 생성·서명</div>
+        <div class="arch-row">
+          <div class="arch-node">PDF 생성<small>pdf-lib</small></div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">서명 배치<small>@signpdf/signpdf</small></div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node external">타임스탬프<small>RFC 3161</small></div>
         </div>
       </div>
 
-      <div class="arch-step-label">4단계 · 영구 저장</div>
-      <div class="arch-row">
-        <div class="arch-node">
-          서명 PDF
-          <small>Vercel Blob 암호화</small>
-        </div>
-        <span class="arch-arrow">+</span>
-        <div class="arch-node">
-          감사 로그
-          <small>Postgres append-only</small>
+      <div class="arch-step">
+        <div class="arch-step-label">4단계 · 영구 저장</div>
+        <div class="arch-row">
+          <div class="arch-node">서명 PDF<small>Vercel Blob</small></div>
+          <div class="arch-node">감사 로그<small>Supabase append-only</small></div>
         </div>
       </div>
 
-      <div class="arch-step-label">5단계 · 완료 알림</div>
-      <div class="arch-row">
-        <div class="arch-node external">
-          카카오 알림톡
-          <small>건당 약 10원</small>
-        </div>
-        <span class="arch-arrow">→</span>
-        <div class="arch-node primary">
-          코디·관리자
-          <small>완료 통지</small>
+      <div class="arch-step">
+        <div class="arch-step-label">5단계 · 완료 알림</div>
+        <div class="arch-row">
+          <div class="arch-node external">카카오 알림톡<small>건당 약 10원</small></div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node primary">사용자<small>완료 통지</small></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section style="background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+<section>
   <div class="wrap">
-    <h2>6. 비용 추산 — 손익분기는 언제인가</h2>
-    <div class="section-sub">초기 투자 vs 건당 절감</div>
+    <h2>비용 — 외부 0원, 운영 변동비 55원</h2>
+    <p class="sub">자체 개발의 본질은 비용 절감</p>
 
     <div class="card">
-      <h3>초기 개발 (MVP)</h3>
-      <p>1팀 컨텍스트 = <strong>Claude Code 자체 개발</strong>. 비용 절감이 자체 개발 결정의 본질이므로 외주 가정 자체가 부적합.</p>
-      <p>· 사용자 시간 = 약 1~2주 (Claude Code 페어 개발)</p>
-      <p>· 인프라·도메인·SSL 셋업 = 거의 0 (Vercel·Supabase 무료 티어)</p>
-      <p>· 법무 자문 = <a href="https://www.k-startup.go.kr/onestop" target="_blank"><strong>K-Startup 원스톱 지원센터</strong></a> 무료 법무 상담 활용 (백민혁 팀원 공유, 2026-05-29 오전 11:29)</p>
-      <p>· 합계 = 사실상 <strong>0원</strong> (1팀 시간 외 외부 비용 없음)</p>
+      <h3>초기 개발</h3>
+      <p>· Claude Code 페어 개발 = 1팀 사용자 시간 1~2주</p>
+      <p>· 인프라 = Vercel·Supabase 무료 티어 (월 0원)</p>
+      <p>· 법무 자문 = <a href="https://www.k-startup.go.kr/onestop" target="_blank">K-Startup 원스톱</a> 무료 상담 (백민혁 팀원 공유)</p>
+      <p style="margin-top: 10px;"><strong>합계 사실상 0원</strong> (1팀 시간 외 외부 비용 없음)</p>
     </div>
 
     <div class="card">
       <h3>운영 변동비 (건당)</h3>
-      <p>본인 인증 약 40원 + 카카오 알림톡 약 10원 + 인프라 약 5원 = <strong>약 55원/건</strong></p>
-      <p>모두사인 800원 - 자체 55원 = <strong>건당 약 745원 절감</strong></p>
+      <p>본인 인증 40원 + 카카오 알림톡 10원 + 인프라 5원 = <strong>약 55원/건</strong></p>
+      <p>모두사인 800원 - 자체 55원 = <strong>건당 745원 절감</strong></p>
     </div>
 
-    <div class="key-callout">
-      <strong>손익분기 (Claude Code 자체 개발 + K-Startup 무료 법무):</strong> 초기 투자 사실상 0 → 운영 시작 시점부터 즉시 절감 시작<br>
-      · 운영 초기 (각 1,000명, 연 9,500건) → 연 약 <strong>700만 원 절감</strong><br>
-      · 1만 명 시점 (연 9.4만 건) → 연 약 <strong>7,000만 원 절감</strong>
+    <div class="callout">
+      <strong>규모별 연 절감 (가정·1팀 검토 필요):</strong><br>
+      · 운영 초기 (각 1,000명, 연 9,500건) → 연 약 <strong>700만 원</strong> 절감<br>
+      · 1만 명 모객 시점 (연 9.4만 건) → 연 약 <strong>7,000만 원</strong> 절감
     </div>
+  </div>
+</section>
 
-    <div class="key-callout" style="background: var(--amber-light); border-left-color: var(--amber);">
-      <strong>본질:</strong> 자체 개발은 비용 절감 결정. Claude Code 페어 개발 + K-Startup 원스톱 무료 법무 상담이면 외부 비용 사실상 0. 외주 가정으로 BEP를 늦추는 분석은 모모케어 컨텍스트와 맞지 않음.
+<section class="alt">
+  <div class="wrap">
+    <h2>결정</h2>
+    <p class="sub">단계별로 다른 답</p>
+
+    <div class="decision-grid">
+      <div class="decision-card">
+        <div class="stage">본 단계 · 가설 검증 시즌</div>
+        <div class="choice">모두사인 단기 사용</div>
+        <p class="reason">연 약 300건 · 24만 원 부담 없음. 개발 1~2주가 D-Day 2026-06-09 발표 준비와 충돌해서 임시.</p>
+      </div>
+
+      <div class="decision-card">
+        <div class="stage">운영 진입 직후 · 사업화 셋업</div>
+        <div class="choice">Claude Code 자체 개발</div>
+        <p class="reason">사용자 시간 1~2주, 외부 비용 0. 운영 시작부터 건당 745원 절감 + 계약 데이터 자산화.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>7. 외부 vs 자체 비교</h2>
-    <div class="section-sub">4개 옵션 매트릭스</div>
+    <h2>사용량 시안</h2>
+    <p class="sub">OVERVIEW 페르소나 + 7차 회의 사용처 3축 기반</p>
 
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>옵션</th><th>초기</th><th>건당</th><th>시간</th><th>모모케어 정합</th></tr>
+          <tr><th>대상</th><th>가입 시 계약·동의</th><th>1인당 가입</th><th>1인당 갱신</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td><strong>모두사인</strong></td>
-            <td>0</td>
-            <td>약 800원</td>
-            <td>즉시</td>
-            <td>가설 검증 시즌 단기 사용</td>
-          </tr>
-          <tr>
-            <td>Dropbox Sign API</td>
-            <td>0</td>
-            <td>약 300~500원</td>
-            <td>1~2주</td>
-            <td>대체 옵션 (낮은 우선순위)</td>
-          </tr>
-          <tr>
-            <td><strong>Claude Code 자체 개발</strong></td>
-            <td>약 0~200만 원</td>
-            <td>약 55원</td>
-            <td>1~2주</td>
-            <td>운영 진입 시점부터 디폴트</td>
-          </tr>
+          <tr><td><strong>보호자</strong></td><td>서비스 약관 · 개인정보 · 영상 동의 · 자동 결제 · 해지</td><td>4~5건</td><td>연 1~2건</td></tr>
+          <tr><td><strong>어르신</strong></td><td>영상 정보 · 모션 데이터 · 서비스 이용</td><td>2~3건</td><td>연 1건</td></tr>
+          <tr><td><strong>코디</strong></td><td>근로 계약 · 약관 · 개인정보 · 범죄경력 · 단체 보험</td><td>3~4건</td><td>연 1건</td></tr>
         </tbody>
       </table>
     </div>
-  </div>
-</section>
 
-<section style="background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
-  <div class="wrap">
-    <h2>8. 시기별 결정 권고</h2>
-    <div class="section-sub">코디 수 단계별로 다른 답</div>
-
-    <div class="decision-grid">
-      <div class="decision-card">
-        <div class="stage">본 단계 · 가설 검증 시즌 (D-Day 2026-06-09 전)</div>
-        <div class="choice">모두사인 단기 사용</div>
-        <p class="reason">연 약 300건·24만 원 수준. Claude Code 개발 1~2주가 발표 준비와 충돌해서 단기 임시 모두사인. 검증 끝나면 자체 개발 진입.</p>
-      </div>
-
-      <div class="decision-card">
-        <div class="stage">운영 진입 직전 · 사업화 셋업</div>
-        <div class="choice">Claude Code 자체 개발 진입</div>
-        <p class="reason">사용자 시간 1~2주만 들이면 MVP 작동. Vercel·Supabase 무료 티어로 인프라 비용 0. 운영 시점부터 건당 745원 절감 시작.</p>
-      </div>
-
-      <div class="decision-card">
-        <div class="stage">운영 초기 · 보호자 1,000명</div>
-        <div class="choice">자체 개발 디폴트 운영</div>
-        <p class="reason">손익분기 약 3.4개월 도달. 모두사인 대비 연 약 700만 원 절감. 보호자·시니어·코디 계약 데이터가 모모케어 자산.</p>
-      </div>
-
-      <div class="decision-card">
-        <div class="stage">1만 명 모객 시점 · 7차 결정 9번 시기</div>
-        <div class="choice">자체 개발 표준화 + 차별점 자산</div>
-        <p class="reason">연 약 9.4만 건 · 약 7,000만 원 절감/년. 자체 전자계약·감사 추적이 모모케어 신뢰 자산이자 차별점.</p>
-      </div>
+    <div class="callout warn">
+      본 사용량·BEP 수치는 모두 가정 기반 시안. 1팀 회의에서 실측 사용량으로 갈음 필요.
     </div>
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="wrap">
-    <h2>9. 본 단계 결정 (1팀 컨펌 필요)</h2>
-    <div class="section-sub">발표·재무 시뮬레이션·BMC 반영</div>
+    <h2>결론</h2>
+    <p class="sub">본 검토를 한 문장으로 줄이면</p>
 
-    <div class="card">
-      <h3>1팀 결정안</h3>
-      <p>· 가설 검증·발표 단계 = <strong>모두사인 단기 사용</strong> (1~2개월, 검증 끝나면 즉시 자체 개발)</p>
-      <p>· 자체 개발 진입 시점 = <strong>운영 진입 직전</strong> (Claude Code 1~2주, 초기 비용 거의 0)</p>
-      <p>· BMC·재무 시뮬레이션 반영 문구 = "전자계약은 자체 개발, 운영 변동비 약 55원/건 (모두사인 대비 745원 절감)"</p>
-      <p style="margin-top: 12px; color: var(--amber); font-size: 14px;">⚠ 본 단계 사용량·BEP 수치는 모두 <strong>가정 기반 시안</strong>. 1팀 검토 거쳐 갈음 예정.</p>
+    <div class="card" style="border-left: 4px solid var(--green); padding: 28px;">
+      <h3 style="font-size: 19px; color: var(--green-dark); margin-bottom: 14px;">전자계약 시스템은 자체 개발이 답이다.</h3>
+      <p style="font-size: 15px; line-height: 1.75; color: var(--ink);">
+        모두사인 800원은 한국 시장 표준이지만, 모모케어가 1만 명 모객 시점에 도달하면 연 7,500만 원 부담이 된다. Claude Code 페어 개발과 K-Startup 원스톱 무료 법무 상담을 활용하면 외부 비용 사실상 0으로 같은 기능을 구축할 수 있다. 운영 시작 시점부터 모두사인 대비 건당 745원이 절감된다.
+      </p>
     </div>
-  </div>
-</section>
-
-<section style="background: var(--paper); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
-  <div class="wrap">
-    <h2>10. 운영단 이관 액션</h2>
-    <div class="section-sub">사업화 후 사이클</div>
 
     <div class="card">
-      <p>1. 본인 인증 사업자 1차 선정 (KG이니시스 통합인증 또는 카카오 인증 SDK) + 사업자 등록 후 정식 단가 협상</p>
-      <p>2. Claude Code 페어 개발 — 사용자 1~2주 사이클로 MVP 작동 (pdf-lib · @signpdf/signpdf · Vercel Blob · Supabase append-only)</p>
-      <p>3. 감사 추적·해시 무결성 설계 직접 검증 (분쟁 대비)</p>
-      <p>4. 법무 1차 검토 = 1팀 자체 + <a href="https://www.k-startup.go.kr/onestop" target="_blank">K-Startup 원스톱 지원센터</a> 무료 상담 (전자서명법·개인정보보호법·근로기준법)</p>
-      <p>5. 본인 인증 사업자 약관 검수 + 운영 변동비 실측</p>
+      <h3>다음 액션 (1팀 컨펌 후 진행)</h3>
+      <p>1. 가설 검증·발표(2026-06-09)까지 모두사인 단기 사용 결정</p>
+      <p>2. 사업화 진입 시점에 Claude Code 페어 개발 1~2주 사이클로 MVP 작동</p>
+      <p>3. K-Startup 원스톱 지원센터 무료 법무 상담 신청 (전자서명법·개인정보보호법 1차 검증)</p>
+      <p>4. BMC·재무 시뮬레이션에 "전자계약 = 자체 개발, 건당 55원" 반영</p>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p><strong>출처</strong></p>
+    <p class="footer-title">출처</p>
     <p>· <a href="https://www.law.go.kr/법령/전자서명법" target="_blank">전자서명법 (국가법령정보센터)</a></p>
     <p>· <a href="https://moleg.go.kr/lawinfo/lawAnalysis/nwLwAnList?csSeq=108482" target="_blank">전자서명법 2020-12-10 개정 해설 (법제처)</a></p>
     <p>· <a href="https://blog.portone.io/authorization-payment-2/" target="_blank">본인 인증 API 단가 가이드 (포트원)</a></p>
     <p>· <a href="https://www.npmjs.com/package/@signpdf/signpdf" target="_blank">@signpdf/signpdf PDF 서명 라이브러리</a></p>
-    <p>· <a href="https://www.k-startup.go.kr/onestop" target="_blank">K-Startup 원스톱 지원센터 (스타트업 법무·세무·경영 통합 상담)</a> — 백민혁 팀원 공유 2026-05-29</p>
+    <p>· <a href="https://www.k-startup.go.kr/onestop" target="_blank">K-Startup 원스톱 지원센터 무료 법무 상담</a> (백민혁 팀원 공유 2026-05-29 오전 11:29)</p>
     <p>· 7차 회의록 modusign 도입 검토 액션 · 본 검토 본문 = <code>contents/decisions/전자계약_자체개발_검토_2026-05-29.md</code></p>
-    <p style="margin-top: 16px; color: var(--ink-mute);">모모케어 1팀 내부 검토 자료 · 2026-05-29 v1.0 · 외부 공유 제한</p>
+    <p style="margin-top: 14px; color: var(--ink-mute);">모모케어 1팀 내부 검토 자료 · v1.4 · 2026-05-29 · 외부 공유 제한</p>
   </div>
 </footer>
 
