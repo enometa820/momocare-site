@@ -336,19 +336,62 @@
 
   /* Model (BMC) section */
   .model { background: var(--green-light); }
-  .model-card {
-    background: var(--paper); border-radius: 24px;
-    padding: 40px; max-width: 1040px; margin: 0 auto;
-    box-shadow: var(--shadow);
+  .model-highlights {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+    max-width: 1040px; margin: 0 auto 28px;
   }
-  .model-card img {
-    width: 100%; height: auto;
-    border-radius: 12px;
-    display: block;
+  .mh-card {
+    background: var(--paper); border-radius: 16px; padding: 20px 18px;
+    box-shadow: var(--shadow); border-top: 4px solid var(--green);
+    display: flex; flex-direction: column; gap: 4px;
   }
+  .mh-card .mh-label { font-size: 12px; font-weight: 700; color: var(--green-dark); letter-spacing: 0.3px; }
+  .mh-card strong { font-size: 17px; font-weight: 800; color: var(--ink); letter-spacing: -0.3px; }
+  .mh-card .mh-sub { font-size: 12px; color: var(--ink-mute); line-height: 1.5; }
+  .model-canvas {
+    background: var(--paper); border-radius: 24px; padding: 24px;
+    max-width: 1040px; margin: 0 auto; box-shadow: var(--shadow);
+  }
+  .model-canvas img {
+    width: 100%; height: auto; border-radius: 12px; display: block; cursor: zoom-in;
+  }
+  .model-canvas-cap { margin-top: 12px; text-align: center; font-size: 13px; color: var(--ink-mute); }
   .model-foot {
-    margin-top: 24px; text-align: center;
+    margin-top: 20px; text-align: center;
     font-size: 14px; color: var(--ink-mute);
+  }
+  .model-foot a { color: var(--green); font-weight: 700; }
+
+  /* Device showcase section */
+  .device-showcase { background: var(--paper); }
+  .ds-visual {
+    max-width: 880px; margin: 0 auto 28px; border-radius: 24px; overflow: hidden;
+    background: var(--bg); box-shadow: var(--shadow);
+  }
+  .ds-visual img { width: 100%; height: auto; display: block; cursor: zoom-in; }
+  .ds-stages {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    max-width: 980px; margin: 0 auto;
+  }
+  .ds-stage {
+    background: var(--bg); border-radius: 16px; padding: 22px 20px;
+    border-top: 4px solid var(--green);
+  }
+  .ds-stage.s2 { border-top-color: var(--purple); }
+  .ds-stage.s3 { border-top-color: var(--coral); }
+  .ds-stage .ds-num { font-size: 12px; font-weight: 800; letter-spacing: 0.5px; color: var(--green-dark); }
+  .ds-stage.s2 .ds-num { color: var(--purple); }
+  .ds-stage.s3 .ds-num { color: var(--coral); }
+  .ds-stage strong { display: block; font-size: 17px; font-weight: 800; margin: 6px 0 8px; letter-spacing: -0.3px; }
+  .ds-stage p { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+
+  @media (max-width: 1024px) {
+    .model-highlights { grid-template-columns: repeat(2, 1fr); }
+    .ds-stages { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .model-highlights { grid-template-columns: 1fr; }
+    .model-canvas { padding: 14px; }
   }
 
   /* Footer brand row with logo */
@@ -703,12 +746,73 @@
     <div class="sec-head">
       <div class="sec-eyebrow">사업 모델</div>
       <h2>한눈에 보는 모모케어 사업 모델</h2>
-      <p>가치 제안부터 수익 구조까지, 모모케어가 어떻게 작동하는지 한 장으로.</p>
+      <p>현장 침투로 신뢰를 쌓고, 무료 디바이스로 모은 돌봄 데이터를 슈퍼 디바이스로 키우는 구독형 데이터 플랫폼.</p>
     </div>
-    <div class="model-card">
-      <img src="assets/bmc.png" class="zoomable" alt="모모케어 비즈니스 모델 캔버스 — 2026-05-28 7차 결정 본" data-caption="모모케어 BMC — 7차 결정 본 (GTM 피봇·디바이스 3단계·5분 송출·코디 호칭 반영)">
-      <div class="model-foot"><a href="bmc.html" style="color:var(--green); font-weight:700;">사업 모델 자세히 보기 →</a></div>
+
+    <div class="model-highlights">
+      <div class="mh-card">
+        <span class="mh-label">구독 3티어</span>
+        <strong>14,900~49,900원</strong>
+        <span class="mh-sub">안심·패밀리·플러스(라이브 송출)</span>
+      </div>
+      <div class="mh-card">
+        <span class="mh-label">디바이스</span>
+        <strong>무료 배포</strong>
+        <span class="mh-sub">코디네이터 모객 핵심·CAC 대체</span>
+      </div>
+      <div class="mh-card">
+        <span class="mh-label">매칭 수수료</span>
+        <strong>0%</strong>
+        <span class="mh-sub">1만명까지·이후 3% 재도입</span>
+      </div>
+      <div class="mh-card">
+        <span class="mh-label">공급자</span>
+        <strong>모모케어 코디네이터</strong>
+        <span class="mh-sub">기록·신뢰 전문 인력 양성</span>
+      </div>
+      <div class="mh-card">
+        <span class="mh-label">데이터</span>
+        <strong>슈퍼 디바이스 학습</strong>
+        <span class="mh-sub">5분 라벨링 케어 누적</span>
+      </div>
     </div>
+
+    <div class="model-canvas">
+      <img src="assets/bmc.png" class="zoomable" alt="모모케어 비즈니스 모델 캔버스 9블록 — 2026-05-29 8차 갱신" data-caption="모모케어 BMC — 8차 갱신 (구독 3티어·코디네이터 양성·보증금 선수금·단계적 MVP)">
+      <p class="model-canvas-cap">9블록 비즈니스 모델 캔버스 · 이미지를 클릭하면 확대됩니다</p>
+    </div>
+    <div class="model-foot"><a href="bmc.html">사업 모델 전체 페이지 보기 →</a></div>
+  </div>
+</section>
+
+<section id="device-showcase" class="device-showcase">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">케어 디바이스</div>
+      <h2>1·2·3단계로 자라는 케어 디바이스</h2>
+      <p>무료로 배포하는 1단계 디바이스에서 시작해, 데이터가 쌓일수록 더 똑똑해지는 슈퍼 디바이스로.</p>
+    </div>
+    <div class="ds-visual">
+      <img src="assets/device-lineup.png" class="zoomable" alt="모모케어 케어 디바이스 라인업 — 페어 워치·기록 디바이스·슈퍼 디바이스" data-caption="모모케어 케어 디바이스 1·2·3단계 라인업">
+    </div>
+    <div class="ds-stages">
+      <div class="ds-stage s1">
+        <span class="ds-num">1단계</span>
+        <strong>케어 디바이스 (무료 배포)</strong>
+        <p>1인칭 카메라·하트 버튼·6축 모션 센서. 코디네이터 활동을 모션·음성·영상으로 수집해요.</p>
+      </div>
+      <div class="ds-stage s2">
+        <span class="ds-num">2단계</span>
+        <strong>페어 워치 (편의 업그레이드)</strong>
+        <p>코디네이터·어르신이 함께 차는 워치. 같은 기록·음성 명령을 손목에서 더 편하게.</p>
+      </div>
+      <div class="ds-stage s3">
+        <span class="ds-num">3단계</span>
+        <strong>슈퍼 디바이스 (AI 분석)</strong>
+        <p>모은 간병 데이터로 학습. AI가 활동을 자동 인식하고 위험 신호를 표시해요.</p>
+      </div>
+    </div>
+    <div class="model-foot"><a href="devices.html">디바이스 통합 페이지 보기 →</a></div>
   </div>
 </section>
 
