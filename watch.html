@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/logo-icon.png">
 <title>모모케어 페어 워치 — MVP 웰니스 안전권 설계안</title>
 <style>
   :root {
@@ -518,7 +519,7 @@
           <div class="time">14:32</div>
           <div class="info">A실 김씨 · 정상</div>
         </div>
-        <div class="watch-label">간병인 워치</div>
+        <div class="watch-label">코디네이터 워치</div>
         <div class="watch-sub">AMOLED 터치 · 음성</div>
       </div>
       <div class="watch">
@@ -534,7 +535,7 @@
     <div class="concept-grid">
       <div class="concept-box caregiver">
         <div class="role">CAREGIVER</div>
-        <div class="name">간병인 워치 — "호출 수신 + 업무"</div>
+        <div class="name">코디네이터 워치 — "호출 수신 + 업무"</div>
         <div class="desc">대상자 호출 수신 · 음성 응답 · 업무 체크리스트 · 활동량 표시</div>
       </div>
       <div class="arrow">⇄</div>
@@ -564,7 +565,7 @@
             물리 SOS 버튼 3초 길게 누름 → 즉시 발신 + 자동 마이크 켜짐
           </div>
           <div class="flow-box">
-            <b>간병인 워치</b>
+            <b>코디네이터 워치</b>
             진동 + 알림음 + 양방향 음성 자동 연결 → BLE 신호 강도로 대략 위치
           </div>
         </div>
@@ -578,10 +579,10 @@
         <div class="flow">
           <div class="flow-box">
             <b>대상자 워치</b>
-            6축 IMU가 강한 충격 + 무동작 5초 감지 → 대상자에게 "괜찮으세요?" 알림 → 10초 내 응답 없으면 간병인에게 알림
+            6축 IMU가 강한 충격 + 무동작 5초 감지 → 대상자에게 "괜찮으세요?" 알림 → 10초 내 응답 없으면 코디네이터에게 알림
           </div>
           <div class="flow-box">
-            <b>간병인 워치</b>
+            <b>코디네이터 워치</b>
             "A실 김씨 충격 감지" 알림 → 음성 연결로 직접 확인
           </div>
         </div>
@@ -598,7 +599,7 @@
             BLE 신호 점차 약화 → 연결 끊김 → 마지막 신호 강도 기록
           </div>
           <div class="flow-box">
-            <b>간병인 워치</b>
+            <b>코디네이터 워치</b>
             "BLE 신호 약화 → 끊김" 단계별 알림. 마지막 연결 위치·시각 표시
           </div>
         </div>
@@ -615,7 +616,7 @@
             정해진 시각에 진동 + "약 드세요" 큰 글씨 → 확인 버튼 누르면 완료
           </div>
           <div class="flow-box">
-            <b>간병인 워치</b>
+            <b>코디네이터 워치</b>
             확인 시간 초과 시 알림 ("미확인 10분 경과")
           </div>
         </div>
@@ -628,12 +629,12 @@
         </div>
         <div class="flow">
           <div class="flow-box">
-            <b>간병인 워치</b>
+            <b>코디네이터 워치</b>
             오늘 할 일 (체위변경·식사보조·청결관리 등) 리스트 · 음성으로 완료 처리 ("완료" 한마디)
           </div>
           <div class="flow-box">
             <b>대상자 워치</b>
-            해당 없음 (간병인 전용 기능)
+            해당 없음 (코디네이터 전용 기능)
           </div>
         </div>
       </div>
@@ -641,7 +642,7 @@
     </div>
 
     <div class="note">
-      <b>표현 변경 핵심</b> — "낙상 감지" → "충격 감지", "이상 감지" → "알림", "측정" → "표시"로 모두 변경. 진단·판단을 사용자(간병인)에게 위임하는 구조.
+      <b>표현 변경 핵심</b> — "낙상 감지" → "충격 감지", "이상 감지" → "알림", "측정" → "표시"로 모두 변경. 진단·판단을 사용자(코디네이터)에게 위임하는 구조.
     </div>
   </section>
 
@@ -654,7 +655,7 @@
 
       <!-- Caregiver -->
       <div class="spec-card caregiver">
-        <h3>간병인 워치</h3>
+        <h3>코디네이터 워치</h3>
         <div class="role-sub">CAREGIVER WATCH — 호출 수신 · 음성 응답 · 업무</div>
 
         <div class="spec-block">
@@ -722,7 +723,7 @@
 
         <div class="spec-block">
           <h4>통신</h4>
-          <div class="item"><span class="k">BLE</span><span class="v">5.3 (간병인 워치 직결)</span></div>
+          <div class="item"><span class="k">BLE</span><span class="v">5.3 (코디네이터 워치 직결)</span></div>
           <div class="item"><span class="k">위치 추정</span><span class="v">BLE RSSI (대략적)</span></div>
         </div>
 
@@ -802,13 +803,13 @@
       <div class="decision">
         <div class="label">충격 감지 로직</div>
         <div class="choice">IMU 단독 + 대상자 확인</div>
-        <div class="reason">의료적 판단을 워치가 하지 않음. 대상자가 응답 안하면 간병인이 판단. 책임 소재 명확</div>
+        <div class="reason">의료적 판단을 워치가 하지 않음. 대상자가 응답 안하면 코디네이터가 판단. 책임 소재 명확</div>
       </div>
 
       <div class="decision">
         <div class="label">자동 호출 정책</div>
         <div class="choice">10초 사용자 확인 후 호출</div>
-        <div class="reason">"완전 자동 진단·호출"은 의료기기 영역. 사용자(대상자/간병인) 확인 단계 두면 안전권 유지</div>
+        <div class="reason">"완전 자동 진단·호출"은 의료기기 영역. 사용자(대상자/코디네이터) 확인 단계 두면 안전권 유지</div>
       </div>
 
       <div class="decision">
@@ -842,7 +843,7 @@
       </thead>
       <tbody>
         <tr>
-          <td rowspan="3" style="background:var(--blue-light); color:var(--blue); font-weight:600;">간병인</td>
+          <td rowspan="3" style="background:var(--blue-light); color:var(--blue); font-weight:600;">코디네이터</td>
           <td>AMOLED 1.4"</td>
           <td class="right">12,000~18,000</td>
           <td class="right">12,000~18,000</td>
